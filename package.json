@@ -1,0 +1,23 @@
+{
+  "name": "web-project-covid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leo-TheCoder/web-project-covid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leo-TheCoder/web-project-covid/issues"
+  },
+  "homepage": "https://github.com/Leo-TheCoder/web-project-covid#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
