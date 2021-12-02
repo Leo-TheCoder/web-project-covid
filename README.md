@@ -10,9 +10,9 @@
 ## Thông tin nhóm
 |**Thành viên**|**MSSV**|
 |:- | --- |
-|Vũ Đăng Hoàng Long|18120203|
-|Lâm Xương Đức|18120163|
 |Nguyễn Duy Thiên Kim|18120047|
+|Lâm Xương Đức|18120163|
+|Vũ Đăng Hoàng Long|18120203|
 |Ngô Nhật Tân|18120547|
 |Võ Minh Lâm|18120192|
 
