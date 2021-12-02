@@ -13,7 +13,7 @@
 |Vũ Đăng Hoàng Long|18120203|
 |Lâm Xương Đức|18120163|
 |Nguyễn Duy Thiên Kim|18120047|
-|Ngô Nhật Tân|18120|
+|Ngô Nhật Tân|18120547|
 |Võ Minh Lâm|18120192|
 
 ---
