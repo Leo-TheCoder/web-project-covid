@@ -1,30 +1,41 @@
 //decalring libraries
+require('dotenv').config();
+require('express-async-errors');
 const express = require("express");
-const handlebars = require('express-handlebars');
-const { Router } = require('express');
+const handlebars = require("express-handlebars");
 
 //declaring public variables
+const app = express();
 const port = process.env.PORT || 5000;
 const www = process.env.WWW || "./";
 
-const app = express();
 app.use(express.static(www));
 app.use(express.json());
 app.use(express.urlencoded());
-//console.log(`serving ${www}`);
 
-const hbs = handlebars.create();
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', './views');
+const authRouter = require("./routes/auth_route");
 
-//server main functions
-app.use('/', require('./controllers/users/login.C'));
+const hbs = handlebars.create({
+  extname: 'hbs',
+  defaultLayout: 'main'
+});
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
+app.set("views", "./views");
 
+//middleware modules
+const notFoundMiddleware = require('./middlewares/not-found');
+const errorHandlerMiddleware = require('./middlewares/handle-errors');
+const authenticateUser = require('./middlewares/authentication');
 
-/*app.get("*", (req, res) => {
-  res.sendFile(`index.html`, { root: www });
-});*/
+//server main routes
+app.use("/", authRouter);
+//sau nay nhung route can co authenticate thi them middleware authenticateUser vao
+//Ex: app.use('/order', authenticateUser, orderRouter)
+
+//error middleware
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 //starting the server
-app.listen(port, () => console.log(`listening on http://localhost:${port}`));
+app.listen(port, () => console.log(`The server is listening on http://localhost:${port}`));
