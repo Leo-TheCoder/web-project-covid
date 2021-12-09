@@ -1,4 +1,4 @@
-//decalring libraries
+//declaring libraries
 require('dotenv').config();
 require('express-async-errors');
 const express = require("express");
@@ -17,7 +17,8 @@ const authRouter = require("./routes/auth_route");
 
 const hbs = handlebars.create({
   extname: 'hbs',
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  partialsDir: __dirname + '/views/partials/'
 });
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
@@ -30,6 +31,7 @@ const authenticateUser = require('./middlewares/authentication');
 
 //server main routes
 app.use("/", authRouter);
+app.use(express.static('./public'));
 //sau nay nhung route can co authenticate thi them middleware authenticateUser vao
 //Ex: app.use('/order', authenticateUser, orderRouter)
 

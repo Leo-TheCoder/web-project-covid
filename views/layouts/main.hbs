@@ -6,16 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NOmicron</title>
+
+  {{> css}}
+  {{> fonts}}
 </head>
 
 <body>
   <div class="container">
-    {{ > (navbar)}}
-
+    {{> navbar}}
     {{{body}}}
-
-    {{> {footer}}}
+    {{> footer}}
   </div>
+
+  {{> scripts}}
 </body>
 
 </html>

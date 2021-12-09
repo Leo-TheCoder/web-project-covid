@@ -1,7 +1,7 @@
 {
   "name": "web-project-covid",
   "version": "1.0.0",
-  "description": "",
+  "description": "Đồ án cuối kỳ của môn Phát triển ứng dụng web.",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"

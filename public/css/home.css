@@ -1,0 +1,36 @@
+:root{
+  --themeColor: #6554C0;
+  --themeColor_accent: #8574e6;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+*{
+  font-family: 'Montserrat', 'sans-serif';
+}
+
+a{
+  color: var(--themeColor);
+}
+
+button{
+  background-color: var(--themeColor);
+  color: white;
+  height: 35px;
+  border-radius: 5px;
+}
+
+button:hover{
+  background-color: var(--themeColor_accent);
+}
+
+.page-title{
+  color: var(--themeColor);
+  font-size: 35px;
+  font-weight: 700;
+
+  margin-block-end: 50px;
+}
