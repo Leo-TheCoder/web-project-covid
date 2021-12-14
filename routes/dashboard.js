@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {getLoginPage, login} = require('../controllers/users/login.C');
+const {getAdminPage, getManagerPage, getUserPage} = require('../controllers/users/dashboard.C');
 
-router.route('/').get(getLoginPage);
-router.route('/login').get(getLoginPage).post(login);
+router.route('/admin').get(getAdminPage);
+router.route('/user').get(getUserPage);
+router.route('/manager').get(getManagerPage);
 
 module.exports = router;

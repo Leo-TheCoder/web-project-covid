@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 const authRouter = require("./routes/auth_route");
+const dashboardRouter = require("./routes/dashboard");
 
 const hbs = handlebars.create({
   extname: 'hbs',
@@ -31,6 +32,10 @@ const authenticateUser = require('./middlewares/authentication');
 
 //server main routes
 app.use("/", authRouter);
+
+// Test dashboard
+app.use("/test", dashboardRouter);
+
 app.use(express.static('./public'));
 //sau nay nhung route can co authenticate thi them middleware authenticateUser vao
 //Ex: app.use('/order', authenticateUser, orderRouter)
