@@ -1,3 +1,4 @@
+const { BadRequestError, UnauthenticatedError } = require('../../errors');
 const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/User.M');
 //declaring public variables
@@ -11,11 +12,11 @@ const getHomePage = (req, res) => {
 const getLoginPage = (req, res) => {
 	try {
 		res.render('user/login', {
-			css: () => 'css',
-			fonts: () => 'fonts',
-			navbar: () => 'navbar',
-			footer: () => 'footer',
-			scripts: () => 'scripts',
+			css     : () => 'css',
+			fonts   : () => 'fonts',
+			navbar  : () => 'navbar',
+			footer  : () => 'footer',
+			scripts : () => 'scripts',
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
@@ -44,7 +45,14 @@ const login = async (req, res) => {
 
 	const token = user.createJWT();
 	//just for testing
-	res.status(StatusCodes.OK).json({ user: user, token });
+	res.status(StatusCodes.OK).json({ user, token });
+	res.render('user/login', {
+		css     : () => 'css',
+		fonts   : () => 'fonts',
+		navbar  : () => 'navbar',
+		footer  : () => 'footer',
+		scripts : () => 'scripts',
+	});
 };
 
 module.exports = {
