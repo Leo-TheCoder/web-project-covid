@@ -39,7 +39,13 @@ async function LogIn(){
 
       localStorage.setItem('jwt', jwt);
       //fetch the dashboard
-      
+      const myHeaders = new Headers({
+        'authorization': 'Bearer ' + jwt,
+      });
+      const fetch = fetch(url,{
+        method: "GET",
+        headers: myHeaders,
+      })
 
     }
     else{

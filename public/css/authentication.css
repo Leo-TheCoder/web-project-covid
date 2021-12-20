@@ -39,11 +39,12 @@
 
 .show-password{
   position: absolute;
-  top: 35px;
+  top: 38px;
   right: 10px;
 
   color: var(--themeColor);
   text-decoration: underline;
+  font-size: 15px;
 
   cursor: pointer;
 }
