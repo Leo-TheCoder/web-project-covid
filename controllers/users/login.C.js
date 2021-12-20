@@ -44,14 +44,9 @@ const login = async (req, res) => {
 
 	const token = user.createJWT();
 	//just for testing
+	const cookieValue = 'authorization=Bearer ' + token + '; HttpOnly'
+	res.setHeader('Set-Cookie', cookieValue);
 	res.status(StatusCodes.OK).json({ user, token });
-	res.render('user/login', {
-		css     : () => 'css',
-		fonts   : () => 'fonts',
-		navbar  : () => 'navbar',
-		footer  : () => 'footer',
-		scripts : () => 'scripts',
-	});
 };
 
 module.exports = {

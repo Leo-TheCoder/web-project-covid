@@ -5,6 +5,17 @@ const User = require('../../models/User.M');
 
 const getDashboard = (req, res) => {
 	const type = req.user.type;
+	switch (type) {
+		case 'A':
+			//return admin dashboard
+			return getAdminPage(req, res);
+		case 'M':
+			//return manager dashboard
+			return getManagerPage(req, res);
+		case 'P': //patient
+			//return user dashboard
+			return getUserPage(req, res);
+	}
 };
 
 const getAdminPage = (req, res) => {
@@ -53,5 +64,5 @@ module.exports = {
 	getAdminPage,
 	getManagerPage,
 	getUserPage,
-	getDashboard
+	getDashboard,
 };

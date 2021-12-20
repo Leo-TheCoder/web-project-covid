@@ -32,11 +32,9 @@ const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/handle-errors');
 const authenticateUser = require('./middlewares/authentication');
 
-app.use(express.static('./public'));
-
 //server main routes
 app.use('/', authRouter);
-app.use('/', authenticateUser, dashboardRouter);
+app.use('/dashboard', authenticateUser, dashboardRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
@@ -44,8 +42,6 @@ app.use('/', authenticateUser, dashboardRouter);
 app.use(express.static('./public'));
 //sau nay nhung route can co authenticate thi them middleware authenticateUser vao
 //Ex: app.use('/order', authenticateUser, orderRouter)
-
-app.use(express.static('./public'));
 
 //error middleware
 app.use(notFoundMiddleware);

@@ -18,6 +18,7 @@ async function LogIn(){
   //get username and password to send to server
   const phone_number = document.getElementById('phone_number').value;
   const password = document.getElementById('password').value;
+  //let response;
 
   if(!phone_number || !password){
     alert('Bạn chưa nhập đủ thông tin!');
@@ -34,19 +35,9 @@ async function LogIn(){
 
     if(response.ok){
       const data = await response.json();
-      const jwt = await data.token;
       console.log(data);
 
-      localStorage.setItem('jwt', jwt);
-      //fetch the dashboard
-      const myHeaders = new Headers({
-        'authorization': 'Bearer ' + jwt,
-      });
-      const fetch = fetch(url,{
-        method: "GET",
-        headers: myHeaders,
-      })
-
+      window.location.replace(url + '/dashboard');
     }
     else{
       console.log(response.status);
