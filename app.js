@@ -15,12 +15,14 @@ app.use(express.urlencoded());
 
 const authRouter = require('./routes/auth_route');
 const dashboardRouter = require('./routes/dashboard');
+const db = require('./db/connectDB');
 
 const hbs = handlebars.create({
 	extname       : 'hbs',
 	defaultLayout : 'main',
 	partialsDir   : __dirname + '/views/partials/',
 });
+
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', './views');
@@ -29,6 +31,8 @@ app.set('views', './views');
 const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/handle-errors');
 const authenticateUser = require('./middlewares/authentication');
+
+app.use(express.static('./public'));
 
 //server main routes
 app.use('/', authRouter);
@@ -47,5 +51,14 @@ app.use(express.static('./public'));
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-//starting the server
-app.listen(port, () => console.log(`The server is listening on http://localhost:${port}`));
+const startSever = async () => {
+	try {
+		await db.connect();
+		//starting the server
+		app.listen(port, () => console.log(`The server is listening on http://localhost:${port}`));
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+startSever();

@@ -24,24 +24,23 @@ const getLoginPage = (req, res) => {
 };
 
 const login = async (req, res) => {
-	const { username, password } = req.body;
+	const { phone_number, password } = req.body;
 
-	if (!username || !password) {
+	if (!phone_number || !password) {
 		throw new BadRequestError('Please provide email and password');
 	}
 
-	const user = await User.initUser(username, password);
-	//   const user = await User.findOne({ email });
+	const user = await User.getUser(phone_number);
 
-	//   if (!user) {
-	//     throw new UnauthenticatedError("Invalid Credentials");
-	//   }
+	if (!user) {
+		throw new UnauthenticatedError('Invalid Credentials');
+	}
 
-	//   //checking password
-	//   const isPasswordCorrect = await user.comparePassword(password);
-	//   if (!isPasswordCorrect) {
-	//     throw new UnauthenticatedError("Invalid Credentials");
-	//   }
+	//checking password
+	const isPasswordCorrect = await user.comparePassword(password);
+	if (!isPasswordCorrect) {
+		throw new UnauthenticatedError('Invalid Credentials');
+	}
 
 	const token = user.createJWT();
 	//just for testing
