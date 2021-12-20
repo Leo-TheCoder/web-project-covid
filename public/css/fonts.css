@@ -1,0 +1,19 @@
+/*================= SF Pro ==================*/
+@font-face {
+  font-family: 'SF-Pro-Text';
+  src: url(/fonts/SFPro/SF-Pro-Text-Medium.otf);
+}
+
+@font-face {
+  font-family: 'SF-Pro-Text';
+  src: url(/fonts/SFPro/SF-Pro-Text-Heavy.otf);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'SF-Pro-Text';
+  src: url(/fonts/SFPro/SF-Pro-Text-HeavyItalic.otf);
+  font-weight: 600;
+  font-style: italic;
+}
+

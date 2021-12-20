@@ -39,6 +39,8 @@ async function LogIn(){
 
       localStorage.setItem('jwt', jwt);
       //fetch the dashboard
+      
+
     }
     else{
       console.log(response.status);
