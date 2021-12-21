@@ -1,6 +1,4 @@
 const { StatusCodes } = require('http-status-codes');
-const { JsonWebTokenError } = require('jsonwebtoken');
-const User = require('../../models/User.M');
 //declaring public variables
 
 const getDashboard = (req, res) => {

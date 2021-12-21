@@ -1,4 +1,3 @@
-const User = require("../models/User.M");
 const jwt = require("jsonwebtoken");
 const { UnauthenticatedError } = require("../errors");
 
@@ -6,8 +5,13 @@ const auth = async (req, res, next) => {
   // check header
   // const authHeader = req.headers.authorization;
   const cookie = req.headers.cookie;
+
+  if (!cookie) {
+    throw new UnauthenticatedError("Authentication invalid");
+  }
+
   const authHeader = cookie.split("=")[1];
-  console.log(authHeader);
+
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     throw new UnauthenticatedError("Authentication invalid");
   }

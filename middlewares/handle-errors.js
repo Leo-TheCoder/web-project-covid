@@ -7,9 +7,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || "Something went wrong try again later",
   };
 
-  // if (err instanceof CustomAPIError) {
-  //   return res.status(err.statusCode).json({ msg: err.message });
-  // }
+  if(err.statusCode === StatusCodes.UNAUTHORIZED)
+  {
+    console.log(req.baseUrl);
+    return res.redirect(StatusCodes.MOVED_TEMPORARILY, req.baseUrl + '/login');
+  }
 
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 const authRouter = require('./routes/auth_route');
-const dashboardRouter = require('./routes/dashboard');
+const dashboardRouter = require('./routes/dashboard_route');
 const db = require('./db/connectDB');
 
 const hbs = handlebars.create({
@@ -32,14 +32,15 @@ const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/handle-errors');
 const authenticateUser = require('./middlewares/authentication');
 
+app.use(express.static('./public'));
 //server main routes
-app.use('/', authRouter);
+app.use('/login', authRouter);
+app.get('/', (req, res) => res.redirect('/dashboard'));
 app.use('/dashboard', authenticateUser, dashboardRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
 
-app.use(express.static('./public'));
 //sau nay nhung route can co authenticate thi them middleware authenticateUser vao
 //Ex: app.use('/order', authenticateUser, orderRouter)
 
