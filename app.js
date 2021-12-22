@@ -15,6 +15,7 @@ app.use(express.urlencoded());
 
 const authRouter = require('./routes/auth_route');
 const dashboardRouter = require('./routes/dashboard_route');
+const profileRouter = require('./routes/profile_route');
 const db = require('./db/connectDB');
 
 const hbs = handlebars.create({
@@ -37,6 +38,7 @@ app.use(express.static('./public'));
 app.use('/login', authRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
 app.use('/dashboard', authenticateUser, dashboardRouter);
+app.use('/profile', authenticateUser, profileRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);

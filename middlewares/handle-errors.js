@@ -8,7 +8,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
   if(err.statusCode === StatusCodes.UNAUTHORIZED && err.message === 'Authentication invalid')
   {
-    console.log(req.baseUrl);
     return res.redirect(StatusCodes.MOVED_TEMPORARILY, req.baseUrl + '/login');
   }
 

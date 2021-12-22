@@ -31,7 +31,7 @@ const login = async (req, res) => {
 	}
 
 	const user = await User.getUser(phone_number);
-	
+
 	if (!user) {
 		throw new UnauthenticatedError('Invalid Credentials');
 	}
@@ -43,16 +43,16 @@ const login = async (req, res) => {
 	}
 
 	const token = user.createJWT();
-	//just for testing
+	
 	const cookieValue = 'authorization=Bearer ' + token + '; HttpOnly'
 	res.setHeader('Set-Cookie', cookieValue);
-	res.status(StatusCodes.OK).json({ user, token });
+	res.status(StatusCodes.OK).json({ token });
 };
 
 //just for testing
 const register = async (req, res) => {
 	const { phone_number, password } = req.body;
-	const user = User.InitUser(phone_number, password);
+	const user = await User.InitUser(phone_number, password);
 	res.json({user});
 }
 
