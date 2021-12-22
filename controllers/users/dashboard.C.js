@@ -21,7 +21,7 @@ const getAdminPage = (req, res) => {
 		res.render('dashboard/admin', {
 			css     : () => 'css',
 			fonts   : () => 'fonts',
-			navbar  : () => 'navbar',
+			navbar  : () => 'navbar_dashboard',
 			footer  : () => 'footer',
 			scripts : () => 'scripts',
 		});
@@ -35,7 +35,7 @@ const getManagerPage = (req, res) => {
 		res.render('dashboard/manager', {
 			css     : () => 'css',
 			fonts   : () => 'fonts',
-			navbar  : () => 'navbar',
+			navbar  : () => 'navbar_dashboard',
 			footer  : () => 'footer',
 			scripts : () => 'scripts',
 		});
@@ -49,7 +49,7 @@ const getUserPage = (req, res) => {
 		res.render('dashboard/user', {
 			css     : () => 'css',
 			fonts   : () => 'fonts',
-			navbar  : () => 'navbar',
+			navbar  : () => 'navbar_dashboard',
 			footer  : () => 'footer',
 			scripts : () => 'scripts',
 		});

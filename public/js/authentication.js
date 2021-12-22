@@ -30,7 +30,8 @@ async function LogIn(){
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      withCredentials: true
     });
 
     if(response.ok){
@@ -51,4 +52,13 @@ async function LogIn(){
       
     }
   }
+}
+
+async function LogOut(){
+  const response = await fetch(url+'/logout', {
+    method: 'GET',
+  });
+  // const data = await response.json();
+  console.log(response);
+  window.location.replace(url);
 }

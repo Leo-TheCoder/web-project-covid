@@ -35,6 +35,7 @@ const authenticateUser = require('./middlewares/authentication');
 app.use(express.static('./public'));
 //server main routes
 app.use('/login', authRouter);
+app.use('/logout', authRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
 app.use('/dashboard', authenticateUser, dashboardRouter);
 

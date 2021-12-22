@@ -4,9 +4,8 @@
   height: 50px;
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
 
   background-color: white;
   box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.3);
@@ -19,4 +18,24 @@
 
   font-size: 20px;
   font-weight: 600;
+}
+
+.navbar .logOutButton{
+  height: 100%;
+  padding: 0 20px;
+
+  position: absolute;
+  right: 0px;
+
+  display: flex;
+  align-items: center;
+
+  color: white;
+  background-color: var(--themeColor);
+  
+  cursor: pointer;
+}
+
+.navbar .logOutButton:hover{
+  background-color: var(--themeColor_accent);
 }
