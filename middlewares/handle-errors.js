@@ -1,4 +1,3 @@
-const { CustomError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
@@ -7,7 +6,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || "Something went wrong try again later",
   };
 
-  if(err.statusCode === StatusCodes.UNAUTHORIZED)
+  if(err.statusCode === StatusCodes.UNAUTHORIZED && err.message === 'Authentication invalid')
   {
     console.log(req.baseUrl);
     return res.redirect(StatusCodes.MOVED_TEMPORARILY, req.baseUrl + '/login');

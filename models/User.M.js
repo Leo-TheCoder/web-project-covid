@@ -4,7 +4,7 @@ const db = require("../db/connectDB");
 
 class User {
   //just for example
-  constructor({phonenumber, password, type, id, status}) {
+  constructor({ phonenumber, password, type, id, status }) {
     this.phonenumber = phonenumber;
     this.password = password;
     this.type = type;
@@ -12,15 +12,10 @@ class User {
     this.status = status || 0;
   }
 
-
   createJWT() {
-    return jwt.sign(
-      { id: this.id, type: this.type },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: process.env.JWT_LIFETIME,
-      }
-    );
+    return jwt.sign({ id: this.id, type: this.type }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_LIFETIME,
+    });
   }
 
   async comparePassword(candidatePassword) {
@@ -36,13 +31,18 @@ class User {
   }
 
   static async getUser(phonenumber) {
-    const result = await db.query(
-      `select * from account where phonenumber = $1`,
-      [phonenumber]
-    );
+    try {
+      const result = await db.query(
+        `select * from account where phonenumber = $1`,
+        [phonenumber]
+      );
 
-    let user = new User(result.rows[0]);
-    return user;
+      let user = new User(result.rows[0]);
+      return user;
+    } catch (error) {
+      let user = undefined;
+      return user;
+    }
   }
 }
 

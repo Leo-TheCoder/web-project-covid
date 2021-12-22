@@ -31,7 +31,7 @@ const login = async (req, res) => {
 	}
 
 	const user = await User.getUser(phone_number);
-
+	
 	if (!user) {
 		throw new UnauthenticatedError('Invalid Credentials');
 	}
@@ -49,8 +49,16 @@ const login = async (req, res) => {
 	res.status(StatusCodes.OK).json({ user, token });
 };
 
+//just for testing
+const register = async (req, res) => {
+	const { phone_number, password } = req.body;
+	const user = User.InitUser(phone_number, password);
+	res.json({user});
+}
+
 module.exports = {
 	getHomePage,
 	getLoginPage,
 	login,
+	register,
 };
