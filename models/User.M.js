@@ -7,7 +7,7 @@ class User {
   constructor({ phonenumber, password, type, id, status }) {
     this.phonenumber = phonenumber;
     this.password = password;
-    this.type = type;
+    this.type = type || "P";
     this.id = id || 0;
     this.status = status || 0;
   }
@@ -24,7 +24,7 @@ class User {
   }
 
   static async InitUser(phonenumber, password) {
-    const user = new User(phonenumber, password);
+    const user = new User({ phonenumber, password });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     return user;
@@ -40,8 +40,24 @@ class User {
       let user = new User(result.rows[0]);
       return user;
     } catch (error) {
-      let user = undefined;
-      return user;
+      return undefined;
+    }
+  }
+
+  static async getInformation(id, type) {
+    try {
+      let queryStr = ``;
+      if (type === "P") {
+        queryStr = `select * from patient where patientaccountid = ${id}`;
+      } else if (type === "M") {
+        queryStr = `select * from manager where manageraccountid = ${id}`;
+      }
+
+      const result = await db.query(queryStr);
+      const information = result.rows[0];
+      return information;
+    } catch (error) {
+      return undefined;
     }
   }
 }
