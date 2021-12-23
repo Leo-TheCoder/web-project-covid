@@ -1,7 +1,6 @@
 const { BadRequestError, UnauthenticatedError } = require('../../errors');
 const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/User.M');
-//declaring public variables
 
 //get login page
 const getHomePage = (req, res) => {
@@ -25,35 +24,31 @@ const login = async (req, res) => {
 	console.log(req.body);
 
 	if (!phone_number || !password) {
-		throw new BadRequestError('Please provide phone number and password');
+		return res.render('user/login', {
+			user: false,
+			error: "Bạn nhập thiếu thông tin rồi!",
+		});
 	}
 
 	const user = await User.getUser(phone_number);
 
 	if (!user) {
-		throw new UnauthenticatedError('Invalid Credentials');
+		return res.render('user/login', {
+			user: false,
+			error: "Nhập sai thông tin!",
+		});
 	}
 
 	//checking password
 	const isPasswordCorrect = await user.comparePassword(password);
 	if (!isPasswordCorrect) {
-		// throw new UnauthenticatedError('Invalid Credentials');
-		// res.redirect('/auth/login');
 		return res.render('user/login', {
 			user: false,
-			// css: () => 'css',
-			// fonts: () => 'fonts',
-			// navbar: () => 'navbar',
-			// footer: () => 'footer',
-			// scripts: () => 'scripts',
 			error: "Sai mật khẩu goỳ",
 		});
 	}
 
 	const token = user.createJWT();
-	//just for testing
-	// const cookieValue = 'authorization=Bearer ' + token + '; HttpOnly'
-	// res.setHeader('Set-Cookie', cookieValue);
 	res.cookie('authorization', token, { httpOnly: true, expire: 'session' });
 	// res.status(StatusCodes.OK).json({ user, token });
 	res.redirect('/dashboard');
