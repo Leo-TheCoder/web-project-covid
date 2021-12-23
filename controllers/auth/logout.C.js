@@ -7,7 +7,7 @@ const logout = (req, res) => {
 	console.log('log');
 	res.cookie('authorization', 'off', { expire: "Wed, 22 Dec 1900 14:42:15 GMT" });
 	// res.clearCookie('authorization');
-	res.redirect('/auth/login');
+	res.redirect('/');
 }
 
 module.exports = {
