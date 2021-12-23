@@ -57,8 +57,8 @@ const login = async (req, res) => {
 //just for testing
 const register = async (req, res) => {
 	const { phone_number, password } = req.body;
-	const user = User.InitUser(phone_number, password);
-	res.json({ user });
+	const user = await User.InitUser(phone_number, password);
+	res.json({user});
 }
 
 module.exports = {

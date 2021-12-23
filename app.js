@@ -19,6 +19,7 @@ const loginRouter = require('./routes/auth_routes/login_route');
 const logoutRouter = require('./routes/auth_routes/logout_route');
 const registerRouter = require('./routes/auth_routes/register_route');
 const dashboardRouter = require('./routes/dashboard_route');
+const profileRouter = require('./routes/profile_route');
 const db = require('./db/connectDB');
 
 const hbs = handlebars.create({
@@ -43,6 +44,10 @@ app.use('/register', registerRouter);
 app.use('/logout', logoutRouter);
 app.use('/dashboard', authenticateUser, dashboardRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
+app.use('/profile', authenticateUser, profileRouter);
+
+// Test dashboard
+// app.use('/test', dashboardRouter);
 
 //sau nay nhung route can co authenticate thi them middleware authenticateUser vao
 //Ex: app.use('/order', authenticateUser, orderRouter)
