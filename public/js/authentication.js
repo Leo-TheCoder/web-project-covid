@@ -33,6 +33,7 @@ async function LogIn(){
       body: JSON.stringify(body),
       withCredentials: true
     });
+    console.log(response);
 
     if(response.ok){
       const data = await response.json();
@@ -52,13 +53,4 @@ async function LogIn(){
       
     }
   }
-}
-
-async function LogOut(){
-  const response = await fetch(url+'/logout', {
-    method: 'GET',
-  });
-  // const data = await response.json();
-  console.log(response);
-  window.location.replace(url);
 }

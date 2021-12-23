@@ -3,6 +3,7 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const handlebars = require('express-handlebars');
+const cookieParser = require('cookie-parser');
 
 //declaring public variables
 const app = express();
@@ -11,7 +12,8 @@ const www = process.env.WWW || './';
 
 app.use(express.static(www));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
 
 const authRouter = require('./routes/auth_route');
 const dashboardRouter = require('./routes/dashboard_route');
@@ -34,8 +36,7 @@ const authenticateUser = require('./middlewares/authentication');
 
 app.use(express.static('./public'));
 //server main routes
-app.use('/login', authRouter);
-app.use('/logout', authRouter);
+app.use('/auth', authRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
 app.use('/dashboard', authenticateUser, dashboardRouter);
 

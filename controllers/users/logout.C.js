@@ -3,9 +3,11 @@ const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/User.M');
 //declaring public variables
 
-const logout = (req,res) => {
-	res.setHeader('Set-Cookie', 'authorization=Bearer null' + '; Path=/;');
-  res.status(StatusCodes.OK).json('hello');
+const logout = (req, res) => {
+	console.log('log');
+	res.cookie('authorization', 'off', { expire: "Wed, 22 Dec 1900 14:42:15 GMT" });
+	// res.clearCookie('authorization');
+	res.redirect('/auth/login');
 }
 
 module.exports = {
