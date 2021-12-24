@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { UnauthenticatedError } = require("../errors");
+const User = require("../models/User.M");
 
 const auth = async (req, res, next) => {
   // check cookie
@@ -21,4 +22,21 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+const authManager = async (req, res, next) => {
+  if(req.user.type === 'M')
+  {
+    const id = await User.getManagerID(req.user.id);
+    req.managerid = id;
+    next();
+  }
+  else
+  {
+    throw new UnauthenticatedError("No privilege");
+  }
+}
+
+
+module.exports = {
+  auth,
+  authManager
+};

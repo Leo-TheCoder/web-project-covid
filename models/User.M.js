@@ -60,6 +60,20 @@ class User {
       return undefined;
     }
   }
+
+  static async getManagerID(accountID) {
+    try {
+      const result = await db.query(
+        `select managerid from manager where manageraccountid = $1`,
+        [accountID]
+      );
+
+      const id = result.rows[0].managerid;
+      return id;
+    } catch (error) {
+      return undefined;
+    }
+  }
 }
 
 module.exports = User;

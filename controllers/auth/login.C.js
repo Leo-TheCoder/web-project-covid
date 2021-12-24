@@ -21,7 +21,6 @@ const getLoginPage = (req, res) => {
 
 const login = async (req, res) => {
 	const { phone_number, password } = req.body;
-	console.log(req.body);
 
 	if (!phone_number || !password) {
 		return res.render('user/login', {
