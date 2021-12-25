@@ -5,8 +5,10 @@ const getPatients = async (req, res) => {
   const managerid = req.managerid;
 
   const result = await Patient.getAllPatients(managerid);
-
-  res.status(StatusCodes.OK).json(result);
+  
+  res.status(StatusCodes.OK).render("patients/patients", {
+    patients: result,
+  });
 };
 
 module.exports = {

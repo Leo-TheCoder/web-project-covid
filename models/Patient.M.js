@@ -23,13 +23,14 @@ class Patient {
 
   static async getAllPatients(managerid) {
     try {
-      const result = await db.query(`select * from patient where managerid = $1`, [
-        managerid,
-      ]);
+      const result = await db.query(
+        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid`,
+        [managerid]
+      );
 
       return result.rows;
     } catch (error) {
-        return undefined;
+      return undefined;
     }
   }
 }
