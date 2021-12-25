@@ -1,14 +1,12 @@
 const {
-  BadRequestError,
-  UnauthenticatedError,
   NotFoundError,
 } = require("../../errors");
 const { StatusCodes } = require("http-status-codes");
 const User = require("../../models/User.M");
+const Utility = require("../../utilities");
 
 //Moi xu li patient voi manager, admin k biet lam sao
 const getInformation = async (req, res) => {
-  /*
   const { id, type } = req.user;
 
   const result = await User.getInformation(id, type);
@@ -16,17 +14,33 @@ const getInformation = async (req, res) => {
   if (!result) {
     throw new NotFoundError("Something wrong, please try again!");
   }
-  //need adjust, not send all attributes back
- */
-  res.render('user/profile',{
-    user: "okay",
-    userFullname: "Lâm Xương Đức",
-    userDoB: "22/07/2000",
-    userPhoneNumber: "0123458755",
-    userAddress: "dasdasd/adasd ",
-  }
 
-  )
+  if (type === "P") {
+    res.status(StatusCodes.OK).render("user/profile", {
+      user: "okay",
+      userFullname: result.patientname,
+      userDoB: Utility.getDDMMYYYYFormat(result.patientdob),
+      userPhoneNumber: result.patientphone,
+      userAddress: result.patientaddress,
+    });
+  } else if (type === "M") {
+    res.render("user/profile", {
+      user: "okay",
+      userFullname: result.managername,
+      userDoB: Utility.getDDMMYYYYFormat(result.managerdob),
+      userPhoneNumber: result.managerphone,
+      userAddress: result.manageraddress,
+    });
+  }
+  else {  //dummy
+    res.render("user/profile", {
+      user: "okay",
+      userFullname: "Who the hell are you",
+      userDoB: "xx/xx/xxxx",
+      userPhoneNumber: "6666666666",
+      userAddress: "666",
+    });
+  }
 
   // res.json({ result });
 };

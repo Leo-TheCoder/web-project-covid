@@ -45,7 +45,7 @@ app.use('/logout', logoutRouter);
 app.use('/dashboard', authenticateUser, dashboardRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
 // app.use('/profile', authenticateUser, profileRouter);
-app.use('/profile', profileRouter);
+app.use('/profile', authenticateUser, profileRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
