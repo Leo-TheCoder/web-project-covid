@@ -1,5 +1,5 @@
 const {
-  NotFoundError,
+  NotFoundError, BadRequestError,
 } = require("../../errors");
 const { StatusCodes } = require("http-status-codes");
 const User = require("../../models/User.M");
@@ -24,7 +24,7 @@ const getInformation = async (req, res) => {
       userAddress: result.patientaddress,
     });
   } else if (type === "M") {
-    res.render("user/profile", {
+    res.status(StatusCodes.OK).render("user/profile", {
       user: "okay",
       userFullname: result.managername,
       userDoB: Utility.getDDMMYYYYFormat(result.managerdob),
@@ -48,9 +48,18 @@ const getInformation = async (req, res) => {
 const updateInformation = async (req, res) => {
   const { id, type } = req.user;
 
-  res.send("Tu tu roi lam tiep");
+  const result = await User.updateInformation(id, type, req.body);
+
+  //Not result/ not update/ update one more rows
+  if(!result || result < 1 || result > 1)
+  {
+    throw new BadRequestError("Something wrong, bad request");
+  }
+
+  res.status(StatusCodes.OK).json({msg: "Update successfully!"});
 };
 
 module.exports = {
   getInformation,
+  updateInformation,
 };
