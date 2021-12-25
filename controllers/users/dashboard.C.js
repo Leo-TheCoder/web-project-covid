@@ -20,11 +20,6 @@ const getAdminPage = (req, res) => {
 	try {
 		res.render('dashboard/admin', {
 			user: "okay",
-			// css     : () => 'css',
-			// fonts   : () => 'fonts',
-			// navbar : () => 'navbarDashboard',
-			// footer  : () => 'footer',
-			// scripts : () => 'scripts',
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
@@ -35,11 +30,6 @@ const getManagerPage = (req, res) => {
 	try {
 		res.render('dashboard/manager', {
 			user: "okay",
-			// css     : () => 'css',
-			// fonts   : () => 'fonts',
-			// // navbar  : () => 'navbarDashboard',
-			// footer  : () => 'footer',
-			// scripts : () => 'scripts',
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
@@ -50,11 +40,6 @@ const getUserPage = (req, res) => {
 	try {
 		res.render('dashboard/user', {
 			user: "okay",
-			// css     : () => 'css',
-			// fonts   : () => 'fonts',
-			// // navbar  : () => 'navbarDashboard',
-			// footer  : () => 'footer',
-			// scripts : () => 'scripts',
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });

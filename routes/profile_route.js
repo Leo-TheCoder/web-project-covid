@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const {getInformation} = require('../controllers/users/profile.C');
+const {getInformation, updateInformation} = require('../controllers/users/profile.C');
 
-router.route('/').get(getInformation);
+router.route('/').get(getInformation).put(updateInformation);
 
 module.exports = router;
