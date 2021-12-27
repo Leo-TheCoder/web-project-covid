@@ -12,15 +12,12 @@
 </head>
 
 <body>
-  <div>
     {{#if user}}
     {{> navbarDashboard}}
     {{else}}
     {{> navbar}}
     {{/if}}
     {{{body}}}
-    {{> footer}}
-  </div>
 
   {{> scripts}}
 </body>

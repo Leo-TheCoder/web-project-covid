@@ -7,6 +7,8 @@ body{
   margin: 0;
   padding: 0;
 
+  min-height: 100vh;
+
   overflow-x: hidden;
 }
 
@@ -18,16 +20,15 @@ a{
   color: var(--themeColor);
 }
 
-/* .button{
-  background-color: var(--themeColor);
-  color: white;
-  height: 35px;
-  border-radius: 5px;
-}
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-.button:hover{
-  background-color: var(--themeColor_accent);
-} */
+  width: 100vw;
+  min-height: 90vh;
+}
 
 .page-title{
   color: var(--themeColor);
@@ -35,4 +36,40 @@ a{
   font-weight: 700;
 
   margin-block-end: 50px;
+}
+
+.profile-container{
+  position: relative;
+  width: 500px;
+  padding: 20px;
+
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--themeColor_accent);
+  border-radius: 60px;
+  box-shadow: 0 0 15px 5px rgb(231, 231, 231);
+
+}
+
+.profile-card{
+  position: relative;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  background-color: white;
+  border-radius: 40px;
+}
+
+.profile-card p{
+  width: 100%;
+  padding: 10px 10px 10px 50px;
+
+  border-top: 2px dashed var(--themeColor);
 }
