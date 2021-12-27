@@ -6,26 +6,28 @@
 body{
   margin: 0;
   padding: 0;
+
+  overflow-x: hidden;
 }
 
 *{
-  font-family: 'Montserrat', 'sans-serif';
+  font-family: 'SF-Pro-Text', 'Montserrat', 'sans-serif';
 }
 
 a{
   color: var(--themeColor);
 }
 
-button{
+/* .button{
   background-color: var(--themeColor);
   color: white;
   height: 35px;
   border-radius: 5px;
 }
 
-button:hover{
+.button:hover{
   background-color: var(--themeColor_accent);
-}
+} */
 
 .page-title{
   color: var(--themeColor);

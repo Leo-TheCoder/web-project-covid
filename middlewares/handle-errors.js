@@ -1,4 +1,3 @@
-const { CustomError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
@@ -7,9 +6,10 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || "Something went wrong try again later",
   };
 
-  // if (err instanceof CustomAPIError) {
-  //   return res.status(err.statusCode).json({ msg: err.message });
-  // }
+  if(err.statusCode === StatusCodes.UNAUTHORIZED && err.message === 'Authentication invalid')
+  {
+    return res.redirect(StatusCodes.MOVED_TEMPORARILY, req.baseUrl + '/login');
+  }
 
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };
