@@ -33,6 +33,35 @@ class Patient {
       return undefined;
     }
   }
+
+  static async getPatientById(patientId, managerid) {
+    try {
+      const result = await db.query(
+        `select p.*, a.areaname from patient p, quarantinearea a where p.patientid = $1 and p.quarantineareaid = a.areaid and managerid = $2`,
+        [patientId, managerid]
+      );
+
+      return result.rows[0];
+    } catch (error) {
+      console.log("get patient by id: ", error);
+      return undefined;
+    }
+  }
+
+  static async deletePatientById(patientId, managerid) {
+    try {
+      const result = db.query(
+        `delete from patient where patientid = $1 and managerid = $2`,
+        [patientId, managerid]
+      );
+
+      console.log(result);
+      return result.rowCount;
+    } catch (error) {
+      console.log("delete patient by id: ", error);
+      return undefined;
+    }
+  }
 }
 
 module.exports = Patient;
