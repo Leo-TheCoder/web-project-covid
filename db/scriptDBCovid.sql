@@ -7,15 +7,6 @@ CREATE TABLE ACCOUNT
  phonenumber VARCHAR(10)
 )
 
--- CREATE TABLE LOG
--- (
--- 	ID INT,
--- 	TIMESTAMP TIMESTAMP,
-	
--- 	CONSTRAINT FK_LOG_ACC
--- 	FOREIGN KEY (ID)
--- 	REFERENCES ACCOUNT
--- )
 
 CREATE TABLE PRODUCT
 (
@@ -138,7 +129,7 @@ CREATE TABLE PATIENT
 	PatientPHONE VARCHAR(10),
 	PatientACCOUNTID INT,
 	QuarantineAreaID INT,
-	Status VARCHAR(10),
+	Status INT,
 	StartDate DATE,
 	EndDate DATE, 
 	ManagerID INT,
@@ -206,5 +197,33 @@ CREATE TABLE PRODUCTPIC
 	REFERENCES PRODUCT
 )
 
+CREATE TABLE AUDIT
+(
+	AUDITID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY
+	(START WITH 1 INCREMENT BY 1),
+	USERID INT,
+	USER_ACTION VARCHAR(150),
+	ACTION_METHOD VARCHAR (150),
+	ACTION_TIME TIMESTAMP
+	
+	FOREIGN KEY (USERID)
+	REFERENCES ACCOUNT
+)
 
+--Set PatientStatus
+CREATE OR REPLACE PROCEDURE UpdatePatientStatus
+(c_PatientID INT, c_Status INT)
+LANGUAGE SQL
+AS 
+$$
+	UPDATE "patient"
+	SET Status = c_Status
+	WHERE PatientID = c_PatientID
+$$
 
+CREATE OR REPLACE VIEW Get_Quarantine_Area 
+AS
+	SELECT QA.areaid, QA.areaname, QA.capacity, QA.occupated, 
+		WA.wardname  || ', ' || DI.districtname || ', ' || CO.countryname AS areaAddress
+	FROM quarantinearea QA, country CO, district DI, ward WA 
+	WHERE QA.countryid = CO.countryid AND QA.districtid = DI.districtid AND QA.wardid = WA.wardid

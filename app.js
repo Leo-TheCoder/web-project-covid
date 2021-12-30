@@ -12,7 +12,7 @@ const www = process.env.WWW || './';
 
 app.use(express.static(www));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const loginRouter = require('./routes/auth_routes/login_route');
@@ -20,6 +20,7 @@ const logoutRouter = require('./routes/auth_routes/logout_route');
 const registerRouter = require('./routes/auth_routes/register_route');
 const dashboardRouter = require('./routes/dashboard_route');
 const profileRouter = require('./routes/profile_route');
+const areaRouter = require('./routes/area_route');
 const db = require('./db/connectDB');
 
 const hbs = handlebars.create({
@@ -45,6 +46,7 @@ app.use('/logout', logoutRouter);
 app.use('/dashboard', authenticateUser, dashboardRouter);
 app.get('/', (req, res) => res.redirect('/dashboard'));
 app.use('/profile', authenticateUser, profileRouter);
+app.use('/area', areaRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
