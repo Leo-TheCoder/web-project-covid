@@ -40,16 +40,21 @@ const {
   auth: authenticateUser,
   authManager: authenticateManager,
 } = require("./middlewares/authentication");
+const auditMiddleware = require("./middlewares/audit");
 
 app.use(express.static("./public"));
 //server main routes
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/logout", logoutRouter);
-app.use("/dashboard", authenticateUser, dashboardRouter);
+app.use("/dashboard", [authenticateUser, auditMiddleware], dashboardRouter);
 app.get("/", (req, res) => res.redirect("/dashboard"));
-app.use("/profile", authenticateUser, profileRouter);
-app.use("/patients", [authenticateUser, authenticateManager], patientsRouter);
+app.use("/profile", [authenticateUser, auditMiddleware], profileRouter);
+app.use(
+  "/patients",
+  [authenticateUser, authenticateManager, auditMiddleware],
+  patientsRouter
+);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);

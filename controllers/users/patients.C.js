@@ -22,7 +22,6 @@ const getPatientById = async (req, res) => {
 	const { patientId } = req.params;
 	const managerid = req.managerid;
 	const result = await Patient.getPatientById(patientId, managerid);
-	console.log(result);
 
 	if (!result) {
 		throw new NotFoundError("Not found this id");
@@ -61,7 +60,7 @@ const updatePatientPage = async (req, res) => {
 };
 
 const insertPatient = async (req, res) => {
-	
+	res.send("Oh hey u have just got to insert route");
 }
 
 module.exports = {
