@@ -1,4 +1,6 @@
 const db = require("../db/connectDB");
+const { CustomError } = require("../errors");
+const User = require("./User.M");
 
 class Patient {
   constructor({
@@ -62,11 +64,61 @@ class Patient {
     }
   }
 
-  static async insertPatient(patientInfo, managerid)
-  {
+  static async insertPatient(patientInfo, managerid) {
+    const userAccount = await User.InitUser(
+      patientInfo.patientphone,
+      patientInfo.patientidnumber
+    );
+
+    const createAccountResult = await db.query(
+      `insert into account (password, phonenumber, type, status) 
+      values($1, $2, 'P', 1) returning id`,
+      [userAccount.password, userAccount.phonenumber]
+    );
+
+    console.log("Create Acc: ", createAccountResult);
+    if (!createAccountResult.rows[0].id) {
+      throw new CustomError("Something wrong with create patient account");
+    }
+
+    const accountid = createAccountResult.rows[0].id;
+    const {
+      quarantinearea,
+      status,
+      patientname,
+      patientidnumber,
+      patientdob,
+      patientphone,
+      patientaddress,
+      startdate,
+      enddate,
+    } = patientInfo;
+
     const result = await db.query(
-      
-    )
+      `insert into patient(patientaccountid, quarantineareaid, status, startdate, enddate, managerid, patientname, patientdob, patientaddress, patientidnumber, patientphone) 
+    values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      [
+        accountid,
+        quarantinearea,
+        status,
+        startdate,
+        enddate,
+        managerid,
+        patientname,
+        patientdob,
+        patientaddress,
+        patientidnumber,
+        patientphone,
+      ]
+    );
+
+    console.log("Create patient: ", result);
+    if(!result) 
+    {
+      throw new CustomError("Something wrong with create patient data");
+    }
+
+    return result;
   }
 }
 

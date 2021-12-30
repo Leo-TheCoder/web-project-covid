@@ -1,7 +1,7 @@
 /** @format */
 
 const { StatusCodes } = require("http-status-codes");
-const { NotFoundError } = require("../../errors");
+const { NotFoundError, CustomError } = require("../../errors");
 const Patient = require("../../models/Patient.M");
 
 const getPatients = async (req, res) => {
@@ -60,7 +60,19 @@ const updatePatientPage = async (req, res) => {
 };
 
 const insertPatient = async (req, res) => {
-	res.send("Oh hey u have just got to insert route");
+
+	const result = await Patient.insertPatient(req.body, req.managerid);
+
+	if(!result)
+	{
+		throw new CustomError("In controller insert patient");
+	}
+
+	res.status(StatusCodes.OK).json({
+		msg: "Insert successfully!",
+		status: "Success"
+	})
+	
 }
 
 module.exports = {
