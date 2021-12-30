@@ -29,7 +29,7 @@ const getPatientById = async (req, res) => {
 	}
 
 	res.status(StatusCodes.OK).render("patients/edit", {
-		patientid: result.patientId,
+		patient: result,
 	});
 };
 
@@ -47,8 +47,18 @@ const deletePatientById = async (req, res) => {
 	res.status(StatusCodes.OK).json(result);
 };
 
+const getAddPatientPage = (req, res) => {
+	res.status(StatusCodes.OK).render('patients/addnew');
+}
+
+const updatePatientPage = async (req, res) => {
+	res.send("Get here");
+}
+
 module.exports = {
 	getPatients,
 	getPatientById,
 	deletePatientById,
+	getAddPatientPage,
+	updatePatientPage,
 };
