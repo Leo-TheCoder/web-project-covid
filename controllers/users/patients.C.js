@@ -30,6 +30,7 @@ const getPatientById = async (req, res) => {
 
 	res.status(StatusCodes.OK).render("patients/edit", {
 		patient: result,
+		editScript: () => "editpatientscript",
 	});
 };
 
@@ -51,13 +52,13 @@ const deletePatientById = async (req, res) => {
 };
 
 const getAddPatientPage = (req, res) => {
-	res.status(StatusCodes.OK).render('patients/addnew');
-}
+	res.status(StatusCodes.OK).render("patients/addnew");
+};
 
 const updatePatientPage = async (req, res) => {
 
 	res.send("Get here");
-}
+};
 
 const insertPatient = async (req, res) => {
 	
