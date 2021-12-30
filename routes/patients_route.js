@@ -7,9 +7,10 @@ const {
   deletePatientById,
   getAddPatientPage,
   updatePatientPage,
+  insertPatient,
 } = require("../controllers/users/patients.C");
 
-router.route("/").get(getPatients);
+router.route("/").get(getPatients).post(insertPatient);
 router.route("/addnewpatient").get(getAddPatientPage);
 router
   .route("/:patientId")

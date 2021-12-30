@@ -50,17 +50,23 @@ class Patient {
 
   static async deletePatientById(patientId, managerid) {
     try {
-      const result = db.query(
+      const result = await db.query(
         `delete from patient where patientid = $1 and managerid = $2`,
         [patientId, managerid]
       );
 
-      console.log(result);
       return result.rowCount;
     } catch (error) {
       console.log("delete patient by id: ", error);
       return undefined;
     }
+  }
+
+  static async insertPatient(patientInfo, managerid)
+  {
+    const result = await db.query(
+      
+    )
   }
 }
 

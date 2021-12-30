@@ -44,7 +44,10 @@ const deletePatientById = async (req, res) => {
 			.send("Something wrong, can not delete data");
 	}
 
-	res.status(StatusCodes.OK).json(result);
+	res.status(StatusCodes.OK).json({
+		msg: "Delete successfully!",
+		status: "Success",
+	});
 };
 
 const getAddPatientPage = (req, res) => {
@@ -52,7 +55,12 @@ const getAddPatientPage = (req, res) => {
 }
 
 const updatePatientPage = async (req, res) => {
+
 	res.send("Get here");
+}
+
+const insertPatient = async (req, res) => {
+	
 }
 
 module.exports = {
@@ -61,4 +69,5 @@ module.exports = {
 	deletePatientById,
 	getAddPatientPage,
 	updatePatientPage,
+	insertPatient,
 };
