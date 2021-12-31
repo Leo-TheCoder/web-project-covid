@@ -122,9 +122,7 @@ class Patient {
   static async updatePatient(patientInfo)
   {
     const {patientid , status} = patientInfo;
-    console.log(patientInfo);
     const updateStatusPatient =  await db.query(`call updatepatientstatus($1, $2)`, [patientid, status]);
-    console.log(updateStatusPatient);
     return updateStatusPatient;
   }
 }

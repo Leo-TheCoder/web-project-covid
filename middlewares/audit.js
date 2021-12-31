@@ -4,7 +4,7 @@ const audit = (req, res, next) => {
     const method = req.method;
     const accountid = req.user.id;
     
-    Audit.audit(accountid, fullUrl, method);
+    //Audit.audit(accountid, fullUrl, method);
     next();
 };
 
