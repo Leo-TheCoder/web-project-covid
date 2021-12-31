@@ -1,5 +1,6 @@
 /** @format */
 
+const Utility = require('../../utilities');
 const { StatusCodes } = require("http-status-codes");
 const { NotFoundError, CustomError } = require("../../errors");
 const Patient = require("../../models/Patient.M");
@@ -26,6 +27,10 @@ const getPatientById = async (req, res) => {
 	if (!result) {
 		throw new NotFoundError("Not found this id");
 	}
+
+	result.patientdob = Utility.getDDMMYYYYFormat(result.patientdob);
+	result.startdate = Utility.getDDMMYYYYFormat(result.startdate);
+	result.enddate = Utility.getDDMMYYYYFormat(result.enddate);
 
 	res.status(StatusCodes.OK).render("patients/edit", {
 		patient: result,

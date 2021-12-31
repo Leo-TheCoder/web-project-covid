@@ -76,7 +76,6 @@ class Patient {
       [userAccount.password, userAccount.phonenumber]
     );
 
-    console.log("Create Acc: ", createAccountResult);
     if (!createAccountResult.rows[0].id) {
       throw new CustomError("Something wrong with create patient account");
     }
@@ -112,13 +111,12 @@ class Patient {
       ]
     );
 
-    console.log("Create patient: ", result);
-    if(!result) 
+    if(!result || result.rowCount < 1) 
     {
       throw new CustomError("Something wrong with create patient data");
     }
 
-    return result;
+    return result.rowCount;
   }
 }
 

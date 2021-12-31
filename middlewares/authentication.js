@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     //attach the user to the job routes
-    req.user = { id: payload.id, type: payload.type };
+    req.user = { id: payload.id, type: payload.type, mainId: payload.mainId };
     next();
   } catch (error) {
     throw new UnauthenticatedError("Authentication invalid");
@@ -25,7 +25,7 @@ const auth = async (req, res, next) => {
 const authManager = async (req, res, next) => {
   if(req.user.type === 'M')
   {
-    const id = await User.getManagerID(req.user.id);
+    const id = req.user.mainId;
     req.managerid = id;
     next();
   }

@@ -47,7 +47,7 @@ const login = async (req, res) => {
 		});
 	}
 
-	const token = user.createJWT();
+	const token = await user.createJWT();
 	res.cookie('authorization', token, { httpOnly: true, expire: 'session' });
 	// res.status(StatusCodes.OK).json({ user, token });
 	res.redirect('/dashboard');

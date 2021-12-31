@@ -13,8 +13,17 @@ class User {
     this.status = status || 0;
   }
 
-  createJWT() {
-    return jwt.sign({ id: this.id, type: this.type }, process.env.JWT_SECRET, {
+  async createJWT() {
+    let mainId = 0;
+    if(this.type === 'M')
+    {
+      mainId = await User.getManagerID(this.id);
+    }
+    else if(this.type === 'P')
+    {
+      mainId = await User.getPatientID(this.id);
+    }
+    return jwt.sign({ id: this.id, type: this.type, mainId }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_LIFETIME,
     });
   }
@@ -72,6 +81,20 @@ class User {
       );
 
       const id = result.rows[0].managerid;
+      return id;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  static async getPatientID(accountID) {
+    try {
+      const result = await db.query(
+        `select patientid from patient where patientaccountid = $1`,
+        [accountID]
+      );
+
+      const id = result.rows[0].patientid;
       return id;
     } catch (error) {
       return undefined;
