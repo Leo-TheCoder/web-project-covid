@@ -21,6 +21,7 @@ const registerRouter = require("./routes/auth_routes/register_route");
 const dashboardRouter = require("./routes/dashboard_route");
 const profileRouter = require("./routes/profile_route");
 const patientsRouter = require("./routes/patients_route");
+const areaRouter = require('./routes/area_route');
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -63,6 +64,7 @@ app.use(
   [authenticateUser, authenticateManager, auditMiddleware],
   patientsRouter
 );
+app.use('/area', areaRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
