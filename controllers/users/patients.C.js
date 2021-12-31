@@ -14,6 +14,12 @@ const getPatients = async (req, res) => {
 		return res.status(StatusCodes.OK).send("No data");
 	}
 
+	//change status '0' -> 'F0'
+	for(const patient of result)
+	{
+		patient.status = 'F' + patient.status;
+	}
+
 	res.status(StatusCodes.OK).render("patients/patients", {
 		patients: result,
 	});
@@ -60,8 +66,16 @@ const getAddPatientPage = (req, res) => {
 };
 
 const updatePatientPage = async (req, res) => {
+	const result = await Patient.updatePatient(req.body);
 
-	res.send("Get here");
+	if(!result) {
+		throw CustomError("Something wrong when updating patient!");
+	}
+
+	res.status(StatusCodes.OK).render("patients/edit", {
+		patient: result,
+		editScript: () => "editpatientscript",
+	});
 };
 
 const insertPatient = async (req, res) => {

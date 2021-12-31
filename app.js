@@ -27,6 +27,14 @@ const hbs = handlebars.create({
   extname: "hbs",
   defaultLayout: "main",
   partialsDir: __dirname + "/views/partials/",
+  helpers: {
+    compare(s1, s2, options) {
+      if(s1 == s2) {
+        return options.fn(this)
+      }
+      return options.inverse(this);
+    }
+  }
 });
 
 app.engine("hbs", hbs.engine);
