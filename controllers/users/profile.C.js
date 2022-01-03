@@ -5,7 +5,7 @@ const { StatusCodes } = require("http-status-codes");
 const User = require("../../models/User.M");
 const Utility = require("../../utilities");
 
-//Moi xu li patient voi manager, admin k biet lam sao
+//Get information of patient and manager
 const getInformation = async (req, res) => {
   const { id, type } = req.user;
 
