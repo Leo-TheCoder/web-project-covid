@@ -23,6 +23,7 @@ const profileRouter = require("./routes/profile_route");
 const patientsRouter = require("./routes/patients_route");
 const areaRouter = require('./routes/area_route');
 const productRouter = require('./routes/product_route');
+const productPackRouter = require('./routes/pack_route');
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -67,6 +68,7 @@ app.use(
 );
 app.use('/products', authenticateUser, productRouter);
 app.use('/area', areaRouter);
+app.use('/packs', productPackRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);

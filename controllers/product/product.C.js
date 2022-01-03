@@ -2,8 +2,8 @@ const { StatusCodes } = require("http-status-codes");
 const Product = require("../../models/Product.M");
 
 const getProducts = async (req, res) => {
-  const reuslt = await Product.getProducts();
-  res.status(StatusCodes.OK).json(reuslt);
+  const result = await Product.getProducts();
+  res.status(StatusCodes.OK).json(result);
 };
 
 const getProductById = async (req, res) => {
