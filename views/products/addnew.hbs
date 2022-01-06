@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="profile-container">
+
+    <form class="profile-card">
+      <img src="/img/food.jpg" alt="Food image" class="avatar-image" width="200px" />
+      <input id="productname" class="page-title" type="text" placeholder="Tên sản phẩm" value=""></input>
+
+      <p>Giá: <input id="productprice" type="number" value="0" placeholder="Giá sản phẩm" /></p>
+      <p>Đơn vị: <input id="productunit" type="text" value="" placeholder="Giá sản phẩm" /></p>
+      <br />
+      <button class="bg-violet-500 hover:bg-violet-400 text-white py-2 px-4 rounded" type="submit"
+        onclick="addProduct()">Thêm sản phẩm</button>
+    </form>
+  </div>
+</div>
+
+{{>(editScript)}}

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="profile-container">
+
+    <form class="profile-card">
+      <img src="/img/food.jpg" alt="Food image" class="avatar-image" width="200px" />
+      <input id="productname" class="page-title" type="text" value="{{product.productname}}"></input>
+
+      <p>Giá: <input id="productprice" type="number" value="{{product.productprice}}" /></p>
+      <p>Đơn vị: <input id="productunit" type="text" value="{{product.productunit}}" /></p>
+      <br />
+      <button class="bg-violet-500 hover:bg-violet-400 text-white py-2 px-4 rounded" type="submit"
+        onclick="editProduct({{productid}})">Lưu thông tin</button>
+    </form>
+  </div>
+
+  <br />
+  <button class="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded" onclick="deleteProduct({{productid}})">
+    Xóa sản phẩm
+  </button>
+</div>
+
+{{>(editScript)}}

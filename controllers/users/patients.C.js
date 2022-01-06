@@ -21,7 +21,7 @@ const getPatients = async (req, res) => {
 
 	res.status(StatusCodes.OK).render("patients/patients", {
 		patients: result,
-		user: "okay",
+		user: true,
 	});
 };
 
@@ -41,7 +41,7 @@ const getPatientById = async (req, res) => {
 	res.status(StatusCodes.OK).render("patients/edit", {
 		patient: result,
 		editScript: () => "editpatientscript",
-		user: "okay",
+		user: true,
 	});
 };
 
@@ -64,7 +64,7 @@ const deletePatientById = async (req, res) => {
 
 const getAddPatientPage = (req, res) => {
 	res.status(StatusCodes.OK).render("patients/addnew", {
-		user: "okay",
+		user: true,
 	});
 };
 
@@ -78,7 +78,7 @@ const updatePatientPage = async (req, res) => {
 	res.status(StatusCodes.OK).render("patients/edit", {
 		patient: result,
 		editScript: () => "editpatientscript",
-		user: "okay",
+		user: true,
 	});
 };
 

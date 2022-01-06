@@ -3,15 +3,31 @@ const Product = require("../../models/Product.M");
 
 const getProducts = async (req, res) => {
   const result = await Product.getProducts();
-  res.status(StatusCodes.OK).json(result);
+  res.status(StatusCodes.OK).render("products/products", {
+		products: result,
+		user: true,
+	});
 };
 
 const getProductById = async (req, res) => {
   const { productId } = req.params;
 
   const result = await Product.getProductById(productId);
-  res.status(StatusCodes.OK).json(result);
+  res.status(StatusCodes.OK).render("products/edit", {
+		product: result,
+    productid: productId,
+    editScript: () => "editproductscript",
+		user: true,
+  });
 };
+
+//UI only
+const addProduct = (req, res) => {
+  res.render("products/addnew", {
+    editScript: () => "editproductscript",
+		user: true,
+  });
+}
 
 const insertProduct = async (req, res) => {
   const result = await Product.insertProduct(req.body);
@@ -57,4 +73,5 @@ module.exports = {
   insertProduct,
   updateProduct,
   deleteProduct,
+  addProduct,
 };
