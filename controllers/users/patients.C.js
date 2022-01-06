@@ -79,7 +79,7 @@ const updatePatientPage = async (req, res) => {
   const result = await Patient.updatePatient(req.body);
 
   if (!result) {
-    throw CustomError("Something wrong when updating patient!");
+    throw new CustomError("Something wrong when updating patient!");
   }
 
   res.status(StatusCodes.OK).render("patients/edit", {

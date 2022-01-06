@@ -21,7 +21,7 @@ const registerRouter = require("./routes/auth_routes/register_route");
 const dashboardRouter = require("./routes/dashboard_route");
 const profileRouter = require("./routes/profile_route");
 const patientsRouter = require("./routes/patients_route");
-const areaRouter = require('./routes/area_route');
+const areaRouter = require("./routes/area_route");
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -30,12 +30,12 @@ const hbs = handlebars.create({
   partialsDir: __dirname + "/views/partials/",
   helpers: {
     compare(s1, s2, options) {
-      if(s1 == s2) {
-        return options.fn(this)
+      if (s1 == s2) {
+        return options.fn(this);
       }
       return options.inverse(this);
-    }
-  }
+    },
+  },
 });
 
 app.engine("hbs", hbs.engine);
@@ -64,7 +64,11 @@ app.use(
   [authenticateUser, authenticateManager, auditMiddleware],
   patientsRouter
 );
-app.use('/area', areaRouter);
+app.use(
+  "/areas",
+  [authenticateUser, authenticateManager, auditMiddleware],
+  areaRouter
+);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
