@@ -35,8 +35,21 @@ const authManager = async (req, res, next) => {
   }
 }
 
+const authPatient = async (req, res, next) => {
+  if(req.user.type === 'P')
+  {
+    const id = req.user.mainId;
+    req.patientid = id;
+    next();
+  }
+  else
+  {
+    throw new UnauthenticatedError("Not patient, dont have cart!");
+  }
+}
 
 module.exports = {
   auth,
-  authManager
+  authManager,
+  authPatient,
 };
