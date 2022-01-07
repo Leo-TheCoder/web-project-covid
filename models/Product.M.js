@@ -2,7 +2,7 @@ const db = require("../db/connectDB");
 
 class Product {
   static async getProducts() {
-    const result = await db.query(`select * from product`);
+    const result = await db.query(`select * from product where deleted = 0`);
 
     return result.rows;
   }
@@ -42,8 +42,11 @@ class Product {
 
   static async deleteProduct(productid)
   {
-      //pending
-      return true
+      const result = await db.query(
+        `update product set deleted = 1 where productid = $1`,
+        [productid],
+      )
+      return result.rowCount;
   }
 }
 

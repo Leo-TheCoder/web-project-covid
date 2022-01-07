@@ -63,8 +63,21 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   const { productId } = req.params;
+  
+  const result = await Product.deleteProduct(productId);
 
-  res.status(StatusCodes.OK).send("Can ban bac lai vu xoa san pham nha!");
+  if (!result || result < 1) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      msg: "Delete failed!",
+      status: "Fail",
+    });
+  }
+
+  res.status(StatusCodes.OK).json({
+    msg: "Delete successfully!",
+    status: "Success",
+  });
+
 };
 
 module.exports = {
