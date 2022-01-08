@@ -12,6 +12,11 @@ const getProductPackById = async (req, res) => {
     res.status(StatusCodes.OK).json(result);
 }
 
+const addProductPack = async (req, res) => {
+  //pending
+  //const result = await ProductPack.addPack()
+}
+
 module.exports = {
     getProductPacks,
     getProductPackById,

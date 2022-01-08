@@ -35,6 +35,42 @@ class ProductPack {
 
     return result;
   }
+
+  static async addPack({productpackname, productpacklimit, timeunit}, details)
+  {
+    const addPackResult = await db.query(
+      `insert into productpack(productpackname, productpacklimit, timeunit, delete) 
+      values($1, $2, $3, 0) returning productpackid`,
+      [productpackname, productpacklimit, timeunit],
+    )
+
+    const productpackid = addPackResult.rows[0].productpackid;
+    if(!productpackid)
+    {
+      return console.log("Something wrong while adding Pack");
+    }
+
+    details.forEach((detail) => {
+      const {productid, quantity} = detail;
+      const addDetailResult = await db.query(
+        `insert into packdetail(productpackid, productid, quantity, delete) 
+        values($1, $2, $3, 0)`,
+        [productpackid, productid, quantity],
+      )
+    })
+
+    return true;
+  }
+
+  static async updatePack({productpacklimit, timeunit}, detail, productpackid)
+  {
+    const result = await db.query(
+      'update productpack set productpacklimit = $1, timeunit = $2 where productpackid = $3',
+      [productpacklimit, timeunit, productpackid],
+    )
+
+    
+  }
 }
 
 module.exports = ProductPack;
