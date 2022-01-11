@@ -21,10 +21,11 @@ const registerRouter = require("./routes/auth_routes/register_route");
 const dashboardRouter = require("./routes/dashboard_route");
 const profileRouter = require("./routes/profile_route");
 const patientsRouter = require("./routes/patients_route");
-const areaRouter = require('./routes/area_route');
-const productRouter = require('./routes/product_route');
-const productPackRouter = require('./routes/pack_route');
-const cartRouter = require('./routes/cart_route');
+const areaRouter = require("./routes/area_route");
+const productRouter = require("./routes/product_route");
+const productPackRouter = require("./routes/pack_route");
+const cartRouter = require("./routes/cart_route");
+const orderRouter = require("./routes/order_route");
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -68,14 +69,15 @@ app.use(
   [authenticateUser, authenticateManager, auditMiddleware],
   patientsRouter
 );
-app.use('/products', authenticateUser, productRouter);
-app.use('/packs', productPackRouter);
-app.use('/cart', [authenticateUser, authenticatePatient],cartRouter);
+app.use("/products", authenticateUser, productRouter);
+app.use("/packs", productPackRouter);
+app.use("/cart", [authenticateUser, authenticatePatient], cartRouter);
 app.use(
   "/areas",
   [authenticateUser, authenticateManager, auditMiddleware],
   areaRouter
 );
+app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
