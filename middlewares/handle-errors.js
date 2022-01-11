@@ -11,6 +11,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     return res.redirect(StatusCodes.MOVED_TEMPORARILY, req.baseUrl + '/login');
   }
 
+  if(err.statusCode === StatusCodes.UNAUTHORIZED && err.message === 'No privilege')
+  {
+    return res.status(StatusCodes.UNAUTHORIZED).send();
+  }
+
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };
 

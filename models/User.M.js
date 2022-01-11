@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const db = require("../db/connectDB");
+const { CustomError } = require("../errors");
 
 class User {
   //just for example
@@ -12,8 +13,17 @@ class User {
     this.status = status || 0;
   }
 
-  createJWT() {
-    return jwt.sign({ id: this.id, type: this.type }, process.env.JWT_SECRET, {
+  async createJWT() {
+    let mainId = 0;
+    if(this.type === 'M')
+    {
+      mainId = await User.getManagerID(this.id);
+    }
+    else if(this.type === 'P')
+    {
+      mainId = await User.getPatientID(this.id);
+    }
+    return jwt.sign({ id: this.id, type: this.type, mainId }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_LIFETIME,
     });
   }
@@ -51,6 +61,8 @@ class User {
         queryStr = `select * from patient where patientaccountid = ${id}`;
       } else if (type === "M") {
         queryStr = `select * from manager where manageraccountid = ${id}`;
+      } else {
+        //Do nothing
       }
 
       const result = await db.query(queryStr);
@@ -58,6 +70,58 @@ class User {
       return information;
     } catch (error) {
       return undefined;
+    }
+  }
+
+  static async getManagerID(accountID) {
+    try {
+      const result = await db.query(
+        `select managerid from manager where manageraccountid = $1`,
+        [accountID]
+      );
+
+      const id = result.rows[0].managerid;
+      return id;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  static async getPatientID(accountID) {
+    try {
+      const result = await db.query(
+        `select patientid from patient where patientaccountid = $1`,
+        [accountID]
+      );
+
+      const id = result.rows[0].patientid;
+      return id;
+    } catch (error) {
+      return undefined;
+    }
+  }
+  
+  static async updateInformation(id, type, { name, dob, address }) {
+    try {
+      let result = undefined;
+      if (type === "P") {
+        result = await db.query(
+          `update patient set patientname = $1, patientdob = $2, patientaddress = $3 where patientaccountid = $4`,
+          [name, dob, address, id]
+        );
+      } else if (type === "M") {
+        result = await db.query(
+          `update manager set managername = $1, managerdob = $2, manageraddress = $3 where manageraccountid = $4`,
+          [name, dob, address, id]
+        );
+      } else {
+        //Do nothing
+      }
+
+      return result.rowCount;
+    } catch (error) {
+      console.log("Update profile: ", error);
+      throw new CustomError('Something went wrong!');
     }
   }
 }

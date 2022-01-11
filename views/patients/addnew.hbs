@@ -1,0 +1,154 @@
+<div class="w-[920px] mx-auto flex flex-col pt-10">
+	<div class="mt-10 sm:mt-0">
+		<div class="md:grid md:grid-cols-3 md:gap-6">
+			<div class="md:col-span-1">
+				<div class="px-4 sm:px-0">
+					<h3 class="text-lg font-medium leading-6 text-gray-900">Thêm bệnh nhân</h3>
+					<p class="mt-1 text-sm text-gray-600">
+						Vui lòng kiểm tra kỹ thông tin trước khi thêm.
+					</p>
+				</div>
+			</div>
+			<div class="mt-5 md:mt-0 md:col-span-2">
+				<form action="/patients" method="post">
+					<div class="shadow overflow-hidden sm:rounded-md">
+						<div class="px-4 py-5 bg-white sm:p-6">
+							<div class="grid grid-cols-6 gap-6">
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="patientname"
+										class="block text-sm font-medium text-gray-700"
+									>Họ tên: </label>
+									<input
+										type="text"
+										name="patientname"
+										id="name"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="patientidnumber"
+										class="block text-sm font-medium text-gray-700"
+									>CCCD: </label>
+									<input
+										type="text"
+										name="patientidnumber"
+										id="idnumber"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="patientdob"
+										class="block text-sm font-medium text-gray-700"
+									>Ngày sinh: </label>
+									<input
+										type="text"
+										name="patientdob"
+										id="startdate"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="patientphone"
+										class="block text-sm font-medium text-gray-700"
+									>Số điện thoại:</label>
+									<input
+										type="text"
+										name="patientphone"
+										id="phone"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6">
+									<label
+										for="patientaddress"
+										class="block text-sm font-medium text-gray-700"
+									>Địa chỉ:</label>
+									<input
+										type="text"
+										name="patientaddress"
+										id="street-address"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="status"
+										class="block text-sm font-medium text-gray-700"
+									>Tình trạng</label>
+									<select
+										id="status"
+										name="status"
+										class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+									>
+										<option value="0">F0</option>
+										<option value="1">F1</option>
+										<option value="2">F2</option>
+										<option value="3">F3</option>
+									</select>
+								</div>
+
+								<div class="col-span-6 sm:col-span-4">
+									<label
+										for="quarantinearea"
+										class="block text-sm font-medium text-gray-700"
+									>Nơi cách ly hiện tại:</label>
+									<select
+										id="hospital-area"
+										name="quarantinearea"
+										class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+									>
+										<option value="3">Bệnh viện 1</option>
+										<option value="2">Bệnh viện 1</option>
+									</select>
+								</div>
+
+								<div class="col-span-6 sm:col-span-3">
+									<label
+										for="startdate"
+										class="block text-sm font-medium text-gray-700"
+									>Ngày bắt đầu cách ly: </label>
+									<input
+										type="text"
+										name="startdate"
+										id="startdate"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+
+								<div class="col-span-6 sm:col-span-3">
+									<label
+										for="enddate"
+										class="block text-sm font-medium text-gray-700"
+									>Ngày kết thúc cách ly</label>
+									<input
+										type="text"
+										name="enddate"
+										id="enddate"
+										class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+							<button
+								type="submit"
+								class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+							>
+								Thêm bệnh nhân
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
