@@ -36,6 +36,21 @@ class Patient {
     }
   }
 
+  static async getAllPatientsByName(managerid, patientname)
+  {
+    try {
+      const result = await db.query(
+        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2`,
+        [managerid, '%' + patientname + '%']
+      );
+      console.log(result.rows);
+      return result.rows;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
+
   static async getPatientById(patientId, managerid) {
     try {
       const result = await db.query(

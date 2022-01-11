@@ -5,8 +5,6 @@ class Area {
 		try {
 			const result = await db.query(`select * from Get_Quarantine_Area`);
 
-			// let user = new User(result.rows[0]);
-			console.log(result);
 			return result.rows;
 		} catch (error) {
 			return undefined;
