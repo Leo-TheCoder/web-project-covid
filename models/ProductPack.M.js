@@ -50,7 +50,7 @@ class ProductPack {
       return console.log("Something wrong while adding Pack");
     }
 
-    details.forEach((detail) => {
+    details.forEach(async (detail) => {
       const {productid, quantity} = detail;
       const addDetailResult = await db.query(
         `insert into packdetail(productpackid, productid, quantity, delete) 
