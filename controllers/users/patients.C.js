@@ -28,7 +28,7 @@ const getPatients = async (req, res) => {
 
   return res.status(StatusCodes.OK).render("patients/patients", {
     patients: result,
-    user: "okay",
+    user: true,
   });
 };
 
@@ -70,9 +70,9 @@ const deletePatientById = async (req, res) => {
 };
 
 const getAddPatientPage = (req, res) => {
-  res.status(StatusCodes.OK).render("patients/addnew", {
-    user: "okay",
-  });
+	res.status(StatusCodes.OK).render("patients/addnew", {
+		user: true,
+	});
 };
 
 const updatePatientPage = async (req, res) => {
@@ -82,11 +82,11 @@ const updatePatientPage = async (req, res) => {
     throw new CustomError("Something wrong when updating patient!");
   }
 
-  res.status(StatusCodes.OK).render("patients/edit", {
-    patient: result,
-    editScript: () => "editpatientscript",
-    user: "okay",
-  });
+	res.status(StatusCodes.OK).render("patients/edit", {
+		patient: result,
+		editScript: () => "editpatientscript",
+		user: true,
+	});
 };
 
 const insertPatient = async (req, res) => {
