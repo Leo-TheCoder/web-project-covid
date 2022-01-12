@@ -1,4 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
+const ProductPack = require("../../models/ProductPack.M");
+const numPreview = 3;
 //declaring public variables
 
 const getDashboard = (req, res) => {
@@ -36,10 +38,21 @@ const getManagerPage = (req, res) => {
 	}
 };
 
-const getUserPage = (req, res) => {
+const getUserPage = async (req, res) => {
 	try {
+		let packsPreview = [];
+		for (let i=1; i <= numPreview; i++) {
+			const result = await ProductPack.getPackDetailById(i+1);
+
+			packsPreview.push({
+				packname: result.productpackname,
+				detail: result.products.map(p => p.productname).join(", ")
+			});
+		}
+			
 		res.render('dashboard/user', {
 			user: "okay",
+			packs: packsPreview
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
