@@ -147,11 +147,107 @@ class User {
     return result.rows;
   }
 
-  static async insertManager()
+  static async insertManager(managerInfo)
   {
-    const result = await User.InitUser(
+    const userAccount = await User.InitUser(
+      managerInfo.managerphone,
+      managerInfo.manageridnumber,
+    );
 
+    const createAccountResult = await db.query(
+      `insert into account (password, phonenumber, type, status) 
+      values($1, $2, 'M', 1) returning id`,
+      [userAccount.password, userAccount.phonenumber]
+    );
+
+    if (!createAccountResult.rows[0].id) {
+      throw new CustomError("Something wrong with create manager account");
+    }
+
+    const accountid = createAccountResult.rows[0].id;
+
+    const {
+      workareaid,
+      managername,
+      managerdob,
+      managerphone,
+      manageridnumber,
+      manageraddress,
+    } = managerInfo;
+
+    const result = await db.query(
+      `insert into manager(manageraccountid, workareaid, managername, managerdob, manageraddress, manageridnumber, managerphone, current) 
+    values($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        accountid,
+        workareaid,
+        managername,
+        managerdob,
+        manageraddress,
+        manageridnumber,
+        managerphone,
+        1,
+      ]
+    );
+
+    if(!result || result.rowCount < 1) 
+    {
+      throw new CustomError("Something wrong with create patient data");
+    }
+
+    return result.rowCount;
+  }
+
+  static async lockManager(managerid) {
+    const changeStatusAccount = db.query(
+      `UPDATE account
+      SET status=0
+      FROM (SELECT id, managerid
+            FROM account, manager
+            WHERE account.id = manager.manageraccountid and manager.managerid = $1) AS subquery
+      WHERE account.id=subquery.id`,
+      [managerid],
+    );
+
+    const changeCurrentManager = db.query(
+      `update manager set current = 0 where managerid = $1`,
+      [managerid],
     )
+
+    const [changeStatus, changeCurrent] = await Promise.all([changeStatusAccount, changeCurrentManager]);
+    
+    console.log(changeStatus, changeCurrent)
+    if(changeStatus.rowCount > 0 && changeCurrent.rowCount > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static async unlockManager(managerid)
+  {
+    const changeStatusAccount = db.query(
+      `UPDATE account
+      SET status=1
+      FROM (SELECT id, managerid
+            FROM account, manager
+            WHERE account.id = manager.manageraccountid and manager.managerid = $1) AS subquery
+      WHERE account.id=subquery.id`,
+      [managerid],
+    );
+
+    const changeCurrentManager = db.query(
+      `update manager set current = 1 where managerid = $1`,
+      [managerid],
+    )
+
+    const [changeStatus, changeCurrent] = await Promise.all([changeStatusAccount, changeCurrentManager]);
+    
+    if(changeStatus.rowCount > 0 && changeCurrent.rowCount > 0) {
+      return true;
+    }
+
+    return false;
   }
 }
 

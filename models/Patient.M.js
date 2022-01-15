@@ -26,7 +26,7 @@ class Patient {
   static async getAllPatients(managerid) {
     try {
       const result = await db.query(
-        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid`,
+        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and p.status <> -1`,
         [managerid]
       );
 
@@ -40,7 +40,7 @@ class Patient {
   {
     try {
       const result = await db.query(
-        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2`,
+        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2 and p.status <> -1`,
         [managerid, '%' + patientname + '%']
       );
       console.log(result.rows);
@@ -68,7 +68,7 @@ class Patient {
   static async deletePatientById(patientId, managerid) {
     try {
       const result = await db.query(
-        `delete from patient where patientid = $1 and managerid = $2`,
+        `update patient set status = -1 where patientid = $1 and managerid = $2`,
         [patientId, managerid]
       );
 
