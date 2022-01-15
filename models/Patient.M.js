@@ -134,10 +134,10 @@ class Patient {
     return result.rowCount;
   }
 
-  static async updatePatient(patientInfo)
+  static async updatePatient(patientId, patientInfo)
   {
-    const {patientid , status} = patientInfo;
-    const updateStatusPatient =  await db.query(`call updatepatientstatus($1, $2)`, [patientid, status]);
+    const {status} = patientInfo;
+    const updateStatusPatient =  await db.query(`call updatepatientstatus($1, $2)`, [patientId, status]);
     return updateStatusPatient;
   }
 }

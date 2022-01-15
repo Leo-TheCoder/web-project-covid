@@ -4,6 +4,7 @@ const Utility = require("../../utilities");
 const { StatusCodes } = require("http-status-codes");
 const { NotFoundError, CustomError } = require("../../errors");
 const Patient = require("../../models/Patient.M");
+const Area = require("../../models/Area.M");
 
 const getPatients = async (req, res) => {
   const managerid = req.managerid;
@@ -35,7 +36,17 @@ const getPatients = async (req, res) => {
 const getPatientById = async (req, res) => {
   const { patientId } = req.params;
   const managerid = req.managerid;
-  const result = await Patient.getPatientById(patientId, managerid);
+
+  const getPatient = Patient.getPatientById(patientId, managerid);
+  const getAreas = Area.getAreas();
+
+  const [result, quarantinearea] = await Promise.all([getPatient, getAreas]);
+
+  const quarantineareaid = result.quarantineareaid;
+  const obj = quarantinearea.find(({areaid}) => areaid == quarantineareaid);
+  obj.area = true;
+
+  result.quarantinearea = quarantinearea;
 
   if (!result) {
     throw new NotFoundError("Not found this id");
@@ -63,30 +74,28 @@ const deletePatientById = async (req, res) => {
       .send("Something wrong, can not delete data");
   }
 
-  res.status(StatusCodes.OK).json({
-    msg: "Delete successfully!",
-    status: "Success",
-  });
+  //Delete successfully
+  res.status(StatusCodes.OK).redirect("/patients");
 };
 
-const getAddPatientPage = (req, res) => {
+const getAddPatientPage = async (req, res) => {
+  const quarantinearea = await Area.getAreas();
+
 	res.status(StatusCodes.OK).render("patients/addnew", {
 		user: true,
+    quarantinearea,
 	});
 };
 
 const updatePatientPage = async (req, res) => {
-  const result = await Patient.updatePatient(req.body);
+  const {patientId} = req.params;
 
+  const result = await Patient.updatePatient(patientId, req.body);
   if (!result) {
     throw new CustomError("Something wrong when updating patient!");
   }
 
-	res.status(StatusCodes.OK).render("patients/edit", {
-		patient: result,
-		editScript: () => "editpatientscript",
-		user: true,
-	});
+	res.status(StatusCodes.OK)
 };
 
 const insertPatient = async (req, res) => {
@@ -96,10 +105,8 @@ const insertPatient = async (req, res) => {
     throw new CustomError("In controller insert patient");
   }
 
-  res.status(StatusCodes.OK).json({
-    msg: "Insert successfully!",
-    status: "Success",
-  });
+  //Insert succesfully
+  res.status(StatusCodes.OK).redirect("/patients");
 };
 
 module.exports = {

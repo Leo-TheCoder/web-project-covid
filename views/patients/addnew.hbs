@@ -106,8 +106,9 @@
 										name="quarantinearea"
 										class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 									>
-										<option value="3">Bệnh viện 1</option>
-										<option value="2">Bệnh viện 1</option>
+										{{#each quarantinearea}}
+										<option value="{{areaid}}">{{areaname}}</option>
+										{{/each}}
 									</select>
 								</div>
 
