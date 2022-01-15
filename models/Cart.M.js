@@ -15,7 +15,7 @@ class Cart {
 
   static async getItems(patientid) {
     const result = await db.query(
-      `select * from cart_detail c, product p where patientid = $1 and c.productid = p.productid`,
+      `select c.cart_detail_id, c.packid, p.productid, p.productname, c.quantity, p.productprice*c.quantity as price from cart_detail c, product p where patientid = $1 and c.productid = p.productid`,
       [patientid]
     );
 
