@@ -6,7 +6,7 @@ const getDashboard = (req, res) => {
 	switch (type) {
 		case 'A':
 			//return admin dashboard
-			return getAdminPage(req, res);
+			return res.redirect('/admin/managers');
 		case 'M':
 			//return manager dashboard
 			return getManagerPage(req, res);

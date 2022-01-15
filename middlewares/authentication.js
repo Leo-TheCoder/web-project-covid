@@ -44,7 +44,20 @@ const authPatient = async (req, res, next) => {
   }
   else
   {
-    throw new UnauthenticatedError("Not patient, dont have cart!");
+    throw new UnauthenticatedError("No privilege");
+  }
+}
+
+const authAdmin = async (req, res, next) => {
+  if(req.user.type === 'A')
+  {
+    const id = req.user.mainId;
+    req.adminId = id;
+    next();
+  }
+  else
+  {
+    throw new UnauthenticatedError("No privilege");
   }
 }
 
@@ -52,4 +65,5 @@ module.exports = {
   auth,
   authManager,
   authPatient,
+  authAdmin,
 };

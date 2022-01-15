@@ -26,6 +26,7 @@ const productRouter = require("./routes/product_route");
 const productPackRouter = require("./routes/pack_route");
 const cartRouter = require("./routes/cart_route");
 const orderRouter = require("./routes/order_route");
+const adminRouter = require("./routes/admin_route");
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -53,6 +54,7 @@ const {
   auth: authenticateUser,
   authManager: authenticateManager,
   authPatient: authenticatePatient,
+  authAdmin: authenticateAdmin,
 } = require("./middlewares/authentication");
 const auditMiddleware = require("./middlewares/audit");
 
@@ -78,6 +80,7 @@ app.use(
   areaRouter
 );
 app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
+app.use("/admin", [authenticateUser, authenticateAdmin], adminRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);

@@ -23,6 +23,10 @@ class User {
     {
       mainId = await User.getPatientID(this.id);
     }
+    else  //admin
+    {
+      mainId = this.type;
+    }
     return jwt.sign({ id: this.id, type: this.type, mainId }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_LIFETIME,
     });
@@ -123,6 +127,31 @@ class User {
       console.log("Update profile: ", error);
       throw new CustomError('Something went wrong!');
     }
+  }
+
+  static async getAllManagers()
+  {
+    const getPatients = await db.query(
+      `select a.status, m.* from account a, manager m where a.id = m.manageraccountid`
+    );
+    return getPatients.rows;
+  }
+
+  static async searchManagerByName(name)
+  {
+    const result = await db.query(
+      'select a.status, m.* from account a, manager m where a.id = m.manageraccountid and m.managername like $1',
+      ['%' + name + '%'],
+    );
+
+    return result.rows;
+  }
+
+  static async insertManager()
+  {
+    const result = await User.InitUser(
+
+    )
   }
 }
 
