@@ -20,8 +20,13 @@ const addToCart = async (req, res) => {
 
 const getItemsInCart = async (req, res) => {
   const result = await Cart.getItems(req.patientid);
+  console.log(result);
 
-  res.status(StatusCodes.OK).json({ result });
+  res.status(StatusCodes.OK).render("patients/cart/cart", {
+		cart: result,
+    editScript: () => "editcartscript",
+		user: true,
+	});
 };
 
 const getItemById = async (req, res) => {

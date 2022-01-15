@@ -22,6 +22,18 @@
   font-weight: 600;
 }
 
+.navbar .cart{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 15px;
+  height: 100%;
+
+  color: var(--themeColor);
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .navbar .logOutButton{
   height: 100%;
   padding: 0 20px;
