@@ -40,10 +40,10 @@ class Cart {
     return result.rowCount;
   }
 
-  static async deleteItemInCart(cart_detail_id) {
+  static async deletePackInCart(packid, patientid) {
     const result = await db.query(
-      `delete from cart_detail where cart_detail_id = $1`,
-      [cart_detail_id]
+      `delete from cart_detail where packid = $1 and patientid = $2`,
+      [packid, patientid]
     );
 
     return result.rowCount;

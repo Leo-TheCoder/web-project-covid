@@ -53,10 +53,10 @@ const updateItemQuantityInCart = async (req, res) => {
   });
 };
 
-const deleteItemInCart = async (req, res) => {
-  const { cartDetailId } = req.params;
+const deletePackInCart = async (req, res) => {
+  const { packid } = req.body;
 
-  const result = await Cart.deleteItemInCart(cartDetailId);
+  const result = await Cart.deletePackInCart(packid, req.patientid);
 
   if (!result || result < 1) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -76,5 +76,5 @@ module.exports = {
   getItemsInCart,
   getItemById,
   updateItemQuantityInCart,
-  deleteItemInCart,
+  deletePackInCart,
 };
