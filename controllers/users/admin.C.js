@@ -17,7 +17,11 @@ const getAllManagers = async (req, res) => {
       return res.status(StatusCodes.OK).send("No data");
   }
 
-  return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.OK).render('dashboard/admin', {
+    user: true,
+    manager: true,
+    array: result
+  });
 };
 
 const getAreas = async (req, res) => {
@@ -27,7 +31,11 @@ const getAreas = async (req, res) => {
     throw new CustomError("Something wrong when getting areas!");
   }
   
-  res.status(StatusCodes.OK).json(result);
+  res.status(StatusCodes.OK).render('dashboard/admin', {
+    user: true,
+    manager: false,
+    array: result
+  });
 }
 
 module.exports = {

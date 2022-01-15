@@ -43,18 +43,23 @@ const updateItemQuantityInCart = async (req, res) => {
   const { cartDetailId } = req.params;
 
   const result = await Cart.updateItemQuantity(req.body, cartDetailId);
+  const afterDelete = await Cart.getItems(req.patientid);
 
   if (!result || result < 1) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       msg: "Update failed!",
       status: "Fail",
-    });
+    }).render("patients/cart/cart", {
+      cart: afterDelete,
+      editScript: () => "editcartscript",
+      user: true,
+    });;
   }
 
   res.status(StatusCodes.OK).json({
     msg: "Update successfully!",
     status: "Success",
-  });
+  }).render();
 };
 
 const deletePackInCart = async (req, res) => {
