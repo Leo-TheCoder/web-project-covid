@@ -20,7 +20,6 @@ const addToCart = async (req, res) => {
 
 const getItemsInCart = async (req, res) => {
   const result = await Cart.getItems(req.patientid);
-  console.log(result);
 
   res.status(StatusCodes.OK).render("patients/cart/cart", {
 		cart: result,
@@ -59,8 +58,7 @@ const updateItemQuantityInCart = async (req, res) => {
 };
 
 const deletePackInCart = async (req, res) => {
-  const { packid } = req.body;
-
+  const { packid } = req.params;
   const result = await Cart.deletePackInCart(packid, req.patientid);
 
   if (!result || result < 1) {

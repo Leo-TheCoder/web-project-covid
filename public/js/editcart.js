@@ -5,7 +5,6 @@ async function deletePack(packid) {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		withCredentials: true,
 		body: JSON.stringify(packid)
 	});
 

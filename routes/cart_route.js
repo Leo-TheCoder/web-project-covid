@@ -9,12 +9,8 @@ const {
   deletePackInCart,
 } = require("../controllers/product/cart.C");
 
-router.route("/").get(getItemsInCart).post(addToCart).delete(deletePackInCart);
+router.route("/").get(getItemsInCart).post(addToCart);
 //router.route("/add").get(addProduct);
-// router
-//   .route("/:cartDetailId")
-//   .get(getItemById)
-//   .put(updateItemQuantityInCart)
-//   .delete(deleteItemInCart);
+router.route("/:packid").delete(deletePackInCart);
 
 module.exports = router;
