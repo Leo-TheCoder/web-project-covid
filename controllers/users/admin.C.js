@@ -35,8 +35,19 @@ const getAreas = async (req, res) => {
     user: true,
     manager: false,
     array: result,
+    editScript: () => "editmanagerscript"
   });
 };
+
+const addManagerPage = async (req, res) => {
+  const areas = await Area.getAreas();
+
+  res.status(StatusCodes.OK).render("dashboard/addnewmanager", {
+    user: true,
+    areas: areas,
+    editScript: () => "editmanagerscript"
+  });
+}
 
 const addManager = async (req, res) => {
   const result = await User.insertManager(req.body);
@@ -45,10 +56,8 @@ const addManager = async (req, res) => {
     throw new CustomError("In controller insert manager");
   }
 
-  res.status(StatusCodes.OK).json({
-    msg: "Insert successfully!",
-    status: "Success",
-  });
+  res.status(StatusCodes.OK);
+  res.redirect('/admin/managers');
 };
 
 const lockAndUnlockManager = async (req, res) => {
@@ -76,4 +85,5 @@ module.exports = {
   getAreas,
   addManager,
   lockAndUnlockManager,
+  addManagerPage
 };

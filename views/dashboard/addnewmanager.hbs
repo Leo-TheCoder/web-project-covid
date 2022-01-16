@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="profile-container">
+
+    <form class="profile-card" action='/admin/managers' method="POST">
+      <input id="managername" name="managername" class="page-title" type="text" placeholder="Họ tên" value=""></input>
+
+      <p>Ngày sinh: <input id="managerdob" name="managerdob" value="0" type="date" />
+      <p>Địa chỉ: <input id="manageraddress" name="manageraddress" type="text" value="" placeholder="Địa chỉ" /></p>
+      <p>CCCD/CMND: <input id="manageridnumber" name="manageridnumber" type="text" value="" placeholder="CMND/CCCD" /></p>
+      <p>Số điện thoại: <input id="managerphone" name="managerphone" type="text" value="" placeholder="Số điện thoại" /></p>
+      <p for="quarantinearea">Nơi làm việc:
+        <select id="workareaid" name="workareaid"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          {{#each areas}}
+          <option value="{{areaid}}">{{areaname}}</option>
+          {{/each}}
+        </select>
+      </p>
+      <br />
+      <button class="bg-violet-500 hover:bg-violet-400 text-white py-2 px-4 rounded" type="submit">Thêm</button>
+    </form>
+  </div>
+</div>
+
+{{>(editScript)}}
