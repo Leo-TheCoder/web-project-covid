@@ -140,6 +140,16 @@ class Patient {
     const updateStatusPatient =  await db.query(`call updatepatientstatus($1, $2)`, [patientId, status]);
     return updateStatusPatient;
   }
+
+  static async getContactPatients(patientId, managerid) {
+    const result = await db.query(
+      `select c.contact_time, p.* from direct_contact c, patient p 
+      where c.source_patient = $1 and p.patientid = c.contact_patient and p.managerid = $2`,
+      [patientId, managerid]
+    )
+
+    return result.rows;
+  }
 }
 
 module.exports = Patient;

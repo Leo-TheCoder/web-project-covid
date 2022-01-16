@@ -8,6 +8,7 @@ const {
   getAddPatientPage,
   updatePatientPage,
   insertPatient,
+  getContactPatients,
 } = require("../controllers/users/patients.C");
 
 router.route("/").get(getPatients).post(insertPatient);
@@ -17,5 +18,7 @@ router
   .get(getPatientById)
   .delete(deletePatientById)
   .put(updatePatientPage);
+
+router.route("/:patientId/contact").get(getContactPatients);
 
 module.exports = router;

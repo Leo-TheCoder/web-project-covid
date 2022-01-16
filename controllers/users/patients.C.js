@@ -95,7 +95,7 @@ const updatePatientPage = async (req, res) => {
     throw new CustomError("Something wrong when updating patient!");
   }
 
-	res.status(StatusCodes.OK)
+  res.status(StatusCodes.OK).redirect(`/patients/${patientId}`);
 };
 
 const insertPatient = async (req, res) => {
@@ -109,6 +109,27 @@ const insertPatient = async (req, res) => {
   res.status(StatusCodes.OK).redirect("/patients");
 };
 
+const getContactPatients = async (req, res) => {
+  const { patientId } = req.params;
+  const managerid = req.managerid;
+  const result = await Patient.getContactPatients(patientId, managerid);
+
+  console.log(result);
+  if (!result) {
+    return res.status(StatusCodes.OK).send("No data");
+  }
+
+  //change status '0' -> 'F0'
+  for (const patient of result) {
+    patient.status = "F" + patient.status;
+  }
+
+  return res.status(StatusCodes.OK).render("patients/patients", {
+    patients: result,
+    user: true,
+  });
+};
+
 module.exports = {
   getPatients,
   getPatientById,
@@ -116,4 +137,5 @@ module.exports = {
   getAddPatientPage,
   updatePatientPage,
   insertPatient,
+  getContactPatients,
 };
