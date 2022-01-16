@@ -216,7 +216,7 @@ class User {
 
     const [changeStatus, changeCurrent] = await Promise.all([changeStatusAccount, changeCurrentManager]);
     
-    console.log(changeStatus, changeCurrent)
+    // console.log(changeStatus, changeCurrent)
     if(changeStatus.rowCount > 0 && changeCurrent.rowCount > 0) {
       return true;
     }

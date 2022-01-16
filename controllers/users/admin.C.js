@@ -20,6 +20,7 @@ const getAllManagers = async (req, res) => {
     user: true,
     manager: true,
     array: result,
+    editScript: () => "editmanagerscript"
   });
 };
 
