@@ -9,10 +9,9 @@ $$
 	SET Status = c_Status
 	WHERE PatientID = c_PatientID
 	
-	SELECT *
-	FROM DIRECT_CONTACT
-	WHERE Source_patient = c_PatientID AND
-		  DATE_PART('day', NOW()::timestamp - Contact_time::timestamp) <= 14 
+-- 	SELECT *
+-- 	FROM DIRECT_CONTACT
+
 $$
 
 --View Get Quarantine Area
@@ -97,6 +96,36 @@ FOR EACH ROW
 EXECUTE PROCEDURE Update_occupated('1')
 
 
+--UPDATE RECURSIVE STATUS OF PATIENT
+CREATE OR REPLACE FUNCTION Update_status()
+RETURNS TRIGGER
+AS $$
+BEGIN
+	IF (NEW.status != 2) THEN
+		BEGIN
+			UPDATE patient
+			SET status = NEW.status + 1
+			WHERE patientid IN
+			(
+				SELECT dc.contact_patient
+				FROM patient pa INNER JOIN direct_contact dc ON pa.patientid = dc.contact_patient
+				WHERE dc.source_patient = NEW.patientid AND
+		  			  DATE_PART('day', NOW()::timestamp - dc.contact_time::timestamp) <= 14 AND
+					  pa.status > NEW.status	
+			);
+		END;
+		
+	END IF;	
+	RETURN NEW;
+END	
+$$ LANGUAGE PLPGSQL;
+
+--Trigger update status
+CREATE TRIGGER Update_status
+AFTER UPDATE OF status ON patient
+FOR EACH ROW
+WHEN (NEW.status != -1)
+EXECUTE PROCEDURE Update_status()
 
 
 
