@@ -114,7 +114,6 @@ const getContactPatients = async (req, res) => {
   const managerid = req.managerid;
   const result = await Patient.getContactPatients(patientId, managerid);
 
-  console.log(result);
   if (!result) {
     return res.status(StatusCodes.OK).send("No data");
   }
@@ -122,9 +121,10 @@ const getContactPatients = async (req, res) => {
   //change status '0' -> 'F0'
   for (const patient of result) {
     patient.status = "F" + patient.status;
+    patient.contact_time = Utility.getDDMMYYYYFormat(patient.contact_time);
   }
 
-  return res.status(StatusCodes.OK).render("patients/patients", {
+  return res.status(StatusCodes.OK).render("patients/contact", {
     patients: result,
     user: true,
   });
