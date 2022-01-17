@@ -52,7 +52,8 @@ const getUserPage = async (req, res) => {
 			
 		res.render('dashboard/user', {
 			user: "okay",
-			packs: packsPreview
+			packs: packsPreview,
+			type: 'P'
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
