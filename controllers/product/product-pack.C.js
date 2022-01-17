@@ -3,7 +3,14 @@ const { CustomError } = require("../../errors");
 const ProductPack = require("../../models/ProductPack.M");
 
 const getProductPacks = async (req, res) => {
-  const result = await ProductPack.getPacks();
+  const {name, sortby} = req.query;
+  let result;
+  if(name) {
+    result = await ProductPack.searchPackByName()
+  }
+  else {
+    result = await ProductPack.getPacks();
+  }
   res.status(StatusCodes.OK).json(result);
 };
 

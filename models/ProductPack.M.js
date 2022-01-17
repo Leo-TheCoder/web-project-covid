@@ -2,11 +2,56 @@ const db = require("../db/connectDB");
 const { NotFoundError, CustomError } = require("../errors");
 
 class ProductPack {
-  static async getPacks() {
-    const result = await db.query(
-      `select * from productpack where deleted = 0`
-    );
-    return result.rows;
+  static async getPacks(sortby) {
+    if(sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
+
+      let query = `select * from productpack where deleted = 0 
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+
+      const result = await db.query(query);
+      return result.rows;
+    }
+    else {
+      const result = await db.query(
+        `select * from productpack where deleted = 0`
+      );
+      return result.rows;
+    }
+  }
+
+  static async searchPackByName(name, sortby) {
+    if(sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
+
+      let query = `select * from productpack where deleted = 0 and lower(productpackname) = $1
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+
+      const result = await db.query(query, ['%' + name + '%']);
+      return result.rows;
+    }
+      else {
+        const result = await db.query(
+          `select * from productpack where deleted = 0 and lower(productpackname) = $1`,
+          ['%' + name + '%'],
+        );
+
+        return result.rows;
+      }
   }
 
   static async getPackDetailById(packId) {
@@ -57,7 +102,7 @@ class ProductPack {
         linkPics.push(linkPic.linkpic);
       })
     });
-    
+
     return result;
   }
 

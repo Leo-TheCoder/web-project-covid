@@ -23,31 +23,68 @@ class Patient {
     this.enddate = enddate;
   }
 
-  static async getAllPatients(managerid) {
-    try {
-      const result = await db.query(
-        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and p.status <> -1`,
-        [managerid]
-      );
+  static async getAllPatients(managerid, sortby) {
+    if (sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
+
+      let query = `select p.*, a.areaname from patient p, quarantinearea a 
+      where managerid = $1 and p.quarantineareaid = a.areaid and p.status <> -1
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+      const result = await db.query(query, [managerid]);
 
       return result.rows;
-    } catch (error) {
-      return undefined;
+    } else {
+      try {
+        const result = await db.query(
+          `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and p.status <> -1`,
+          [managerid]
+        );
+
+        return result.rows;
+      } catch (error) {
+        return undefined;
+      }
     }
   }
 
-  static async getAllPatientsByName(managerid, patientname)
-  {
-    try {
-      const result = await db.query(
-        `select p.*, a.areaname from patient p, quarantinearea a where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2 and p.status <> -1`,
-        [managerid, '%' + patientname + '%']
-      );
-      console.log(result.rows);
+  static async getAllPatientsByName(managerid, patientname, sortby) {
+    if (sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
+
+      let query = `select p.*, a.areaname from patient p, quarantinearea a 
+      where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2 and p.status <> -1
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+      const result = await db.query(query, [managerid, "%" + patientname + "%"]);
+
       return result.rows;
-    } catch (error) {
-      console.log(error);
-      return undefined;
+    }
+    else {
+      try {
+        const result = await db.query(
+          `select p.*, a.areaname from patient p, quarantinearea a 
+          where managerid = $1 and p.quarantineareaid = a.areaid and lower(p.patientname) like $2 and p.status <> -1`,
+          [managerid, "%" + patientname + "%"]
+        );
+
+        return result.rows;
+      } catch (error) {
+        console.log(error);
+        return undefined;
+      }
     }
   }
 
@@ -126,18 +163,19 @@ class Patient {
       ]
     );
 
-    if(!result || result.rowCount < 1) 
-    {
+    if (!result || result.rowCount < 1) {
       throw new CustomError("Something wrong with create patient data");
     }
 
     return result.rowCount;
   }
 
-  static async updatePatient(patientId, patientInfo)
-  {
-    const {status} = patientInfo;
-    const updateStatusPatient =  await db.query(`call updatepatientstatus($1, $2)`, [patientId, status]);
+  static async updatePatient(patientId, patientInfo) {
+    const { status } = patientInfo;
+    const updateStatusPatient = await db.query(
+      `call updatepatientstatus($1, $2)`,
+      [patientId, status]
+    );
     return updateStatusPatient;
   }
 
@@ -146,7 +184,7 @@ class Patient {
       `select c.contact_time, p.* from direct_contact c, patient p 
       where c.source_patient = $1 and p.patientid = c.contact_patient and p.managerid = $2`,
       [patientId, managerid]
-    )
+    );
 
     return result.rows;
   }

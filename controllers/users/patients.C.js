@@ -9,13 +9,12 @@ const Area = require("../../models/Area.M");
 const getPatients = async (req, res) => {
   const managerid = req.managerid;
 
-  const { name } = req.query;
-
+  const { name, sortby } = req.query;
   let result;
   if (name) {
-    result = await Patient.getAllPatientsByName(managerid, name.toLowerCase());
+    result = await Patient.getAllPatientsByName(managerid, name.toLowerCase(), sortby);
   } else {
-    result = await Patient.getAllPatients(managerid);
+    result = await Patient.getAllPatients(managerid, sortby);
   }
 
   if (!result) {

@@ -2,7 +2,15 @@ const { StatusCodes } = require("http-status-codes");
 const Product = require("../../models/Product.M");
 
 const getProducts = async (req, res) => {
-  const result = await Product.getProducts();
+  const {name, sortby} = req.query;
+  let result;
+  if(name) {
+    result = await Product.searchProductByName(name, sortby);
+  }
+  else {
+    result = await Product.getProducts(sortby);
+  }
+  
   const type = req.user.type;
   res.status(StatusCodes.OK).render("products/products", {
 		products: result,
