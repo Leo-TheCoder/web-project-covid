@@ -101,6 +101,8 @@ CREATE OR REPLACE FUNCTION Update_status()
 RETURNS TRIGGER
 AS $$
 BEGIN
+	SET timezone TO 'UTC-7';
+	
 	IF (NEW.status != 2) THEN
 		BEGIN
 			UPDATE patient
