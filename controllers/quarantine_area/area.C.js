@@ -20,7 +20,7 @@ const addAreaPage = async (req, res) => {
   if (!result) {
     throw new CustomError("Something wrong when getting areas!");
   }
-  res.status(StatusCodes.OK).render("areas/areas", {
+  res.status(StatusCodes.OK).render("areas/addarea", {
     ward: result,
   });
 }

@@ -11,7 +11,7 @@ const {
 } = require("../controllers/quarantine_area/area.C");
 
 router.route("/").get(getArea).post(addQuarantineArea);
-router.route("/addArea").get(addAreaPage);
+router.route("/add").get(addAreaPage);
 router
   .route("/:areaid")
   .get(getAreaById)
