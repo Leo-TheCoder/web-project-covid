@@ -95,6 +95,10 @@ class Patient {
         [patientId, managerid]
       );
 
+      if(result.rows.length < 1) {
+        throw new Error();
+      }
+
       return result.rows[0];
     } catch (error) {
       console.log("get patient by id: ", error);

@@ -1,13 +1,36 @@
 const db = require("../db/connectDB");
+const Photo = require('./Photo.M');
 
 class Order {
   static async getPersonalPatientOrders(patientid) {
-    const result = await db.query(
-      `select * from shoporder where patientid = $1`,
+    const shopPromise = await db.query(
+      `select s.* from shoporder s 
+      where s.patientid = $1`,
       [patientid]
     );
 
-    return result.rows;
+    const shoporder = shopPromise.rows;
+
+    await Promise.all(shoporder.map(async order => {
+      const { orderid } = order;
+      const detailPromise = await db.query(
+        `select o.packid, o.productid, o.quantity, o.productprice, p.productname, p.productunit  
+        from orderdetail o, product p 
+        where o.orderid = $1 and p.productid = o.productid`,
+        [orderid]
+      );
+      order.details = detailPromise.rows;
+      const products = order.details;
+
+      await Promise.all(products.map(async product => {
+        const {productid} = product;
+        const photoLinkpic = await Photo.getFirstPhoto(productid);
+        product.linkpic = photoLinkpic;
+      }))
+    }))
+    
+
+    return shoporder;
   }
 
   static async getPatientOrders(managerid) {

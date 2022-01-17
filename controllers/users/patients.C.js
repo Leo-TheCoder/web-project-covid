@@ -41,15 +41,16 @@ const getPatientById = async (req, res) => {
 
   const [result, quarantinearea] = await Promise.all([getPatient, getAreas]);
 
+  if (!result) {
+    throw new NotFoundError("Not found this id");
+  }
+  
   const quarantineareaid = result.quarantineareaid;
   const obj = quarantinearea.find(({areaid}) => areaid == quarantineareaid);
   obj.area = true;
 
   result.quarantinearea = quarantinearea;
 
-  if (!result) {
-    throw new NotFoundError("Not found this id");
-  }
 
   result.patientdob = Utility.getDDMMYYYYFormat(result.patientdob);
   result.startdate = Utility.getDDMMYYYYFormat(result.startdate);
