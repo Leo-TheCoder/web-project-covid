@@ -3,6 +3,50 @@
     <div class="w-full h-full rounded">
 
       <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <form action="/products" method="get">
+					<div class="flex items-center justify-center">
+						<div class="flex border-2 m-2 rounded-md">
+							<input
+								type="text"
+								name="name"
+								id="searchname"
+								class="px-4 py-2 w-80 text-sm font-medium"
+								placeholder="Tìm kiếm sản phẩm theo tên"
+							/>
+							<button
+								type="submit"
+								class="flex items-center justify-center px-4 border-l"
+							>
+								<svg
+									class="w-4 h-4 text-gray-600"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+								>
+									<path
+										d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+									></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</form>
+      </div>
+
+      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <a href="/products?sortby=productname-a"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sort
+          by name: A-Z</a>
+        <a href="/products?sortby=productname-d"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sort
+          by name: Z-A</a>
+        <a href="/products?sortby=productprice-a"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sort
+          by price: bé đến lớn</a>
+        <a href="/products?sortby=productprice-d"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sort
+          by price: lớn đến bé</a>
+
         <a href="/products/add"
           class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Thêm
           nhu yếu phẩm</a>
@@ -17,11 +61,7 @@
             <p class="text-gray-700 text-base">
               {{productprice}} VNĐ
             </p>
-            {{#compare type M}}
-            <a href="products/{{productid}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-            {{else}}
             <a href="products/{{productid}}" class="text-indigo-600 hover:text-indigo-900">Chi tiết</a>
-            {{/compare}}
           </div>
         </div>
         {{/each}}
