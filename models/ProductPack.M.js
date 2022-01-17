@@ -3,15 +3,17 @@ const { NotFoundError, CustomError } = require("../errors");
 
 class ProductPack {
   static async getPacks() {
-    const result = await db.query(`select * from productpack where deleted = 0`);
+    const result = await db.query(
+      `select * from productpack where deleted = 0`
+    );
     return result.rows;
   }
 
   static async getPackDetailById(packId) {
     const detail = await db.query(
-      `select * from productpack pack, packdetail detail, product p, productpic pic 
+      `select * from productpack pack, packdetail detail, product p 
       where pack.productpackid = detail.productpackid and detail.productid = p.productid and pack.productpackid = $1
-      and detail.deleted = 0 and p.productid = pic.productid`,
+      and detail.deleted = 0`,
       [packId]
     );
 
@@ -28,7 +30,7 @@ class ProductPack {
     };
 
     //get some common attribute out of the products array
-    result.products = detail.rows.map((product) => {
+    result.products = detail.rows.forEach((product) => {
       product.productpackid = undefined;
       product.productpackname = undefined;
       product.productpacklimit = undefined;
@@ -37,6 +39,25 @@ class ProductPack {
 
     result.products = detail.rows;
 
+    //Get link pictures
+    const linkPicPromises = [];
+    result.products.forEach(async (element) => {
+      const linkPicPromise = db.query(
+        "select linkpic from productpic where productid = $1",
+        [element.productid]
+      );
+      linkPicPromises.push(linkPicPromise);
+    });
+
+    const linkPicResult = await Promise.all(linkPicPromises);
+    linkPicResult.forEach((element, index) => {
+      result.products[index].linkPics = [];
+      const linkPics = result.products[index].linkPics
+      element.rows.forEach((linkPic) => {
+        linkPics.push(linkPic.linkpic);
+      })
+    });
+    
     return result;
   }
 
@@ -99,7 +120,7 @@ class ProductPack {
     //Procedure insert_pack_detail will do the insert if not exists, update if exists
     const updateDetailPromises = [];
     details.forEach(async (detail) => {
-      const { productid, quantity, deleted} = detail;
+      const { productid, quantity, deleted } = detail;
       updateDetailPromises.push(
         db.query(`call insert_pack_detail($1, $2, $3, $4)`, [
           productpackid,
@@ -127,13 +148,16 @@ class ProductPack {
     );
     const deleteDetailPackPromise = db.query(
       `update packdetail set deleted = 1 where productpackid = $1`,
-      [productpackid],
+      [productpackid]
     );
-    
-    const [deletePack, deleteDetail] = await Promise.all([deletePackPromise, deleteDetailPackPromise])
 
-    if(deletePack.rowCount < 1) {
-      throw new CustomError("Something wrong while deleting produck pack")
+    const [deletePack, deleteDetail] = await Promise.all([
+      deletePackPromise,
+      deleteDetailPackPromise,
+    ]);
+
+    if (deletePack.rowCount < 1) {
+      throw new CustomError("Something wrong while deleting produck pack");
     }
 
     return true;

@@ -9,11 +9,19 @@ class Product {
 
   static async getProductById(productId) {
     const result = await db.query(
-      `select p.*, pic.linkpic from product p, productpic pic where p.productid = $1 and pic.productid = p.productid`,
+      `select p.* from product p where p.productid = $1`,
       [productId]
     );
+    
+    const picResult = await db.query(
+      `select linkpic form productpic where productid = $1`,
+      [productId],
+    )
 
-    return result.rows[0];
+    const product = result.rows[0];
+    product.linkpics = picResult.rows;
+
+    return product;
   }
 
   static async insertProduct({ productname, productprice, productunit }, files) {
