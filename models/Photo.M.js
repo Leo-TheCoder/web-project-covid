@@ -6,12 +6,12 @@ class Photo {
       `select linkpic from productpic where productid = $1 limit 1`,
       [productId]
     );
-
-    const linkpic = result.rows.linkpic;
-    if (linkpic) {
-      return linkpic;
+    
+    if(result.rows.length < 1) {
+        return "#";
     }
-    return "#";
+    const linkpic = result.rows[0].linkpic;
+    return linkpic;
   }
 
   static async getPhotos(productId) {
