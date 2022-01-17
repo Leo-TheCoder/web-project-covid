@@ -30,7 +30,8 @@ const addProduct = (req, res) => {
 }
 
 const insertProduct = async (req, res) => {
-  const result = await Product.insertProduct(req.body);
+  const images = req.files.image;
+  const result = await Product.insertProduct(req.body, images);
 
   if (!result || result < 1) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

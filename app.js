@@ -59,6 +59,7 @@ const {
 const auditMiddleware = require("./middlewares/audit");
 
 app.use(express.static("./public"));
+app.use("/uploads", express.static("./uploads"));
 //server main routes
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);

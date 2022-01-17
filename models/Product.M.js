@@ -2,26 +2,35 @@ const db = require("../db/connectDB");
 
 class Product {
   static async getProducts() {
-    const result = await db.query(`select * from product where deleted = 0`);
+    const result = await db.query(`select p.*, l.linkpic from product p, productpic l where p.deleted = 0 and p.productid = l.productid`);
 
     return result.rows;
   }
 
   static async getProductById(productId) {
     const result = await db.query(
-      `select * from product where productid = $1`,
+      `select p.*, pic.linkpic from product p, productpic pic where p.productid = $1 and pic.productid = p.productid`,
       [productId]
     );
 
     return result.rows[0];
   }
 
-  static async insertProduct({ productname, productprice, productunit }) {
+  static async insertProduct({ productname, productprice, productunit }, files) {
     const result = await db.query(
       `insert into product (productname, productprice, productunit) 
-      values($1, $2, $3)`,
+      values($1, $2, $3) returning productid`,
       [productname, productprice, productunit]
     );
+
+    const productid = result.rows[0].productid;
+    files.forEach(async element => {
+      const filename = '/uploads/' + element.filename;
+      await db.query(
+        `insert into productpic(productid, linkpic) values($1, $2)`,
+        [productid, filename],
+      )
+    });
 
     return result.rowCount;
   }

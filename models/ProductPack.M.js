@@ -9,9 +9,9 @@ class ProductPack {
 
   static async getPackDetailById(packId) {
     const detail = await db.query(
-      `select * from productpack pack, packdetail detail, product p 
+      `select * from productpack pack, packdetail detail, product p, productpic pic 
       where pack.productpackid = detail.productpackid and detail.productid = p.productid and pack.productpackid = $1
-      and detail.deleted = 0`,
+      and detail.deleted = 0 and p.productid = pic.productid`,
       [packId]
     );
 
