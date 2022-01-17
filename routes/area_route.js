@@ -7,9 +7,11 @@ const {
   getAreaById,
   updateQuarantineArea,
   deleteQuarantineArea,
+  addAreaPage,
 } = require("../controllers/quarantine_area/area.C");
 
 router.route("/").get(getArea).post(addQuarantineArea);
+router.route("/addArea").get(addAreaPage);
 router
   .route("/:areaid")
   .get(getAreaById)

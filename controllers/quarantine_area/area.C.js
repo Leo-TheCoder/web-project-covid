@@ -14,6 +14,17 @@ const getArea = async (req, res) => {
   });
 };
 
+const addAreaPage = async (req, res) => {
+  const result = await Area.getWard();
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).render("areas/areas", {
+    ward: result,
+  });
+}
+
 const getAreaById = async (req, res) => {
   const { areaid } = req.params;
 
@@ -28,7 +39,6 @@ const getAreaById = async (req, res) => {
 
 const addQuarantineArea = async (req, res) => {
   const result = await Area.insertArea(req.body);
-
   if (!result) {
     throw new CustomError("Something wrong adding new area");
   }
@@ -73,6 +83,7 @@ module.exports = {
   getArea,
   getAreaById,
   addQuarantineArea,
+  addAreaPage,
   deleteQuarantineArea,
   updateQuarantineArea,
 };

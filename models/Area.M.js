@@ -74,6 +74,14 @@ class Area {
 
     return true;
   }
+
+  static async getWard() {
+    const result = await db.query(
+      `select * from ward`,
+    )
+
+    return result.rows;
+  } 
 }
 
 module.exports = Area;
