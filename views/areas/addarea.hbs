@@ -1,19 +1,30 @@
 <div class="container">
   <div class="profile-container">
 
-    <form class="profile-card" action='/admin/managers' method="POST">
-      <input id="managername" name="managername" class="page-title" type="text" placeholder="Họ tên" value=""></input>
+    <form class="profile-card" action='/admin/areas/add' method="POST">
+      <input id="occupated" name="occupated" value="0" type="hidden" value="0" />
+      <input id=" areaname" name="areaname" class="page-title" type="text" placeholder="Tên khu cách ly"
+        value=""></input>
 
-      <p>Ngày sinh: <input id="managerdob" name="managerdob" value="0" type="date" />
-      <p>Địa chỉ: <input id="manageraddress" name="manageraddress" type="text" value="" placeholder="Địa chỉ" /></p>
-      <p>CCCD/CMND: <input id="manageridnumber" name="manageridnumber" type="text" value="" placeholder="CMND/CCCD" /></p>
-      <p>Số điện thoại: <input id="managerphone" name="managerphone" type="text" value="" placeholder="Số điện thoại" /></p>
-      <p for="quarantinearea">Nơi làm việc:
-        <select id="workareaid" name="workareaid"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-          {{#each areas}}
-          <option value="{{areaid}}">{{areaname}}</option>
+      <p>Sức chứa: <input id="capacity" name="capacity" value="0" type="number" />
+      <p for="quarantinearea">Thành phố:
+        <select id="country" name="countryid"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="changeCountry(this.value)">
+          {{#each country}}
+          <option value="{{countryid}}">{{countryname}}</option>
           {{/each}}
+        </select>
+      </p>
+
+      <p for="quarantinearea">Quận/huyện:
+        <select id="district" name="districtid"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="changeDistrict(this.value)">
+        </select>
+      </p>
+
+      <p for="quarantinearea">Quận/huyện:
+        <select id="ward" name="wardid"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
         </select>
       </p>
       <br />

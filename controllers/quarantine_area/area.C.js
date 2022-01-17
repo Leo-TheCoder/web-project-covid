@@ -25,6 +25,16 @@ const addAreaPage = async (req, res) => {
   });
 }
 
+const getDistrictsByCountryId = async (req, res) => {
+  const { countryid } = req.params;
+  const result = await Area.getDistrict(countryid);
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).json(result);
+}
+
 const getAreaById = async (req, res) => {
   const { areaid } = req.params;
 
@@ -86,4 +96,5 @@ module.exports = {
   addAreaPage,
   deleteQuarantineArea,
   updateQuarantineArea,
+  getDistrictsByCountryId
 };

@@ -39,6 +39,46 @@ const getAreas = async (req, res) => {
   });
 };
 
+const addAreaPage = async (req, res) => {
+  const result = await Area.getCountry();
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).render("areas/addarea", {
+    country: result,
+    editScript: () => "editareascript"
+  });
+}
+
+const getDistrictsByCountryId = async (req, res) => {
+  const { countryid } = req.query;
+  const result = await Area.getDistrict(countryid);
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).json(result);
+}
+const getWardsByCountryId = async (req, res) => {
+  const { countryid, districtid } = req.query;
+  const result = await Area.getWard(countryid, districtid);
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).json(result);
+}
+
+const addQuarantineArea = async (req, res) => {
+  const result = await Area.insertArea(req.body);
+  if (!result) {
+    throw new CustomError("Something wrong adding new area");
+  }
+
+  res.status(StatusCodes.OK).redirect('/admin/areas');
+};
+
 const addManagerPage = async (req, res) => {
   const areas = await Area.getAreas();
 
@@ -85,5 +125,9 @@ module.exports = {
   getAreas,
   addManager,
   lockAndUnlockManager,
-  addManagerPage
+  addManagerPage,
+  addAreaPage,
+  getDistrictsByCountryId,
+  getWardsByCountryId,
+  addQuarantineArea
 };
