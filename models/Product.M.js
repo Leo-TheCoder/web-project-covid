@@ -14,12 +14,12 @@ class Product {
     );
     
     const picResult = await db.query(
-      `select linkpic form productpic where productid = $1`,
+      `select linkpic from productpic where productid = $1`,
       [productId],
-    )
-
-    const product = result.rows[0];
-    product.linkpics = picResult.rows;
+      )
+      
+      const product = result.rows[0];
+      product.linkpics = picResult.rows;
 
     return product;
   }
