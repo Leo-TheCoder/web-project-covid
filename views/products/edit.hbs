@@ -2,11 +2,11 @@
   <div class="profile-container">
 
     <form class="profile-card">
-      {{#each product.linkpics}}
       <div class='food-images'>
+        {{#each product.linkpics}}
         <img src="{{linkpic}}" alt="Food image" class="avatar-image" width="200px" />
+        {{/each}}
       </div>
-      {{/each}}
       <input id="productname" class="page-title" type="text" value="{{product.productname}}"></input>
 
       <p>Giá: <input id="productprice" type="number" value="{{product.productprice}}" /></p>
@@ -20,7 +20,8 @@
   <br />
   <br />
   <br />
-  <button class="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded mt-5 mb-5" onclick="deleteProduct({{productid}})">
+  <button class="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded mt-5 mb-5"
+    onclick="deleteProduct({{productid}})">
     Xóa sản phẩm
   </button>
 </div>
