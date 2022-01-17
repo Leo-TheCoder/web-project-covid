@@ -4,12 +4,12 @@ const Area = require("../../models/Area.M");
 const { CustomError } = require("../../errors");
 
 const getAllManagers = async (req, res) => {
-  const { name } = req.query;
+  const { name, sortby } = req.query;
   let result;
   if (!name) {
-    result = await User.getAllManagers();
+    result = await User.getAllManagers(sortby);
   } else {
-    result = await User.searchManagerByName(name);
+    result = await User.searchManagerByName(name, sortby);
   }
 
   if (!result) {

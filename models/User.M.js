@@ -129,22 +129,61 @@ class User {
     }
   }
 
-  static async getAllManagers()
+  static async getAllManagers(sortby)
   {
-    const getPatients = await db.query(
-      `select a.status, m.* from account a, manager m where a.id = m.manageraccountid`
-    );
-    return getPatients.rows;
+    let result;
+    if(sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
+
+      let query = `select a.status, m.* from account a, manager m where a.id = m.manageraccountid 
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+
+      result = await db.query(query);
+      return result.rows;
+    }
+    else {
+      const getPatients = await db.query(
+        `select a.status, m.* from account a, manager m where a.id = m.manageraccountid`
+      );
+      return getPatients.rows;
+    }
   }
 
-  static async searchManagerByName(name)
+  static async searchManagerByName(name, sortby)
   {
-    const result = await db.query(
-      'select a.status, m.* from account a, manager m where a.id = m.manageraccountid and m.managername like $1',
-      ['%' + name + '%'],
-    );
+    let result;
+    if(sortby) {
+      const attributeSort = sortby.split("-")[0];
+      const isAscend = sortby.split("-")[1] === "a" ? true : false;
 
-    return result.rows;
+      let query = `select a.status, m.* from account a, manager m 
+      where a.id = m.manageraccountid and m.managername like $1 
+      order by ${attributeSort} `;
+
+      if (isAscend) {
+        query += "asc";
+      } else {
+        query += "desc";
+      }
+
+      result = await db.query(query, ['%' + name + '%']);
+      return result.rows;
+    }
+    else {
+      const result = await db.query(
+        'select a.status, m.* from account a, manager m where a.id = m.manageraccountid and m.managername like $1',
+        ['%' + name + '%'],
+      );
+  
+      return result.rows;
+    }
   }
 
   static async insertManager(managerInfo)
