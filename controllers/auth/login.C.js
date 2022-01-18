@@ -62,8 +62,11 @@ const register = async (req, res) => {
 	res.json({ user });
 };
 const getResetPasswordPage = async (req, res) => {
-	res.send('Trang reset password');
+	res.render('user/resetpassword', {
+		user  : false,
+	});
 };
+
 const resetPassword = async (req, res) => {
 	//SĐT
 	//Pass mới + Xác nhận
