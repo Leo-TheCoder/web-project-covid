@@ -3,6 +3,7 @@ const User = require("../../models/User.M");
 const Area = require("../../models/Area.M");
 const Audit = require("../../models/Audit.M");
 const { CustomError } = require("../../errors");
+const Utility = require("../../utilities");
 
 const getAllManagers = async (req, res) => {
   const { name, sortby } = req.query;
@@ -125,8 +126,11 @@ const getHistoryActivity = async (req, res) => {
   const {managerid} = req.params;
 
   const result = await Audit.GetAudit(managerid);
-
-  res.json(result);
+  // res.json(result);
+  res.render('dashboard/managerhistory', {
+    user: true,
+    array: result
+  })
 }
 
 module.exports = {

@@ -16,12 +16,13 @@ const register = async (req, res) => {
 
 	const token = await user.createJWT();
 	res.cookie('authorization', token, { httpOnly: true, expire: 'session' });
-	// res.status(StatusCodes.OK).json({ user, token });
 	res.redirect('/dashboard');
 }
 
 const getRegisterPage = async(req, res) => {
-	res.send('Tao trang dang ki o day');
+	res.render('user/register', {
+		
+	});
 }
 
 module.exports = {
