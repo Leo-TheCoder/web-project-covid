@@ -318,7 +318,7 @@ class User {
       throw new CustomError("Something wrong while adding admin");
     }
 
-    const id = resut.rows[0].id;
+    const id = result.rows[0].id;
     return id;
   }
 }
