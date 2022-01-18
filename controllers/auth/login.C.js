@@ -11,8 +11,8 @@ const getHomePage = (req, res) => {
 const getLoginPage = (req, res) => {
 	try {
 		res.render('user/login', {
-			user: false,
-			error: "",
+			user  : false,
+			error : '',
 		});
 	} catch (e) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: e.message });
@@ -24,17 +24,19 @@ const login = async (req, res) => {
 
 	if (!phone_number || !password) {
 		return res.render('user/login', {
-			user: false,
-			error: "Bạn nhập thiếu thông tin rồi!",
+			user  : false,
+			error : 'Bạn nhập thiếu thông tin rồi!',
 		});
 	}
 
 	const user = await User.getUser(phone_number);
-
+	if (user.first_login == 1) {
+		return res.redirect('/login/resetpassword');
+	}
 	if (!user) {
 		return res.render('user/login', {
-			user: false,
-			error: "Nhập sai thông tin!",
+			user  : false,
+			error : 'Nhập sai thông tin!',
 		});
 	}
 
@@ -42,8 +44,8 @@ const login = async (req, res) => {
 	const isPasswordCorrect = await user.comparePassword(password);
 	if (!isPasswordCorrect) {
 		return res.render('user/login', {
-			user: false,
-			error: "Sai mật khẩu goỳ",
+			user  : false,
+			error : 'Sai mật khẩu goỳ',
 		});
 	}
 
@@ -57,12 +59,34 @@ const login = async (req, res) => {
 const register = async (req, res) => {
 	const { phone_number, password } = req.body;
 	const user = await User.InitUser(phone_number, password);
-	res.json({user});
-}
+	res.json({ user });
+};
+const getResetPasswordPage = async (req, res) => {
+	res.send('Trang reset password');
+};
+const resetPassword = async (req, res) => {
+	//SĐT
+	//Pass mới + Xác nhận
+	//Dashboard
+	const { phone_number, new_pass, confirm_pass } = req.body;
+	if (new_pass !== confirm_pass) {
+		return res.send('Confirm password and password are conflicted');
+	}
+	else {
+		const user = await User.InitUser(phone_number, new_pass);
+		user.first_login = 0;
+		console.log(user);
+		User.updatePassword(user.phonenumber, user.password);
+
+		res.redirect('/');
+	}
+};
 
 module.exports = {
 	getHomePage,
 	getLoginPage,
 	login,
 	register,
+	getResetPasswordPage,
+	resetPassword,
 };
