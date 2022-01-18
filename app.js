@@ -57,12 +57,15 @@ const {
   authAdmin: authenticateAdmin,
 } = require("./middlewares/authentication");
 const auditMiddleware = require("./middlewares/audit");
+const {checkIfServerInit} = require("./middlewares/init-admin"); 
+
+app.use("/register", registerRouter);
+app.use('/', checkIfServerInit);
 
 app.use(express.static("./public"));
 app.use("/uploads", express.static("./uploads"));
 //server main routes
 app.use("/login", loginRouter);
-app.use("/register", registerRouter);
 app.use("/logout", logoutRouter);
 app.use("/dashboard", [authenticateUser, auditMiddleware], dashboardRouter);
 app.get("/", (req, res) => res.redirect("/dashboard"));

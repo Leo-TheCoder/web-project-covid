@@ -307,6 +307,20 @@ class User {
 		}
 		return true;
 	}
+
+  static async createAdminAccount(phone_number, password) {
+    const result = await db.query(
+      `insert into account (phonenumber, password, status, type, first_login) 
+      values ($1, $2, 1, $3, $4) returning id`,
+      [phone_number, password, 'A', 0]
+    )
+    if(result.rowCount < 1) {
+      throw new CustomError("Something wrong while adding admin");
+    }
+
+    const id = resut.rows[0].id;
+    return id;
+  }
 }
 
 module.exports = User;

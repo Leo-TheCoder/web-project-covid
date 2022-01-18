@@ -16,7 +16,6 @@ const getPatientOrders = async (req, res) => {
 		throw new CustomError("Something wrong with get list Order");
 	}
 
-	console.log(result);
 	res.render("products/orderhistory", {
 		orders: result,
 	});
