@@ -18,6 +18,7 @@ const getPatientOrders = async (req, res) => {
 
 	res.render("products/orderhistory", {
 		orders: result,
+		user: true
 	});
 };
 
