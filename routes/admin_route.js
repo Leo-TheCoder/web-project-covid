@@ -10,10 +10,12 @@ const {
   addAreaPage,
   getDistrictsByCountryId,
   getWardsByCountryId,
-  addQuarantineArea
+  addQuarantineArea,
+  getHistoryActivity
 } = require("../controllers/users/admin.C");
 
 router.route("/managers").get(getAllManagers).post(addManager);
+router.route("/:managerid").get(getHistoryActivity);
 router.route("/managers/add").get(addManagerPage);
 router.route("/managers/:managerid").post(lockAndUnlockManager);
 router.route("/areas").get(getAreas);

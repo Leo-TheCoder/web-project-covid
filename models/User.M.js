@@ -24,7 +24,7 @@ class User {
 		}
 		else {
 			//admin
-			mainId = this.type;
+			mainId = this.id;
 		}
 		return jwt.sign({ id: this.id, type: this.type, mainId }, process.env.JWT_SECRET, {
 			expiresIn : process.env.JWT_LIFETIME,
@@ -137,7 +137,7 @@ class User {
 			const attributeSort = sortby.split('-')[0];
 			const isAscend = sortby.split('-')[1] === 'a' ? true : false;
 
-			let query = `select a.status, m.* from account a, manager m where a.id = m.manageraccountid 
+			let query = `select a.id, a.status, m.* from account a, manager m where a.id = m.manageraccountid 
       order by ${attributeSort} `;
 
 			if (isAscend) {
@@ -164,7 +164,7 @@ class User {
 			const attributeSort = sortby.split('-')[0];
 			const isAscend = sortby.split('-')[1] === 'a' ? true : false;
 
-			let query = `select a.status, m.* from account a, manager m 
+			let query = `select a.id, a.status, m.* from account a, manager m 
       where a.id = m.manageraccountid and m.managername like $1 
       order by ${attributeSort} `;
 
@@ -294,12 +294,12 @@ class User {
 		return false;
 	}
 
-	static async updatePassword (phone_number, new_pass) {
+	static async updatePassword (id, new_pass) {
 		const result = await db.query(
 			`UPDATE ACCOUNT
     SET PASSWORD = $1, FIRST_LOGIN = 0
-    WHERE PHONENUMBER = $2`,
-			[ new_pass, phone_number ],
+    WHERE ID = $2`,
+			[ new_pass, id ],
 		);
 
 		if (result.rowCount < 1) {

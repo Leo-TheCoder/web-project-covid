@@ -71,15 +71,15 @@ const resetPassword = async (req, res) => {
 	//SĐT
 	//Pass mới + Xác nhận
 	//Dashboard
-	const { phone_number, new_pass, confirm_pass } = req.body;
+	const id = req.user.id;
+	const {new_pass, confirm_pass } = req.body;
 	if (new_pass !== confirm_pass) {
 		return res.send('Confirm password and password are conflicted');
 	}
 	else {
-		const user = await User.InitUser(phone_number, new_pass);
+		const user = await User.InitUser('', new_pass);
 		user.first_login = 0;
-		console.log(user);
-		User.updatePassword(user.phonenumber, user.password);
+		User.updatePassword(id, user.password);
 
 		res.redirect('/');
 	}

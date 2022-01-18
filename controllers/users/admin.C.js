@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../../models/User.M");
 const Area = require("../../models/Area.M");
+const Audit = require("../../models/Audit.M");
 const { CustomError } = require("../../errors");
 
 const getAllManagers = async (req, res) => {
@@ -120,6 +121,14 @@ const lockAndUnlockManager = async (req, res) => {
   }
 };
 
+const getHistoryActivity = async (req, res) => {
+  const {managerid} = req.params;
+
+  const result = await Audit.GetAudit(managerid);
+
+  res.json(result);
+}
+
 module.exports = {
   getAllManagers,
   getAreas,
@@ -129,5 +138,6 @@ module.exports = {
   addAreaPage,
   getDistrictsByCountryId,
   getWardsByCountryId,
-  addQuarantineArea
+  addQuarantineArea,
+  getHistoryActivity,
 };

@@ -17,6 +17,17 @@ class Audit {
       }
     );
   }
+
+  static async GetAudit(accountid) {
+    const result = await db.query(
+      `select user_action, action_method, action_time from audit 
+      where userid = $1 and action_method <> 'GET'
+      order by action_time desc`,
+      [accountid]
+    )
+
+    return result.rows;
+  }
 }
 
 module.exports = Audit;
