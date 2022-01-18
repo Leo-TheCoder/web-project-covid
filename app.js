@@ -77,7 +77,7 @@ app.use("/packs", productPackRouter);
 app.use("/cart", [authenticateUser, authenticatePatient], cartRouter);
 app.use(
   "/areas",
-  [authenticateUser, authenticateManager, auditMiddleware],
+  [authenticateUser, authenticateAdmin, auditMiddleware],
   areaRouter
 );
 app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
