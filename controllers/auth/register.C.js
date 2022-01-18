@@ -21,7 +21,9 @@ const register = async (req, res) => {
 }
 
 const getRegisterPage = async(req, res) => {
-	res.send('Tao trang dang ki o day');
+	res.render('user/register', {
+		
+	});
 }
 
 module.exports = {
