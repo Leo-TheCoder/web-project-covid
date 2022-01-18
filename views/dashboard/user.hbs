@@ -2,38 +2,63 @@
 	<div class="w-[920px] mx-auto flex flex-col pt-10">
 		<!-- Banner -->
 		<div id="banner">
-			<img src="https://picsum.photos/720/400" class="w-full h-[200px] object-cover object-center" />
+			<img
+				src="https://picsum.photos/720/400"
+				class="w-full h-[200px] object-cover object-center"
+			/>
 		</div>
 
 		<!-- Navigation Shortcuts -->
 		<div class="grid grid-cols-4 gap-10 py-5">
-			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+			<div
+				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
+			>
 				<a href="/profile">
 					<div class="m-4">
-						<img class="h-[24px] w-[24px] rounded" src="/public/icons/User.png" alt="icon" />
+						<img
+							class="h-[24px] w-[24px] rounded"
+							src="/public/icons/User.png"
+							alt="icon"
+						/>
 
-						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+						<h5
+							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
+						>
 							Tài khoản của tôi
 						</h5>
 
 					</div>
 				</a>
 			</div>
-			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+			<div
+				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
+			>
 				<a href="/products">
-				<div class="m-4">
-					<img class="h-[24px] w-[24px]" src="/public/icons/Shopping-bag.png" alt="icon" />
+					<div class="m-4">
+						<img
+							class="h-[24px] w-[24px]"
+							src="/public/icons/Shopping-bag.png"
+							alt="icon"
+						/>
 
-					<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
-						Nhu yếu phẩm
-					</h5>
+						<h5
+							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
+						>
+							Nhu yếu phẩm
+						</h5>
 
-				</div>
+					</div>
 				</a>
 			</div>
-			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+			<div
+				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
+			>
 				<div class="m-4">
-					<img class="h-[24px] w-[24px]" src="/public/icons/Wallet.png" alt="icon" />
+					<img
+						class="h-[24px] w-[24px]"
+						src="/public/icons/Wallet.png"
+						alt="icon"
+					/>
 
 					<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
 						Quản lý thanh toán
@@ -41,12 +66,20 @@
 
 				</div>
 			</div>
-			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+			<div
+				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
+			>
 				<a href="/orders">
 					<div class="m-4">
-						<img class="h-[24px] w-[24px]" src="/public/icons/Shopping-bag.png" alt="icon" />
+						<img
+							class="h-[24px] w-[24px]"
+							src="/public/icons/Shopping-bag.png"
+							alt="icon"
+						/>
 
-						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+						<h5
+							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
+						>
 							Đơn mua
 						</h5>
 
@@ -58,19 +91,30 @@
 		<!-- Products -->
 		<div class="flex justify-between w-full pt-5">
 			<div class="flex invisible">
+
 				<p class="font-medium h-max text-base">
 					Xem tất cả</p>
 
-				<img class="h-[24px] w-[24px]" src="/public/icons/Caret right.png" alt="icon" />
+				<img
+					class="h-[24px] w-[24px]"
+					src="/public/icons/Caret right.png"
+					alt="icon"
+				/>
 
 			</div>
 			<h1 class="w-max font-medium text-3xl">
 				Các gói nhu yếu phẩm</h1>
 			<div class="flex content-end text-[#6554C0] items-end">
-				<p class="font-medium h-max text-base">
-					Xem tất cả</p>
+				<a href="/packs">
+					<p class="font-medium h-max text-base">
+						Xem tất cả</p>
+				</a>
 
-				<img class="h-[24px] w-[24px]" src="/public/icons/Caret right.png" alt="icon" />
+				<img
+					class="h-[24px] w-[24px]"
+					src="/public/icons/Caret right.png"
+					alt="icon"
+				/>
 
 			</div>
 		</div>
@@ -78,20 +122,29 @@
 		<!-- Products List -->
 		<div class="grid grid-cols-3 gap-10 py-10">
 			{{#each packs}}
-			<div>
-				<div class="block bg-white shadow-lg hover:shadow-xl rounded-lg overflow-hidden">
-					<img class="h-56 rounded w-full object-cover object-center mb-4" src="https://picsum.photos/720/400"
-						alt="Image Size 720x400" />
-					<div class="p-4">
-						<h5 class="tracking-widest text-indigo-500 text-xs font-medium truncate ...">
-							{{this.detail}}
-						</h5>
-						<h5 class="text-lg text-gray-900 font-medium mb-4 whitespace-normal">
-							{{this.packname}}
-						</h5>
+				<div>
+					<div
+						class="block bg-white shadow-lg hover:shadow-xl rounded-lg overflow-hidden"
+					>
+						<img
+							class="h-56 rounded w-full object-cover object-center mb-4"
+							src="https://picsum.photos/720/400"
+							alt="Image Size 720x400"
+						/>
+						<div class="p-4">
+							<h5
+								class="tracking-widest text-indigo-500 text-xs font-medium truncate ..."
+							>
+								{{this.detail}}
+							</h5>
+							<h5
+								class="text-lg text-gray-900 font-medium mb-4 whitespace-normal"
+							>
+								{{this.packname}}
+							</h5>
+						</div>
 					</div>
 				</div>
-			</div>
 			{{/each}}
 		</div>
 	</div>

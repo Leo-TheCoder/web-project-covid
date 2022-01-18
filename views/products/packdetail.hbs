@@ -1,0 +1,311 @@
+{{#with pack}}
+	<div class="container w-screen max-w-full">
+		<div class="bg-white">
+			<div class="pt-6">
+				<nav aria-label="Breadcrumb">
+					<ol
+						role="list"
+						class="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8"
+					>
+						<li>
+							<div class="flex items-center">
+								<a href="/" class="mr-2 text-sm font-medium text-gray-900">
+									Trang chủ
+								</a>
+								<svg
+									width="16"
+									height="20"
+									viewBox="0 0 16 20"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
+									class="w-4 h-5 text-gray-300"
+								>
+									<path
+										d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z"
+									></path>
+								</svg>
+							</div>
+						</li>
+						<li>
+							<div class="flex items-center">
+								<a href="/packs" class="mr-2 text-sm font-medium text-gray-900">
+									Gói nhu yếu phẩm
+								</a>
+								<svg
+									width="16"
+									height="20"
+									viewBox="0 0 16 20"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
+									class="w-4 h-5 text-gray-300"
+								>
+									<path
+										d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z"
+									></path>
+								</svg>
+							</div>
+						</li>
+						<li class="text-sm">
+							<a
+								href="#"
+								aria-current="page"
+								class="font-medium text-indigo-500 hover:text-indigo-600"
+							>
+								{{productpackname}}
+							</a>
+						</li>
+					</ol>
+				</nav>
+				<!-- Image gallery -->
+				<div
+					class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8"
+				>
+					<div
+						class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block"
+					>
+						<img
+							src="https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg"
+							alt=""
+							class="w-full h-full object-center object-cover"
+						/>
+					</div>
+					<div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+						<div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+							<img
+								src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg"
+								alt=""
+								class="w-full h-full object-center object-cover"
+							/>
+						</div>
+						<div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+							<img
+								src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg"
+								alt=""
+								class="w-full h-full object-center object-cover"
+							/>
+						</div>
+					</div>
+					<div
+						class="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4"
+					>
+						<img
+							src="https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg"
+							alt=""
+							class="w-full h-full object-center object-cover"
+						/>
+					</div>
+				</div>
+				<!-- Product info -->
+				<div
+					class="flex flex-col max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8"
+				>
+					<div class="lg:col-span-2">
+						<h1
+							class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+						>
+							{{productpackname}}
+						</h1>
+					</div>
+					<!-- Options -->
+
+					<div class="py-10 lg:pt-6 lg:pb-16">
+						<!-- Description and details -->
+						<div>
+							<h3 class="sr-only">Sản phẩm</h3>
+							<div class="w-100">
+								<div
+									class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+								>
+									<table class="min-w-full divide-y divide-gray-200">
+										<thead class="bg-gray-50">
+											<tr>
+												<th
+													scope="col"
+													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												>
+													Tên sản phẩm
+												</th>
+												<th
+													scope="col"
+													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												>
+													Đơn giá
+												</th>
+												<th
+													scope="col"
+													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												>
+													Số lượng
+												</th>
+												<th
+													scope="col"
+													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												>
+													Thành tiền
+												</th>
+											</tr>
+										</thead>
+										<tbody class="bg-white divide-y divide-gray-200">
+											{{#each this.products}}
+												<tr>
+													<td class="px-6 py-4 whitespace-nowrap">
+														<div class="flex items-center">
+															<div>
+																<div
+																	class="text-base font-medium text-gray-800"
+																>
+																	{{productname}}
+																</div>
+																<div class="text-base text-gray-500">
+																	{{productunit}}
+																</div>
+															</div>
+														</div>
+													</td>
+													<td data-name="productprice" class="px-6 py-4 whitespace-nowrap">
+														{{productprice}}
+													</td>
+													<td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                                                            <button data-action="decrement" class=" bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-l cursor-pointer outline-none">
+                                                            <span class="m-auto text-2xl font-thin">-</span>
+                                                            </button>
+                                                            <input type="number" class="text-center w-16 bg-indigo-50  font-semibold text-md outline-none border-0 focus:border-0 flex items-center text-gray-700" name="custom-input-number" value="{{quantity}}"></input>
+                                                            <button data-action="increment" class="bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-r cursor-pointer">
+                                                                <span class="m-auto text-2xl font-thin">+</span>
+                                                            </button>
+                                                        </div>
+													</td>
+													<td data-name="total" class="px-6 py-4 whitespace-nowrap text-base text-indigo-600"
+													>
+                                                        123
+													</td>
+												</tr>
+											{{/each}}
+											<!-- More people... -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="flex flex-col">
+						<div class="self-end flex items-center">
+							<p class="text-xl text-gray-900 pr-6">Tổng thanh toán:</p>
+							<p id="totalamount" class="text-3xl text-indigo-600">$money</p>
+						</div>
+						<button
+							type="submit"
+							class="mt-6 w-2xl self-end bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>Thêm vào giỏ hàng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{{/with}}
+
+<style>
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+    .custom-number-input {
+    outline: none !important;
+  }
+
+  .custom-number-input input:focus {
+    outline: none !important;
+  }
+
+  .custom-number-input button:focus {
+    outline: none !important;
+  }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+  function decrement(e) {
+    
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement"]'
+    );
+    const target = btn.nextElementSibling;
+    
+    const row = target.closest('tr');
+    let productprice = row.querySelector(
+      'td[data-name="productprice"]'
+    );
+
+    let totalEle = row.querySelector(
+      'td[data-name="total"]'
+    );
+
+    let price = Number(productprice.innerText);
+
+    let value = Number(target.value);
+    value--;
+    if (value == 0 ) {
+        value = 1;
+    }
+    target.value = value;
+
+    totalEle.innerHTML = price * value;
+    calculateTotal();
+  }
+
+  function increment(e) {
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement"]'
+    );
+    const target = btn.nextElementSibling;
+
+    const row = target.closest('tr');
+    let productprice = row.querySelector(
+      'td[data-name="productprice"]'
+    );
+
+    let totalEle = row.querySelector(
+      'td[data-name="total"]'
+    );
+
+    let price = Number(productprice.innerText);
+    let value = Number(target.value);
+    value++;
+    target.value = value;
+    totalEle.innerHTML = price * value;
+    calculateTotal();
+  }
+
+  const decrementButtons = document.querySelectorAll(
+    `button[data-action="decrement"]`
+  );
+
+  const incrementButtons = document.querySelectorAll(
+    `button[data-action="increment"]`
+  );
+
+  decrementButtons.forEach(btn => {
+    btn.addEventListener("click", decrement);
+  });
+
+  incrementButtons.forEach(btn => {
+    btn.addEventListener("click", increment);
+  });
+
+  function calculateTotal(){
+    const alltotalprice = document.querySelectorAll(
+    `td[data-name="total"]`
+  );
+    let price = 0;
+    alltotalprice.forEach(element => price += Number(element.innerHTML));
+    console.log(price);
+    $("#totalamount").html(price);
+  }
+
+</script>
