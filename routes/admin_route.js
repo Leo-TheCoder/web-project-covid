@@ -15,9 +15,8 @@ const {
 } = require("../controllers/users/admin.C");
 
 router.route("/managers").get(getAllManagers).post(addManager);
-router.route("/:managerid").get(getHistoryActivity);
 router.route("/managers/add").get(addManagerPage);
-router.route("/managers/:managerid").post(lockAndUnlockManager);
+router.route("/managers/:managerid").get(getHistoryActivity).post(lockAndUnlockManager);
 router.route("/areas").get(getAreas);
 router.route("/areas/districts").get(getDistrictsByCountryId);
 router.route("/areas/wards").get(getWardsByCountryId);
