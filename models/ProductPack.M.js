@@ -7,7 +7,9 @@ class ProductPack {
       const attributeSort = sortby.split("-")[0];
       const isAscend = sortby.split("-")[1] === "a" ? true : false;
 
-      let query = `select * from productpack where deleted = 0 
+      let query = `select pack.*, min(p.linkpic) as linkpic from productpack pack, packdetail d, productpic p   
+      where pack.deleted = 0 and pack.productpackid = d.productpackid and d.productid = p.productid
+	    group by pack.productpackid;
       order by ${attributeSort} `;
 
       if (isAscend) {
@@ -76,10 +78,10 @@ class ProductPack {
 
     //get some common attribute out of the products array
     result.products = detail.rows.forEach((product) => {
-      product.productpackid = undefined;
-      product.productpackname = undefined;
-      product.productpacklimit = undefined;
-      product.timeunit = undefined;
+      delete product.productpackid;
+      delete product.productpackname;
+      delete product.productpacklimit;
+      delete product.timeunit;
     });
 
     result.products = detail.rows;
