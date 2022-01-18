@@ -68,11 +68,13 @@ class Patient {
       } else {
         query += "desc";
       }
-      const result = await db.query(query, [managerid, "%" + patientname + "%"]);
+      const result = await db.query(query, [
+        managerid,
+        "%" + patientname + "%",
+      ]);
 
       return result.rows;
-    }
-    else {
+    } else {
       try {
         const result = await db.query(
           `select p.*, a.areaname from patient p, quarantinearea a 
@@ -95,7 +97,7 @@ class Patient {
         [patientId, managerid]
       );
 
-      if(result.rows.length < 1) {
+      if (result.rows.length < 1) {
         throw new Error();
       }
 
@@ -183,11 +185,10 @@ class Patient {
     return updateStatusPatient;
   }
 
-  static async getContactPatients(patientId, managerid) {
+  static async getContactPatients(patientId) {
     const result = await db.query(
-      `select c.contact_time, p.* from direct_contact c, patient p 
-      where c.source_patient = $1 and p.patientid = c.contact_patient and p.managerid = $2`,
-      [patientId, managerid]
+      `SELECT * FROM SEE_DIRECT_CONTACT_LIST ($1)`,
+      [patientId]
     );
 
     return result.rows;

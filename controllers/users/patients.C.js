@@ -111,8 +111,8 @@ const insertPatient = async (req, res) => {
 
 const getContactPatients = async (req, res) => {
   const { patientId } = req.params;
-  const managerid = req.managerid;
-  const result = await Patient.getContactPatients(patientId, managerid);
+  //const managerid = req.managerid;
+  const result = await Patient.getContactPatients(patientId);
 
   if (!result) {
     return res.status(StatusCodes.OK).send("No data");
