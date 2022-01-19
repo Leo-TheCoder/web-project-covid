@@ -7,9 +7,11 @@ const {
   updateProductPack,
   deleteProductPack,
   addProductPack,
+  getAddPackPage
 } = require("../controllers/product/product-pack.C");
 
 router.route("/").get(getProductPacks).post(addProductPack);
+router.route("/add").get(getAddPackPage);
 router
   .route("/:packId")
   .get(getProductPackById)

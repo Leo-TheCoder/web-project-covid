@@ -20,9 +20,11 @@ const {
   updateProduct,
   deleteProduct,
   addProduct,
+  getProductsNameAndId
 } = require("../controllers/product/product.C");
 
 router.route("/").get(getProducts).post(multipleUpload, insertProduct);
+router.route("/list").get(getProductsNameAndId);
 router.route("/add").get(addProduct);
 router
   .route("/:productId")

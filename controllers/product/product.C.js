@@ -1,6 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
 const Product = require("../../models/Product.M");
 
+const getProductsNameAndId = async (req, res) => {
+  const result = await Product.getProducts();
+  res.status(StatusCodes.OK).json(result);
+}
+
 const getProducts = async (req, res) => {
   const {name, sortby} = req.query;
   let result;
@@ -107,4 +112,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   addProduct,
+  getProductsNameAndId
 };

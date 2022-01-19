@@ -49,6 +49,13 @@ const getProductPackById = async (req, res) => {
 	});
 };
 
+const getAddPackPage = (req, res) => {
+	res.render('products/addnewpack',{
+		user: true,
+		editScript: () => 'editpackscript'
+	})
+}
+
 const addProductPack = async (req, res) => {
 	const { productpackname, productpacklimit, timeunit, details } = req.body;
 
@@ -99,4 +106,5 @@ module.exports = {
 	addProductPack,
 	updateProductPack,
 	deleteProductPack,
+	getAddPackPage
 };

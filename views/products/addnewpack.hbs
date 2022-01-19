@@ -1,0 +1,46 @@
+<div class="container w-screen max-w-full">
+  <div class="bg-white">
+    <div class="py-10 lg:pt-6 lg:pb-16">
+      <div class="profile-container">
+
+        <div id="product-main" class="profile-card mb-10">
+          <input id="productpackname" class="page-title" type="text" placeholder="Tên gói sản phẩm"></input>
+          <p>Giới hạn mua: <input id="productpacklimit" type="number" placeholder="Giới hạn lần mua" /></p>
+          <p>Giới hạn thời gian: <input id="timeunit" type="number" placeholder="Khoảng cách thời gian" /></p>
+          <br />
+        </div>
+      </div>
+
+      <br />
+      <!-- table -->
+      <div>
+        <div class="w-100">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table id="product-table" class="min-w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col"
+                    class="w-2/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tên sản phẩm
+                  </th>
+                  <th scope="col"
+                    class="w-2/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Số lượng
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class='flex items-center justify-center'>
+        <button type="submit"
+          class="mt-6 w-2xl self-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onclick="addPack()">Thêm
+          gói sản phẩm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> (editScript)}}
