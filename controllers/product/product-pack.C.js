@@ -6,6 +6,7 @@ const ProductPack = require("../../models/ProductPack.M");
 
 const getProductPacks = async (req, res) => {
 	const { name, sortby } = req.query;
+
 	let result;
 	if (name) {
 		result = await ProductPack.searchPackByName(name, sortby);
@@ -34,6 +35,7 @@ const getProductPacks = async (req, res) => {
 	res.status(StatusCodes.OK).render("products/packs", {
 		packs: result,
 		user: true,
+		type: req.user.type
 	});
 };
 
@@ -49,6 +51,7 @@ const getProductPackById = async (req, res) => {
 	});
 
 	result.totalCash = totalCash;
+	result.type = req.user.type;
 
 	res.status(StatusCodes.OK).render("products/packdetail", {
 		pack: result,
@@ -57,7 +60,7 @@ const getProductPackById = async (req, res) => {
 };
 
 const getAddPackPage = (req, res) => {
-	res.render('products/addnewpack',{
+	res.render('products/addnewpack', {
 		user: true,
 		editScript: () => 'editpackscript'
 	})

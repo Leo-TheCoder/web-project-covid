@@ -87,8 +87,6 @@ const addPack = async () => {
 		details
 	}
 
-	console.log(body);
-
 	const response = await fetch(url + `/packs`,{
 		method: 'POST',
     headers: {
