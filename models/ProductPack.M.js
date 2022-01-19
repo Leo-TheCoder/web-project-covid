@@ -60,7 +60,7 @@ class ProductPack {
     const detail = await db.query(
       `select * from productpack pack, packdetail detail, product p 
       where pack.productpackid = detail.productpackid and detail.productid = p.productid and pack.productpackid = $1
-      and detail.deleted = 0`,
+      and detail.deleted = 0 and p.deleted = 0`,
       [packId]
     );
 
