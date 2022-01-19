@@ -21,6 +21,15 @@ const getProductPacks = async (req, res) => {
 const getProductPackById = async (req, res) => {
 	const { packId } = req.params;
 	const result = await ProductPack.getPackDetailById(packId);
+
+	let totalCash = 0;
+	result.products.forEach(product => {
+		product.cash = parseFloat(product.productprice) * parseInt(product.quantity);
+		totalCash += product.cash;
+	});
+
+	result.totalCash = totalCash;
+
 	console.log(result);
 	res.status(StatusCodes.OK).render("products/packdetail", {
 		pack: result,

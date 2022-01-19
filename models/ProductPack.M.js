@@ -87,24 +87,18 @@ class ProductPack {
     result.products = detail.rows;
 
     //Get link pictures
-    const linkPicPromises = [];
-    result.products.forEach(async (element) => {
-      const linkPicPromise = db.query(
-        "select linkpic from productpic where productid = $1",
-        [element.productid]
-      );
-      linkPicPromises.push(linkPicPromise);
-    });
+    const linkPics = [];
+    const pictureResult = await db.query(
+      `select p.linkpic from packdetail pack, productpic p 
+      where pack.productid = p.productid and pack.productpackid = $1`,
+      [packId]
+    )
+    
+    pictureResult.rows.forEach(element => {
+      linkPics.push(element.linkpic);
+    })
 
-    const linkPicResult = await Promise.all(linkPicPromises);
-    linkPicResult.forEach((element, index) => {
-      result.products[index].linkPics = [];
-      const linkPics = result.products[index].linkPics
-      element.rows.forEach((linkPic) => {
-        linkPics.push(linkPic.linkpic);
-      })
-    });
-
+    result.linkpics = linkPics;
     return result;
   }
 
