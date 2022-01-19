@@ -8,9 +8,9 @@ const getProductPacks = async (req, res) => {
 	const { name, sortby } = req.query;
 	let result;
 	if (name) {
-		result = await ProductPack.searchPackByName();
+		result = await ProductPack.searchPackByName(name, sortby);
 	} else {
-		result = await ProductPack.getPacks();
+		result = await ProductPack.getPacks(sortby);
 	}
 	res.status(StatusCodes.OK).render("products/packs", {
 		packs: result,
