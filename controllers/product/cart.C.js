@@ -25,7 +25,7 @@ const getItemsInCart = async (req, res) => {
     })
     pack.total = totalCash;
   })
-  return res.json(result);
+  // return res.json(result);
   res.status(StatusCodes.OK).render("patients/cart/cart", {
 		cart: result,
     editScript: () => "editcartscript",

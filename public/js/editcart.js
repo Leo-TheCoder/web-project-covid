@@ -1,11 +1,20 @@
 /** @format */
-async function deletePack(packid) {
-	const response = await fetch(url + `/cart/${packid}`, {
+async function deletePack(cartid) {
+	const response = await fetch(url + `/cart/${cartid}`, {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
 		}
 	});
+	location.href = '/cart';
+}
 
-	console.log(response);
+async function buyPack(cartid) {
+	const response = await fetch(url + `/cart/${cartid}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		}
+	});
+	location.href = '/cart';
 }
