@@ -42,7 +42,6 @@ const getProductPackById = async (req, res) => {
 
 	result.totalCash = totalCash;
 
-	console.log(result);
 	res.status(StatusCodes.OK).render("products/packdetail", {
 		pack: result,
 		user: true,

@@ -86,7 +86,7 @@ app.use(
 );
 app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
 app.use("/admin", [authenticateUser, authenticateAdmin], adminRouter);
-app.use("/statistic", authenticateUser, statisticRouter);
+app.use("/statistic", [authenticateUser, authenticateManager], statisticRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
