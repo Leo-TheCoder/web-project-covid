@@ -27,6 +27,7 @@ const productPackRouter = require("./routes/pack_route");
 const cartRouter = require("./routes/cart_route");
 const orderRouter = require("./routes/order_route");
 const adminRouter = require("./routes/admin_route");
+const statisticRouter = require('./routes/statistic_route');
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -85,6 +86,7 @@ app.use(
 );
 app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
 app.use("/admin", [authenticateUser, authenticateAdmin], adminRouter);
+app.use("/statistic", authenticateUser, statisticRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);
