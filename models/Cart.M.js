@@ -84,7 +84,6 @@ class Cart {
       }
     }
 
-    console.log(result);
     return result;
   }
 

@@ -102,11 +102,38 @@
 					class="flex flex-col max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8"
 				>
 					<div class="lg:col-span-2">
+						<span id="productpackid" class="hidden">{{productpackid}}</span>
 						<h1
 							class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
 						>
 							{{productpackname}}
 						</h1>
+						<div class="w-full flex justify-between">
+							<div
+								class="mt-2 flex items-center text-indigo-500 text-xl font-medium truncate ..."
+							>
+								<p>Còn được mua:</p>
+								<p id="packlimit" class="ml-2">
+								{{this.productpacklimit}}
+								</p>
+							</div>
+							<div class="flex items-center">
+								<p
+								class="w-full text-indigo-500 text-xl font-medium"
+								>
+								Số lượng mua:
+								</p>
+								<div class="flex flex-row h-10 w-full ml-4 rounded-lg relative bg-transparent mt-1">
+									<button id="bigdecrement" onclick="bigdecrement()" class=" bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-l cursor-pointer outline-none">
+									<span class="m-auto text-2xl font-thin">-</span>
+									</button>
+									<input type="number" class="text-center w-16 bg-indigo-50  font-semibold text-md outline-none border-0 focus:border-0 flex items-center text-gray-700" name="custom-input-number" value="1"></input>
+									<button id="bigincrement" onclick="bigincrement()" class="bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-r cursor-pointer">
+										<span class="m-auto text-2xl font-thin">+</span>
+									</button>
+                                </div>
+							</div>
+						</div>
 					</div>
 					<!-- Options -->
 
@@ -121,6 +148,12 @@
 									<table class="min-w-full divide-y divide-gray-200">
 										<thead class="bg-gray-50">
 											<tr>
+												<th
+													scope="col"
+													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												>
+													ID
+												</th>
 												<th
 													scope="col"
 													class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -147,9 +180,12 @@
 												</th>
 											</tr>
 										</thead>
-										<tbody class="bg-white divide-y divide-gray-200">
+										<tbody  id="product-table" class="bg-white divide-y divide-gray-200">
 											{{#each this.products}}
 												<tr>
+													<td class="px-6 py-4 whitespace-nowrap">
+														{{productid}}
+													</td>
 													<td class="px-6 py-4 whitespace-nowrap">
 														<div class="flex items-center">
 															<div>
@@ -197,15 +233,20 @@
 							<p id="totalamount" class="text-3xl text-indigo-600">{{{totalCash}}}</p>
 						</div>
 						<button
-							type="submit"
 							class="mt-6 w-2xl self-end bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+							onclick="addToCart()"
+							{{#compare packlimit "0"}}
+							disabled
+							{{/compare}}
 						>Thêm vào giỏ hàng</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 {{/with}}
+
 
 <style>
   input[type='number']::-webkit-inner-spin-button,
@@ -282,6 +323,37 @@
     calculateTotal();
   }
 
+  function bigdecrement(e) {
+    
+    const btn = document.getElementById("bigdecrement");
+    const target = btn.nextElementSibling;
+
+    let value = Number(target.value);
+    value--;
+    if (value == -1 ) {
+        value = 0;
+    }
+    target.value = value;
+	calculateTotal();
+  }
+
+  function bigincrement(e) {
+    const btn = document.getElementById("bigdecrement");
+    const target = btn.nextElementSibling;
+
+    let value = Number(target.value);
+    value++;
+
+	let limit = Number(document.getElementById("packlimit").innerHTML);
+	if (value>limit) {
+		value = limit;
+	}
+	
+    target.value = value;
+
+	calculateTotal();
+  }
+
   const decrementButtons = document.querySelectorAll(
     `button[data-action="decrement"]`
   );
@@ -304,8 +376,61 @@
   );
     let price = 0;
     alltotalprice.forEach(element => price += Number(element.innerHTML));
-    console.log(price);
-    $("#totalamount").html(price);
+    const btn = document.getElementById("bigdecrement");
+    const target = btn.nextElementSibling;
+
+    let value = Number(target.value);
+    $("#totalamount").html(price*value);
   }
+
+  async function addToCart() {
+	const productpackid = document.getElementById("productpackid").innerHTML;
+	console.log(productpackid);
+	const totalCash = Number($("#totalamount").html());
+	let products = tableToObj(document.getElementById("product-table"));
+	console.log(products);
+	const body = {productpackid, totalCash, products};
+	console.log(JSON.stringify(body));
+
+  	const response = await fetch(url + '/cart', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body),
+	});
+
+	if(response.ok){
+		window.location.replace(url + '/packs');
+	}
+	else{
+		console.log(response.status);
+		//error handling
+	}
+  }
+
+  function tableToObj(table) {
+		
+		var row, rows = table.rows;
+		let products = []
+		for (var i=0, iLen=rows.length; i<iLen; i++) {
+			var obj = {};
+			row = rows[i];
+			let productid = row.cells[0].innerHTML;
+			productid = productid.replace(/(\r\n|\n|\r)/g,"").trim();
+			let cash = row.cells[2].innerHTML;
+			const btn = row.cells[3].querySelector(
+				`button[data-action="decrement"]`
+			);
+			const target = btn.nextElementSibling;
+    		let quantity = Number(target.value);
+			obj["productid"] = productid;
+			obj["quantity"] = quantity;
+			obj["cash"] = Number(cash);
+			JSON.stringify(obj);
+			products.push(obj);
+		}
+		return products;
+	}
 
 </script>

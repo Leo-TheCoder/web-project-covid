@@ -13,15 +13,22 @@ const getProductPacks = async (req, res) => {
 		result = await ProductPack.getPacks(sortby);
 	}
 
-	if(req.user.type === 'P') {
+	if (req.user.type === "P") {
 		const promises = [];
-		result.forEach(async pack => {
-			promises.push(ProductPack.getNumberOfPackAvaliableForPatient(req.user.mainId, pack.productpackid, pack.timeunit))
-		})
+		result.forEach(async (pack) => {
+			promises.push(
+				ProductPack.getNumberOfPackAvaliableForPatient(
+					req.user.mainId,
+					pack.productpackid,
+					pack.timeunit
+				)
+			);
+		});
 		const number_packs = await Promise.all(promises);
 		result.forEach((pack, index) => {
-			pack.productpacklimit = parseInt(pack.productpacklimit) - number_packs[index];
-		})
+			pack.productpacklimit =
+				parseInt(pack.productpacklimit) - number_packs[index];
+		});
 	}
 
 	res.status(StatusCodes.OK).render("products/packs", {
@@ -35,14 +42,14 @@ const getProductPackById = async (req, res) => {
 	const result = await ProductPack.getPackDetailById(packId);
 
 	let totalCash = 0;
-	result.products.forEach(product => {
-		product.cash = parseFloat(product.productprice) * parseInt(product.quantity);
+	result.products.forEach((product) => {
+		product.cash =
+			parseFloat(product.productprice) * parseInt(product.quantity);
 		totalCash += product.cash;
 	});
 
 	result.totalCash = totalCash;
 
-	console.log(result);
 	res.status(StatusCodes.OK).render("products/packdetail", {
 		pack: result,
 		user: true,

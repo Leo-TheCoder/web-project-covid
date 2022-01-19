@@ -58,6 +58,29 @@ class Order {
 
     return result;
   }
+
+  static async addOrder({total, details}, patientid) {
+    const orderOverview = await db.query(
+      `insert into shoporder (managerid, patientid, createdtime, acceptedtime, status, total) 
+      values($1, $2, $3, $4, $5, $6) returning orderid`,
+      [1, patientid, new Date(), new Date(), 'A', total]
+    );
+
+    const orderid = orderOverview.rows[0].orderid;
+
+    const detailsPromises = [];
+    details.forEach(detail => {
+      const {packid, productid, quantity, productprice} = detail;
+      detailsPromises.push(db.query (
+        `insert into orderdetail(orderid, packid, productid, quantity, productprice) 
+        values ($1, $2, $3, $4, $5)`,
+        [orderid, packid, productid, quantity, productprice]
+      ))
+    });
+    await Promise.all(detailsPromises);
+
+    return true;
+  }
 }
 
 module.exports = Order;
