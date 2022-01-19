@@ -3,7 +3,8 @@
   <div class="w-[920px] mx-auto flex flex-col pt-10">
     <h3 class="text-2xl font-medium leading-6 text-gray-900 mx-6 mb-4">Giỏ hàng</h3>
     {{#each cart}}
-    <div class="block p-6 m-4 bg-white border border-gray-200 shadow-sm hover:shadow-md rounded-md overflow-hidden">
+    <div id={{cart_id}}
+      class="block p-6 m-4 bg-white border border-gray-200 shadow-sm hover:shadow-md rounded-md overflow-hidden">
       <div class="border-b flex justify-between border-gray-200 pb-4 mb-6">
         <div class="flex items-center font-medium">
           <p class="mr-4 text-base text-indigo-900">Gói {{cart_id}}</p>
@@ -12,7 +13,7 @@
 
       <ul role="list" class="-my-6 divide-y divide-gray-200">
         {{#each products}}
-        <li class="py-6 flex">
+        <li id='product' class="py-6 flex">
           <div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
             <img src="{{linkpic}}" alt="" class="w-full h-full object-center object-cover" />
           </div>
@@ -21,6 +22,9 @@
             <div>
               <div class="flex justify-between text-base font-medium text-gray-900">
                 <h3>
+                  <div class="hidden" id='productid'>{{productid}}</div>
+                  <div class="hidden" id='quantity'>{{quantity}}</div>
+                  <div class="hidden" id='productprice'>{{productprice}}</div>
                   <a href="#">
                     {{productname}}
                   </a>
@@ -44,22 +48,25 @@
         <!-- More products... -->
       </ul>
 
+      <div class="hidden" id='total'>{{total}}</div>
+
       <div class="border-t border-gray-200 mt-6 pt-6">
         <div class="flex flex-row-reverse items-center font-medium">
           <h2 class="text-xl text-indigo-600">{{total}} đ</h2>
           <p class="mr-4 text-base text-gray-900">Tổng số tiền:</p>
         </div>
         <div class="flex justify-center font-medium">
-        <button
-          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-          onclick="deletePack({{cart_id}})">
-          Xóa hàng
-        </button>
-        <button
-          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Mua hàng
-        </button>
-</div>
+          <button
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            onclick="deletePack({{cart_id}})">
+            Xóa hàng
+          </button>
+          <button
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onclick="buyPack({{packid}}, {{cart_id}})">
+            Mua hàng
+          </button>
+        </div>
       </div>
     </div>
     {{/each}}

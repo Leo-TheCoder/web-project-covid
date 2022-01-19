@@ -35,8 +35,7 @@ const getOrderDetail = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
-  const result = await Order.addOrder(req.body, req.patientid);
-
+  const result = await Order.addOrder(req.body, req.user.mainId);
   if (!result) {
     throw new CustomError("Something wrong while adding to Order");
   }

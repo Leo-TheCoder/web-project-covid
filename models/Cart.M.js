@@ -38,11 +38,11 @@ class Cart {
 
   static async getItems(patientid) {
     const details = await db.query(
-      `select c.*, d.quantity, p.productid, p.productname, p.productprice, min(pic.linkpic) as linkpic  
+      `select c.*, d.quantity, p.productid, p.productname, p.productprice, min(pic.linkpic) as linkpic, d.packid  
       from cart c, cart_detail d, product p, productpic pic 
       where c.patientid = $1 and c.cart_id = d.cart_id 
       and d.productid = p.productid and p.productid = pic.productid 
-      group by c.cart_id, d.quantity, p.productid, p.productname, p.productprice 
+      group by c.cart_id, d.quantity, p.productid, p.productname, p.productprice, d.packid 
       order by c.cart_id asc`,
       [patientid]
     );
