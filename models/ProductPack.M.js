@@ -8,8 +8,8 @@ class ProductPack {
       const isAscend = sortby.split("-")[1] === "a" ? true : false;
 
       let query = `select pack.*, min(p.linkpic) as linkpic from productpack pack, packdetail d, productpic p   
-      where pack.deleted = 0 and pack.productpackid = d.productpackid and d.productid = p.productid
-	    group by pack.productpackid;
+      where pack.deleted = 0 and pack.productpackid = d.productpackid and d.productid = p.productid 
+	    group by pack.productpackid 
       order by ${attributeSort} `;
 
       if (isAscend) {
@@ -19,11 +19,18 @@ class ProductPack {
       }
 
       const result = await db.query(query);
+
+      result.rows.forEach(pack => {
+        
+      })
+
       return result.rows;
     }
     else {
       const result = await db.query(
-        `select * from productpack where deleted = 0`
+        `select pack.*, min(p.linkpic) as linkpic from productpack pack, packdetail d, productpic p   
+        where pack.deleted = 0 and pack.productpackid = d.productpackid and d.productid = p.productid
+        group by pack.productpackid;`
       );
       return result.rows;
     }
@@ -54,6 +61,15 @@ class ProductPack {
 
         return result.rows;
       }
+  }
+
+  static async getNumberOfPackAvaliableForPatient(patientid, packid, timeunit) {
+    const result = await db.query(
+      `select count_number_of_packs_ordered_in_timeunit($1, $2, $3) as count_packs`,
+      [parseInt(patientid), parseInt(packid), parseInt(timeunit)], 
+    )
+
+    return result.rows[0].count_packs;
   }
 
   static async getPackDetailById(packId) {

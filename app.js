@@ -76,7 +76,7 @@ app.use(
   patientsRouter
 );
 app.use("/products", authenticateUser, productRouter);
-app.use("/packs", productPackRouter);
+app.use("/packs", [authenticateUser] , productPackRouter);
 app.use("/cart", [authenticateUser, authenticatePatient], cartRouter);
 app.use(
   "/areas",
