@@ -27,6 +27,7 @@ const productPackRouter = require("./routes/pack_route");
 const cartRouter = require("./routes/cart_route");
 const orderRouter = require("./routes/order_route");
 const adminRouter = require("./routes/admin_route");
+const statisticRouter = require('./routes/statistic_route');
 const db = require("./db/connectDB");
 
 const hbs = handlebars.create({
@@ -57,11 +58,15 @@ const {
   authAdmin: authenticateAdmin,
 } = require("./middlewares/authentication");
 const auditMiddleware = require("./middlewares/audit");
+const {checkIfServerInit} = require("./middlewares/init-admin"); 
+
+app.use("/register", registerRouter);
+app.use('/', checkIfServerInit);
 
 app.use(express.static("./public"));
+app.use("/uploads", express.static("./uploads"));
 //server main routes
 app.use("/login", loginRouter);
-app.use("/register", registerRouter);
 app.use("/logout", logoutRouter);
 app.use("/dashboard", [authenticateUser, auditMiddleware], dashboardRouter);
 app.get("/", (req, res) => res.redirect("/dashboard"));
@@ -72,15 +77,16 @@ app.use(
   patientsRouter
 );
 app.use("/products", authenticateUser, productRouter);
-app.use("/packs", productPackRouter);
+app.use("/packs", [authenticateUser] , productPackRouter);
 app.use("/cart", [authenticateUser, authenticatePatient], cartRouter);
 app.use(
   "/areas",
-  [authenticateUser, authenticateManager, auditMiddleware],
+  [authenticateUser, authenticateAdmin, auditMiddleware],
   areaRouter
 );
 app.use("/orders", [authenticateUser, auditMiddleware], orderRouter);
 app.use("/admin", [authenticateUser, authenticateAdmin], adminRouter);
+app.use("/statistic", [authenticateUser, authenticateManager], statisticRouter);
 
 // Test dashboard
 // app.use('/test', dashboardRouter);

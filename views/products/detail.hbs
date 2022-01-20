@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="profile-container">
+
+    <form class="profile-card">
+      <div class='food-images'>
+        {{#each product.linkpics}}
+        <img src="{{linkpic}}" alt="Food image" class="avatar-image" width="200px" />
+        {{/each}}
+      </div>
+      <h1>Tên: {{product.productname}}</h1>
+      <p>Giá: {{product.productprice}} VNĐ</p>
+      <p>Đơn vị: {{product.productunit}}</p>
+    </form>
+  </div>
+</div>

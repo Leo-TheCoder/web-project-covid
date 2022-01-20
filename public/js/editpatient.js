@@ -19,6 +19,7 @@ async function updatePatient(patientId) {
 	const area = document.getElementById("hospital-area").value;
 
 	const body = {status, area};
+	console.log(body);
 	const response = await fetch(url + `/patients/${patientId}`, {
 		method: "PUT",
 		headers: {

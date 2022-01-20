@@ -60,7 +60,12 @@ async function editProfile() {
     dob = document.getElementById('dob').value,
     address = document.getElementById('address').value;
 
-  const body = { name, dob, address };
+    if(!name || !dob || !address){
+      alert('Bạn chưa nhập đủ');
+      return;
+    }
+
+  const body = { name, dob, address, password };
 
   const response = await fetch(url + '/profile', {
     method: 'PUT',

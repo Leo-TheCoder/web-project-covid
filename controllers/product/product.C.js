@@ -1,24 +1,51 @@
 const { StatusCodes } = require("http-status-codes");
 const Product = require("../../models/Product.M");
 
-const getProducts = async (req, res) => {
+const getProductsNameAndId = async (req, res) => {
   const result = await Product.getProducts();
+  res.status(StatusCodes.OK).json(result);
+}
+
+const getProducts = async (req, res) => {
+  const {name, sortby} = req.query;
+  let result;
+  if(name) {
+    result = await Product.searchProductByName(name, sortby);
+  }
+  else {
+    result = await Product.getProducts(sortby);
+  }
+  
+  const type = req.user.type;
   res.status(StatusCodes.OK).render("products/products", {
 		products: result,
 		user: true,
+    type: type
 	});
 };
 
 const getProductById = async (req, res) => {
   const { productId } = req.params;
+  const type = req.user.type;
 
   const result = await Product.getProductById(productId);
-  res.status(StatusCodes.OK).render("products/edit", {
-		product: result,
-    productid: productId,
-    editScript: () => "editproductscript",
-		user: true,
-  });
+
+  if(type === 'P'){
+    res.status(StatusCodes.OK).render("products/detail", {
+      product: result,
+      productid: productId,
+      user: true,
+    });
+  } else {
+    res.status(StatusCodes.OK).render("products/edit", {
+      product: result,
+      productid: productId,
+      editScript: () => "editproductscript",
+      user: true,
+    });
+  }
+
+ 
 };
 
 //UI only
@@ -30,7 +57,8 @@ const addProduct = (req, res) => {
 }
 
 const insertProduct = async (req, res) => {
-  const result = await Product.insertProduct(req.body);
+  const images = req.files.image;
+  const result = await Product.insertProduct(req.body, images);
 
   if (!result || result < 1) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -38,10 +66,7 @@ const insertProduct = async (req, res) => {
       status: "Fail",
     });
   }
-  res.status(StatusCodes.OK).json({
-    msg: "Insert successfully!",
-    status: "Success",
-  });
+  res.status(StatusCodes.OK).redirect('/products');
 };
 
 const updateProduct = async (req, res) => {
@@ -87,4 +112,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   addProduct,
+  getProductsNameAndId
 };

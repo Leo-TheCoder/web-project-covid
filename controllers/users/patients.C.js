@@ -9,13 +9,12 @@ const Area = require("../../models/Area.M");
 const getPatients = async (req, res) => {
   const managerid = req.managerid;
 
-  const { name } = req.query;
-
+  const { name, sortby } = req.query;
   let result;
   if (name) {
-    result = await Patient.getAllPatientsByName(managerid, name.toLowerCase());
+    result = await Patient.getAllPatientsByName(managerid, name.toLowerCase(), sortby);
   } else {
-    result = await Patient.getAllPatients(managerid);
+    result = await Patient.getAllPatients(managerid, sortby);
   }
 
   if (!result) {
@@ -42,15 +41,16 @@ const getPatientById = async (req, res) => {
 
   const [result, quarantinearea] = await Promise.all([getPatient, getAreas]);
 
+  if (!result) {
+    throw new NotFoundError("Not found this id");
+  }
+  
   const quarantineareaid = result.quarantineareaid;
   const obj = quarantinearea.find(({areaid}) => areaid == quarantineareaid);
   obj.area = true;
 
   result.quarantinearea = quarantinearea;
 
-  if (!result) {
-    throw new NotFoundError("Not found this id");
-  }
 
   result.patientdob = Utility.getDDMMYYYYFormat(result.patientdob);
   result.startdate = Utility.getDDMMYYYYFormat(result.startdate);
@@ -95,7 +95,7 @@ const updatePatientPage = async (req, res) => {
     throw new CustomError("Something wrong when updating patient!");
   }
 
-  res.status(StatusCodes.OK).redirect(`/patients/${patientId}`);
+  res.status(StatusCodes.OK).redirect(StatusCodes.SEE_OTHER,`/patients/${patientId}`);
 };
 
 const insertPatient = async (req, res) => {
@@ -111,8 +111,8 @@ const insertPatient = async (req, res) => {
 
 const getContactPatients = async (req, res) => {
   const { patientId } = req.params;
-  const managerid = req.managerid;
-  const result = await Patient.getContactPatients(patientId, managerid);
+  //const managerid = req.managerid;
+  const result = await Patient.getContactPatients(patientId);
 
   if (!result) {
     return res.status(StatusCodes.OK).send("No data");

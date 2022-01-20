@@ -1,15 +1,17 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../../models/User.M");
 const Area = require("../../models/Area.M");
+const Audit = require("../../models/Audit.M");
 const { CustomError } = require("../../errors");
+const Utility = require("../../utilities");
 
 const getAllManagers = async (req, res) => {
-  const { name } = req.query;
+  const { name, sortby } = req.query;
   let result;
   if (!name) {
-    result = await User.getAllManagers();
+    result = await User.getAllManagers(sortby);
   } else {
-    result = await User.searchManagerByName(name);
+    result = await User.searchManagerByName(name, sortby);
   }
 
   if (!result) {
@@ -37,6 +39,46 @@ const getAreas = async (req, res) => {
     array: result,
     editScript: () => "editmanagerscript"
   });
+};
+
+const addAreaPage = async (req, res) => {
+  const result = await Area.getCountry();
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).render("areas/addarea", {
+    country: result,
+    editScript: () => "editareascript"
+  });
+}
+
+const getDistrictsByCountryId = async (req, res) => {
+  const { countryid } = req.query;
+  const result = await Area.getDistrict(countryid);
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).json(result);
+}
+const getWardsByCountryId = async (req, res) => {
+  const { countryid, districtid } = req.query;
+  const result = await Area.getWard(countryid, districtid);
+
+  if (!result) {
+    throw new CustomError("Something wrong when getting areas!");
+  }
+  res.status(StatusCodes.OK).json(result);
+}
+
+const addQuarantineArea = async (req, res) => {
+  const result = await Area.insertArea(req.body);
+  if (!result) {
+    throw new CustomError("Something wrong adding new area");
+  }
+
+  res.status(StatusCodes.OK).redirect('/admin/areas');
 };
 
 const addManagerPage = async (req, res) => {
@@ -80,10 +122,26 @@ const lockAndUnlockManager = async (req, res) => {
   }
 };
 
+const getHistoryActivity = async (req, res) => {
+  const {managerid} = req.params;
+
+  const result = await Audit.GetAudit(managerid);
+  // res.json(result);
+  res.render('dashboard/managerhistory', {
+    user: true,
+    array: result
+  })
+}
+
 module.exports = {
   getAllManagers,
   getAreas,
   addManager,
   lockAndUnlockManager,
-  addManagerPage
+  addManagerPage,
+  addAreaPage,
+  getDistrictsByCountryId,
+  getWardsByCountryId,
+  addQuarantineArea,
+  getHistoryActivity,
 };

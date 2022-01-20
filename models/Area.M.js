@@ -74,6 +74,32 @@ class Area {
 
     return true;
   }
+
+  static async getCountry() {
+    const result = await db.query(
+      `select * from country`,
+    )
+
+    return result.rows;
+  } 
+
+  static async getDistrict(countryid) {
+    const result = await db.query(
+      `select * from district where countryid = $1`,
+      [countryid]
+    )
+
+    return result.rows;
+  } 
+
+  static async getWard(countryid, districtid) {
+    const result = await db.query(
+      `select * from ward where countryid = $1 and districtid = $2`,
+      [countryid, districtid]
+    )
+
+    return result.rows;
+  } 
 }
 
 module.exports = Area;

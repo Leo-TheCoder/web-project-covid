@@ -182,8 +182,7 @@ AS
 	ORDER BY PRODUCTID ASC;
 ---++---
 
-<<<<<<< Updated upstream
-=======
+
 --See direct contact list
 CREATE OR REPLACE FUNCTION SEE_DIRECT_CONTACT_LIST 
 (c_Patient PATIENT.PATIENTID%TYPE)
@@ -199,6 +198,7 @@ $$
 	WHERE SOURCE_PATIENT = C_PATIENT AND
 	DATE_PART('day', NOW()::timestamp - contact_time::timestamp) <= 14;
 $$ LANGUAGE SQL
+
 ---++---
 
 --INSERT STATUS HISTORY
@@ -406,5 +406,3 @@ BEGIN
 END;
 $$
 ---++---
-
->>>>>>> Stashed changes

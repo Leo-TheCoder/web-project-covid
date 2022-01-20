@@ -4,22 +4,27 @@ const Cart = require("../../models/Cart.M");
 
 const addToCart = async (req, res) => {
   const result = await Cart.addToCart(req.body, req.patientid);
-
-  if (!result || result < 1) {
+  
+  if (!result) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       msg: "Insert failed!",
       status: "Fail",
     });
   }
-
-  res.status(StatusCodes.OK).json({
-    msg: "Insert successfully!",
-    status: "Success",
-  });
+  
+  return res.status(StatusCodes.OK).redirect('/packs');
 };
 
 const getItemsInCart = async (req, res) => {
   const result = await Cart.getItems(req.patientid);
+  result.forEach(pack => {
+    let totalCash = 0.0;
+    pack.products.forEach(product => {
+      product.cash = parseFloat(product.productprice) * parseInt(product.quantity);
+      totalCash += product.cash;
+    })
+    pack.total = totalCash;
+  })
 
   res.status(StatusCodes.OK).render("patients/cart/cart", {
 		cart: result,
@@ -63,8 +68,8 @@ const updateItemQuantityInCart = async (req, res) => {
 };
 
 const deletePackInCart = async (req, res) => {
-  const { packid } = req.params;
-  const result = await Cart.deletePackInCart(packid, req.patientid);
+  const { cartId } = req.params;
+  const result = await Cart.deletePackInCart(cartId, req.patientid);
 
   if (!result || result < 1) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

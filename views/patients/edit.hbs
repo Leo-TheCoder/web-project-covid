@@ -14,6 +14,11 @@
 						onclick="deletePatient({{patientid}})">
 						Xóa bệnh nhân
 					</button>
+
+					<a href='{{patientid}}/contact'
+						class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+						Danh sách tiếp xúc
+					</a>
 				</div>
 			</div>
 			<div class="mt-5 md:mt-0 md:col-span-2">
@@ -77,7 +82,7 @@
 								<div class="col-span-6 sm:col-span-4">
 									<label for="hospital-area" class="block text-sm font-medium text-gray-700">Nơi cách
 										ly hiện tại:</label>
-									<select id="hospital-area" name="hospital-area"
+									<select id="hospital-area" name="quarantinearea"
 										class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
 										{{#each quarantinearea}}
 										<option value="{{areaid}}" {{#if area}} selected {{/if}}>{{areaname}}</option>
