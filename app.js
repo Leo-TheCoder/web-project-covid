@@ -105,7 +105,7 @@ const startSever = async () => {
   try {
     await db.connect();
     //starting the server
-    app.listen(port, () =>
+    app.listen(process.env.PORT || 5000, () =>
       console.log(`The server is listening on http://localhost:${port}`)
     );
   } catch (error) {
