@@ -177,11 +177,17 @@ class Patient {
   }
 
   static async updatePatient(patientId, patientInfo) {
-    const { status } = patientInfo;
+    const { status, quarantinearea } = patientInfo;
+ 
     const updateStatusPatient = await db.query(
       `call updatepatientstatus($1, $2)`,
       [patientId, status]
     );
+
+    const updateQuarantineArea = await db.query(
+      `update patient set quarantineareaid = $1 where patientid = $2`,
+      [quarantinearea, patientId],
+    )
     return updateStatusPatient;
   }
 
