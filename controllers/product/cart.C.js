@@ -130,7 +130,8 @@ const payResult = async (req, res) => {
   const { status, msg, tid } = jwt.verify(token, process.env.API_PAYMENT_KEY);
 
   if (status == 0) {
-    
+    //fail => thông báo
+    res.render('patients/cart/error');
   } else {
     //Solve sumthing
 
@@ -140,8 +141,7 @@ const payResult = async (req, res) => {
     const addToOrder = await Order.addOrder(itemCart, req.patientid);
     const deleteInCart = await Cart.deletePackInCart(cartId, req.patientid);
 
-    //Show the result pay
-    return res.send(itemCart);
+    return res.redirect('/orders');
   }
   return res.send();
 };
