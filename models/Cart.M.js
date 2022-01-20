@@ -54,14 +54,14 @@ class Cart {
     let result = [];
     let index = -1;
     const productDetails = [];
-    details.rows.forEach((row, i) => {      
+    details.rows.forEach((row, i) => {
       const productDetail = {
         productid: row.productid,
         quantity: row.quantity,
         productname: row.productname,
         productprice: row.productprice,
         linkpic: row.linkpic,
-      }
+      };
 
       productDetails.push(productDetail);
       delete row.productid;
@@ -71,15 +71,13 @@ class Cart {
       delete row.linkpic;
     });
     const row = details.rows;
-    for(let i = 0; i < row.length; i++) {
-      if(index < 0 || row[i].cart_id !== result[index].cart_id) {
+    for (let i = 0; i < row.length; i++) {
+      if (index < 0 || row[i].cart_id !== result[index].cart_id) {
         result.push(row[i]);
         index++;
         result[index].products = [];
         result[index].products.push(productDetails[i]);
-      }
-      else
-      {
+      } else {
         result[index].products.push(productDetails[i]);
       }
     }
@@ -87,13 +85,31 @@ class Cart {
     return result;
   }
 
-  static async getItemById(patientid, cart_detail_id) {
-    const result = await db.query(
-      `select * from cart_detail c, product p where c.cart_detail_id = $1 and c.patientid = $2 and c.productid = p.productid`,
-      [cart_detail_id, patientid]
+  static async getItemById(cart_id) {
+    const queryResult = await db.query(
+      `select c.cart_id, c.total, d.packid, d.productid, d.quantity, d.productprice 
+      from cart c, cart_detail d 
+      where c.cart_id = d.cart_id and c.cart_id = $1`,
+      [cart_id]
     );
 
-    return result.rows[0];
+    if (queryResult.rows.length < 1) {
+      return null;
+    }
+    const result = {};
+    result.cart_id = queryResult.rows[0].cart_id;
+    result.total = queryResult.rows[0].total;
+    result.details = [];
+    queryResult.rows.forEach((element) => {
+      const product = {
+        packid: element.packid,
+        productid: element.productid,
+        quantity: element.quantity,
+        productprice: element.productprice,
+      };
+      result.details.push(product);
+    });
+    return result;
   }
 
   static async updateItemQuantity({ quantity }, cart_detail_id) {
@@ -108,8 +124,8 @@ class Cart {
   static async deletePackInCart(cartId, patientid) {
     const deleteDetails = await db.query(
       `delete from cart_detail where cart_id = $1`,
-      [cartId],
-    )
+      [cartId]
+    );
 
     const result = await db.query(
       `delete from cart where cart_id = $1 and patientid = $2`,
