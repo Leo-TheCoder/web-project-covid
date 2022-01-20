@@ -18,17 +18,16 @@ async function updatePatient(patientId, curStatus, curArea) {
 	console.log("update patient step 2");
 	const status = document.getElementById("status").value;
 	const area = document.getElementById("hospital-area").value;
-	console.log(curStatus);
-	console.log(status);
-	console.log(curArea);
-	console.log(area);
 
 	if (curStatus == status && curArea == area) {
 		console.log("not updated");
 		return;
 	}
 
-	const body = { status, area };
+	let isStatusChanged = !(curStatus == status);
+	let isAreaChanged = !(curArea == area);
+
+	const body = { status, area, isStatusChanged, isAreaChanged };
 	const response = await fetch(url + `/patients/${patientId}`, {
 		method: "PUT",
 		headers: {
