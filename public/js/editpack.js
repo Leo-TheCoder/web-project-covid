@@ -26,7 +26,7 @@ const moreProduct = () => {
 
 	row.id = 'row';
 	// row.id = 'product' + productIndex;
-	productSelect.id='name';
+	productSelect.id = 'name';
 
 	nameCol.classList = 'px-6 py-4 whitespace-nowrap';
 	quantityCol.classList = 'px-6 py-4 whitespace-nowrap';
@@ -66,7 +66,7 @@ const getProductsFromUI = () => {
 
 const addPack = async () => {
 	const details = getProductsFromUI();
-	if(details.length === 0){
+	if (details.length === 0) {
 		alert('Chưa có sản phẩm!');
 		return;
 	}
@@ -75,7 +75,7 @@ const addPack = async () => {
 	const productpacklimit = document.getElementById('productpacklimit').value;
 	const timeunit = document.getElementById('timeunit').value;
 
-	if(!productpackname || !productpacklimit || !timeunit){
+	if (!productpackname || !productpacklimit || !timeunit) {
 		alert('Chưa nhập đủ!');
 		return;
 	}
@@ -87,13 +87,15 @@ const addPack = async () => {
 		details
 	}
 
-	const response = await fetch(url + `/packs`,{
+	const response = await fetch(url + `/packs`, {
 		method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body),
-	})
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body),
+	});
+
+	location.href = '/packs';
 }
 
 loadProducts();

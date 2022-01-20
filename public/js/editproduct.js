@@ -59,8 +59,8 @@ async function deleteProduct(productid) {
 	});
 
   if(response.ok){
-    // window.location.replace(url + '/products');
-    console.log('success');
+    window.location.replace(url + '/products');
+    // console.log('success');
   }
   else{
     console.log(response.status);

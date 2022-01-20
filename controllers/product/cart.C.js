@@ -131,10 +131,8 @@ const payResult = async (req, res) => {
 
   //Giao dich fail
   if (status == 0) {
-    
-    //reder hay redirect cai gi do...
-
-    //Giao dich thanh cong
+    //fail => thông báo
+    res.render('patients/cart/error');
   } else {
     //Solve sumthing
 
@@ -144,8 +142,7 @@ const payResult = async (req, res) => {
     const addToOrder = await Order.addOrder(itemCart, req.patientid);
     const deleteInCart = await Cart.deletePackInCart(cartId, req.patientid);
 
-    //Show the result pay
-    return res.send(itemCart);
+    return res.redirect('/orders');
   }
   return res.send();
 };
