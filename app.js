@@ -9,9 +9,9 @@ const cors = require('cors');
 //declaring public variables
 const app = express();
 const port = process.env.PORT || 5000;
-const www = process.env.WWW || "./";
+//const www = process.env.WWW || "./";
 
-app.use(express.static(www));
+//app.use(express.static(www));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
