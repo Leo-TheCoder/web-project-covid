@@ -2,82 +2,62 @@
 	<div class="w-[920px] mx-auto flex flex-col pt-10">
 		<!-- Banner -->
 		<div id="banner">
-			<img
-				src="https://picsum.photos/720/400"
-				class="w-full h-[200px] object-cover object-center"
-			/>
+			<img src="https://picsum.photos/720/400" class="w-full h-[200px] object-cover object-center" />
 		</div>
 
 		<!-- Navigation Shortcuts -->
 		<div class="grid grid-cols-4 gap-10 py-5">
-			<div
-				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
-			>
+			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
 				<div class="m-4">
 					<a href="/profile">
-						<img
-							class="h-[24px] w-[24px]"
-							src="/public/icons/User.png"
-							alt="icon"
-						/>
+						<img class="h-[24px] w-[24px]" src="/public/icons/User.png" alt="icon" />
 
-						<h5
-							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
-						>
+						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
 							Tài khoản của tôi
 						</h5>
 
 					</a>
 				</div>
 			</div>
-			<div
-				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
-			>
+			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+				<a href="/packs">
+					<div class="m-4">
+						<img class="h-[24px] w-[24px]" src="/public/icons/Shopping-bag.png" alt="icon" />
+
+						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+							Gói nhu yếu phẩm
+						</h5>
+
+					</div>
+				</a>
+			</div>
+
+			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
 				<a href="/products">
 					<div class="m-4">
-						<img
-							class="h-[24px] w-[24px]"
-							src="/public/icons/Shopping-bag.png"
-							alt="icon"
-						/>
+						<img class="h-[24px] w-[24px]" src="/public/icons/Shopping-bag.png" alt="icon" />
 
-						<h5
-							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
-						>
+						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
 							Nhu yếu phẩm
 						</h5>
 
 					</div>
 				</a>
 			</div>
-			<div
-				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
-			>
+			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
 				<div class="m-4">
 					<a href="/patients">
-						<img
-							class="h-[24px] w-[24px]"
-							src="/public/icons/Pulse.png"
-							alt="icon"
-						/>
+						<img class="h-[24px] w-[24px]" src="/public/icons/Pulse.png" alt="icon" />
 
-						<h5
-							class="tracking-widest text-indigo-500 text-xs font-medium pt-2"
-						>
+						<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
 							Quản lý bệnh nhân
 						</h5>
 					</a>
 				</div>
 			</div>
-			<div
-				class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden"
-			>
+			<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
 				<div class="m-4">
-					<img
-						class="h-[24px] w-[24px]"
-						src="/public/icons/Wallet.png"
-						alt="icon"
-					/>
+					<img class="h-[24px] w-[24px]" src="/public/icons/Wallet.png" alt="icon" />
 
 					<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
 						Quản lý thanh toán
@@ -92,7 +72,43 @@
 			<h1 class="w-max font-medium text-3xl">
 				Thống kê</h1>
 		</div>
+		<div class="flex justify-center w-full pt-5">
+			<div class="grid grid-cols-4 gap-10 py-5">
+				<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+					<div class="m-4">
+						<a href="/statistic/product-consumption">
+							<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+								Tiêu thụ sản phẩm
+							</h5>
 
+						</a>
+					</div>
+				</div>
+
+				<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+					<a href="/statistic/pack-sell">
+						<div class="m-4">
+							<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+								Tiêu thụ gói sản phẩm
+							</h5>
+
+						</div>
+					</a>
+				</div>
+
+
+				<div class="block bg-white shadow-md hover:shadow-lg rounded-md overflow-hidden">
+					<div class="m-4">
+						<a href="/statistic/patients">
+							<h5 class="tracking-widest text-indigo-500 text-xs font-medium pt-2">
+								Số lượng bệnh nhân
+							</h5>
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
 		<!-- Products List -->
 
 	</div>
