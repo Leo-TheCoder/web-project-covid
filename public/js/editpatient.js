@@ -37,4 +37,7 @@ async function updatePatient(patientId, curStatus, curArea) {
 	});
 
 	console.log(response);
+	if(response.ok) {
+		window.location.replace(response.url);
+	}
 }

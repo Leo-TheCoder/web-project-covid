@@ -177,18 +177,21 @@ class Patient {
   }
 
   static async updatePatient(patientId, patientInfo) {
-    const { status, quarantinearea } = patientInfo;
- 
-    const updateStatusPatient = await db.query(
-      `call updatepatientstatus($1, $2)`,
-      [patientId, status]
-    );
+    const { status, area, isStatusChanged, isAreaChanged } = patientInfo;
+    if(isStatusChanged) {
+      const updateStatusPatient = await db.query(
+        `call updatepatientstatus($1, $2)`,
+        [patientId, status]
+      )
+    }
 
-    const updateQuarantineArea = await db.query(
-      `update patient set quarantineareaid = $1 where patientid = $2`,
-      [quarantinearea, patientId],
-    )
-    return updateStatusPatient;
+    if(isAreaChanged) {
+      const updateQuarantineArea = await db.query(
+        `update patient set quarantineareaid = $1 where patientid = $2`,
+        [area, patientId],
+      )
+    }
+    return true;
   }
 
   static async getContactPatients(patientId) {

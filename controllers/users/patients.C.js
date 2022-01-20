@@ -95,7 +95,7 @@ const updatePatientPage = async (req, res) => {
     throw new CustomError("Something wrong when updating patient!");
   }
 
-  res.status(StatusCodes.OK).redirect(StatusCodes.SEE_OTHER,`/patients/${patientId}`);
+  res.status(StatusCodes.OK).redirect(StatusCodes.SEE_OTHER,`/patients`);
 };
 
 const insertPatient = async (req, res) => {
