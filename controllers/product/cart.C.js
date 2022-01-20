@@ -126,7 +126,7 @@ const pay = async (req, res) => {
 
 const payResult = async (req, res) => {
   //Get token from payment server
-  const { token } = req.body;
+  const { token } = req.query;
   const { status, msg, tid } = jwt.verify(token, process.env.API_PAYMENT_KEY);
 
   //Giao dich fail
