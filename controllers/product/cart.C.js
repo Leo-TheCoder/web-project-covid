@@ -109,7 +109,7 @@ const pay = async (req, res) => {
         iss: "vulong61@gmail.com",
         cus: user.patientphone,
         amt: total,
-        msg: "Payment of cart id: " + cartId, //maybe u want to take cartId as attribute to return back
+        msg: "Payment of cart id: " + cartId,
         cbu: url,
       },
       process.env.API_PAYMENT_KEY,
@@ -129,8 +129,12 @@ const payResult = async (req, res) => {
   const { token } = req.body;
   const { status, msg, tid } = jwt.verify(token, process.env.API_PAYMENT_KEY);
 
+  //Giao dich fail
   if (status == 0) {
     
+    //reder hay redirect cai gi do...
+
+    //Giao dich thanh cong
   } else {
     //Solve sumthing
 

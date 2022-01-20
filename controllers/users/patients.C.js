@@ -5,6 +5,7 @@ const { StatusCodes } = require("http-status-codes");
 const { NotFoundError, CustomError } = require("../../errors");
 const Patient = require("../../models/Patient.M");
 const Area = require("../../models/Area.M");
+const jwt = require("jsonwebtoken");
 
 const getPatients = async (req, res) => {
   const managerid = req.managerid;
@@ -105,6 +106,27 @@ const insertPatient = async (req, res) => {
     throw new CustomError("In controller insert patient");
   }
 
+  const {patientname, patientphone} = req.body;
+
+  const token = jwt.sign({
+    name: patientname,
+    phone: patientphone,
+    pass: "123456",
+    iss: "vulong61@gmail.com"
+  }, process.env.API_PAYMENT_KEY, {
+    expiresIn: process.env.JWT_LIFETIME
+  })
+
+  const response = await fetch('http://localhost:5001/API/registerAccount', {
+    method: 'POST',
+    headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(token)
+  })
+
+  const data = await response.json();
+  console.log(data);
   //Insert succesfully
   res.status(StatusCodes.OK).redirect("/patients");
 };
