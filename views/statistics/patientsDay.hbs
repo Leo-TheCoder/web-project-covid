@@ -1,0 +1,141 @@
+<div class="flex flex-col">
+  <h2>Biểu đồ bệnh nhân theo ngày</h2>
+  <canvas id="myChart" height="480"></canvas>
+</div>
+
+<div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+  <a href="/statistic/patients-month"
+    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Thống
+    kê theo tháng</a>
+  <a href="/statistic/patients-year"
+    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Thống
+    kê theo năm</a>
+</div>
+
+{{#each data}}
+<div id='date' class="hidden">{{date}}</div>
+<div id='f0' class="hidden">{{f0}}</div>
+<div id='f1' class="hidden">{{f1}}</div>
+<div id='f2' class="hidden">{{f2}}</div>
+<div id='f3' class="hidden">{{f3}}</div>
+<div id='f_out' class="hidden">{{f_out}}</div>
+{{/each}}
+
+<style>
+  h2 {
+    text-align: center;
+    margin: 10px;
+  }
+</style>
+
+<script src="../../node_modules/chart.js/dist/chart.js"></script>
+<script>
+  const dates = document.querySelectorAll('#date');
+  const patient = document.querySelectorAll('#f0');
+  const patient1 = document.querySelectorAll('#f1');
+  const patient2 = document.querySelectorAll('#f2');
+  const patient3 = document.querySelectorAll('#f3');
+  const patient_out = document.querySelectorAll('#f_out');
+
+  const labels = [];
+  const f0 = [];
+  const f1 = [];
+  const f2 = [];
+  const f3 = [];
+  const f_out = [];
+
+  dates.forEach(item => {
+    labels.push(item.innerHTML);
+  })
+
+  patient.forEach(item => {
+    f0.push(item.innerHTML);
+  })
+
+  patient1.forEach(item => {
+    f1.push(item.innerHTML);
+  })
+
+  patient2.forEach(item => {
+    f2.push(item.innerHTML);
+  })
+
+  patient3.forEach(item => {
+    f3.push(item.innerHTML);
+  })
+
+  patient_out.forEach(item => {
+    f_out.push(item.innerHTML);
+  })
+
+  const ctx = document.getElementById('myChart');
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'F0',
+        data: f0,
+        backgroundColor: [
+          'rgba(252, 44, 3, 0.2)'
+        ],
+        borderColor: [
+          'rgba(252, 44, 3, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'F1',
+        data: f1,
+        backgroundColor: [
+          'rgba(252, 173, 3, 0.2)'
+        ],
+        borderColor: [
+          'rgba(252, 173, 3, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'F2',
+        data: f2,
+        backgroundColor: [
+          'rgba(252, 3, 186, 0.2)'
+        ],
+        borderColor: [
+          'rgba(252, 3, 186, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'F3',
+        data: f3,
+        backgroundColor: [
+          'rgba(103, 3, 252, 0.2)'
+        ],
+        borderColor: [
+          'rgba(103, 3, 252, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'Khỏi bệnh',
+        data: f_out,
+        backgroundColor: [
+          'rgba(3, 252, 98, 0.2)'
+        ],
+        borderColor: [
+          'rgba(3, 252, 98, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+    }
+    }
+  });
+</script>

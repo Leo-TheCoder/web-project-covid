@@ -25,6 +25,41 @@ class Statistic {
     }
   }
 
+  static async getPatientOverTime() {
+    try {
+      const result = await db.query(
+        `select * from R_NUMBER_OF_PATIENT_MONTH()`
+      );
+
+      return result.rows;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  static async getPatientOverYear() {
+    try {
+      const result = await db.query(
+        `select * from R_NUMBER_OF_PATIENT_YEAR()`
+      );
+
+      return result.rows;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  static async getPatientOverDay() {
+    try {
+      const result = await db.query(
+        `select * from R_NUMBER_OF_PATIENT_DAY()`
+      );
+
+      return result.rows;
+    } catch (error) {
+      return undefined;
+    }
+  }
 }
 
 module.exports = Statistic;

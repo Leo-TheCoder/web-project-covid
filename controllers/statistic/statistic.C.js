@@ -26,8 +26,37 @@ const getPackSellQuantity = async (req, res) => {
   return res.status(StatusCodes.OK).json(result);
 };
 
+const getPatientOverTime  = async (req,res) => {
+  const result = await Statistic.getPatientOverTime();
+  // return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.OK).render('statistics/patients', {
+    user: true,
+    data: result
+  })
+}
+
+const getPatientOverYear  = async (req,res) => {
+  const result = await Statistic.getPatientOverYear();
+  // return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.OK).render('statistics/patientsYear', {
+    user: true,
+    data: result
+  })
+}
+
+const getPatientOverDay  = async (req,res) => {
+  const result = await Statistic.getPatientOverDay();
+  // return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.OK).render('statistics/patientsDay', {
+    user: true,
+    data: result
+  })
+}
 
 module.exports = {
   getProductConsumption,
-  getPackSellQuantity
+  getPackSellQuantity,
+  getPatientOverTime,
+  getPatientOverYear,
+  getPatientOverDay
 };
