@@ -4,7 +4,7 @@
   "description": "Đồ án cuối kỳ của môn Phát triển ứng dụng web.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -30,10 +30,14 @@
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
+    "node-fetch": "2.0",
     "pg": "^8.7.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
     "tailwindcss": "^3.0.8"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

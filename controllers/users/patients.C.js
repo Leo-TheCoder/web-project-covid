@@ -1,11 +1,13 @@
 /** @format */
 
+
 const Utility = require("../../utilities");
 const { StatusCodes } = require("http-status-codes");
 const { NotFoundError, CustomError } = require("../../errors");
 const Patient = require("../../models/Patient.M");
 const Area = require("../../models/Area.M");
 const jwt = require("jsonwebtoken");
+const fetch = require("node-fetch");
 
 const getPatients = async (req, res) => {
   const managerid = req.managerid;
@@ -111,18 +113,20 @@ const insertPatient = async (req, res) => {
   const token = jwt.sign({
     name: patientname,
     phone: patientphone,
-    pass: "123456",
+    password: "123456",
     iss: "vulong61@gmail.com"
   }, process.env.API_PAYMENT_KEY, {
     expiresIn: process.env.JWT_LIFETIME
   })
+
+  const body = {token: token};
 
   const response = await fetch('http://localhost:5001/API/registerAccount', {
     method: 'POST',
     headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(token)
+		body: JSON.stringify(body)
   })
 
   const data = await response.json();

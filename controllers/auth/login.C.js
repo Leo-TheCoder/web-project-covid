@@ -30,9 +30,7 @@ const login = async (req, res) => {
 	}
 
 	const user = await User.getUser(phone_number);
-	if (user.first_login == 1) {
-		return res.redirect('/login/resetpassword');
-	}
+
 	if (!user) {
 		return res.render('user/login', {
 			user  : false,
@@ -51,6 +49,10 @@ const login = async (req, res) => {
 
 	const token = await user.createJWT();
 	res.cookie('authorization', token, { httpOnly: true, expire: 'session' });
+
+	if (user.first_login == 1) {
+		return res.redirect('/login/resetpassword');
+	}
 	// res.status(StatusCodes.OK).json({ user, token });
 	res.redirect('/dashboard');
 };
@@ -71,6 +73,7 @@ const resetPassword = async (req, res) => {
 	//SĐT
 	//Pass mới + Xác nhận
 	//Dashboard
+	
 	const id = req.user.id;
 	const {new_pass, confirm_pass } = req.body;
 	if (new_pass !== confirm_pass) {
