@@ -118,7 +118,7 @@ const pay = async (req, res) => {
       }
     );
 
-    return res.redirect(302, "http://localhost:5001/?orderToken=" + orderToken);
+    return res.redirect(302, "http://localhost:5001/API/transaction/?orderToken=" + orderToken);
   } catch (err) {
     console.log(err);
   }
