@@ -3,6 +3,7 @@ const { CustomError, NotFoundError } = require("../../errors");
 const Cart = require("../../models/Cart.M");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User.M");
+const Order = require("../../models/Order.M");
 
 const addToCart = async (req, res) => {
   const result = await Cart.addToCart(req.body, req.patientid);
@@ -94,11 +95,12 @@ const deletePackInCart = async (req, res) => {
 };
 
 const pay = async (req, res) => {
-  const {cartId} = req.params;
+  const { cartId } = req.params;
   const { total, details } = req.body;
 
   const user = await User.getInformation(req.user.mainId, "P");
-  const url = req.protocol + '://' + req.get('host') + req.originalUrl + '/result';
+  const url =
+    req.protocol + "://" + req.get("host") + req.originalUrl + "/result";
   const iat = Date.now();
   try {
     const orderToken = jwt.sign(
@@ -107,7 +109,7 @@ const pay = async (req, res) => {
         iss: "vulong61@gmail.com",
         cus: user.patientphone,
         amt: total,
-        msg: "Payment of cart id: " + cartId,
+        msg: "Payment of cart id: " + cartId, //maybe u want to take cartId as attribute to return back
         cbu: url,
       },
       process.env.API_PAYMENT_KEY,
@@ -116,15 +118,33 @@ const pay = async (req, res) => {
       }
     );
 
-    return res.redirect(302, "http://localhost:5001/?orderToken="+orderToken);
+    return res.redirect(302, "http://localhost:5001/?orderToken=" + orderToken);
   } catch (err) {
     console.log(err);
   }
 };
 
 const payResult = async (req, res) => {
+  //Get token from payment server
+  const { token } = req.body;
+  const { status, msg, tid } = jwt.verify(token, process.env.API_PAYMENT_KEY);
+
+  if (status == 0) {
+    
+  } else {
+    //Solve sumthing
+
+    //Return item to order
+    const {cartId} = req.params;
+    const itemCart = await Cart.getItemById(cartId);
+    const addToOrder = await Order.addOrder(itemCart, req.patientid);
+    const deleteInCart = await Cart.deletePackInCart(cartId, req.patientid);
+
+    //Show the result pay
+    return res.send(itemCart);
+  }
   return res.send();
-}
+};
 
 module.exports = {
   addToCart,

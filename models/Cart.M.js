@@ -87,13 +87,33 @@ class Cart {
     return result;
   }
 
-  static async getItemById(patientid, cart_detail_id) {
-    const result = await db.query(
-      `select * from cart_detail c, product p where c.cart_detail_id = $1 and c.patientid = $2 and c.productid = p.productid`,
-      [cart_detail_id, patientid]
+  static async getItemById(cart_id) {
+    const queryResult = await db.query(
+      `select c.cart_id, c.total, d.packid, d.productid, d.quantity, d.productprice 
+      from cart c, cart_detail d 
+      where c.cart_id = d.cart_id and c.cart_id = $1`,
+      [cart_id]
     );
 
-    return result.rows[0];
+    if(queryResult.rows.length < 1) {
+      return null;
+    }
+    const result = {};
+    result.cart_id = queryResult.rows[0].cart_id;
+    result.total = queryResult.rows[0].total;
+    result.details = [];
+    queryResult.rows.forEach(element => {
+      const product = {
+        packid: element.packid,
+        productid: element.productid,
+        quantity: element.quantity,
+        productprice: element.productprice,
+      }
+      result.details.push(product);
+    })
+
+    console.log(result);
+    return result;
   }
 
   static async updateItemQuantity({ quantity }, cart_detail_id) {
