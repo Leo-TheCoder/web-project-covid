@@ -735,6 +735,14 @@ select {
   margin-top: 1.25rem;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .mr-4 {
   margin-right: 1rem;
 }
@@ -743,24 +751,16 @@ select {
   margin-left: 1rem;
 }
 
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
 .mr-2 {
   margin-right: 0.5rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .block {
@@ -871,6 +871,10 @@ select {
   width: 1rem;
 }
 
+.w-2\/4 {
+  width: 50%;
+}
+
 .w-24 {
   width: 6rem;
 }
@@ -881,10 +885,6 @@ select {
 
 .w-16 {
   width: 4rem;
-}
-
-.w-1 {
-  width: 0.25rem;
 }
 
 .min-w-full {
@@ -990,6 +990,10 @@ select {
 
 .self-end {
   align-self: flex-end;
+}
+
+.self-center {
+  align-self: center;
 }
 
 .overflow-hidden {
@@ -1709,19 +1713,19 @@ select {
     padding-right: 2rem;
   }
 
-  .lg\:pt-16 {
-    padding-top: 4rem;
-  }
-
-  .lg\:pb-24 {
-    padding-bottom: 6rem;
-  }
-
   .lg\:pt-6 {
     padding-top: 1.5rem;
   }
 
   .lg\:pb-16 {
     padding-bottom: 4rem;
+  }
+
+  .lg\:pt-16 {
+    padding-top: 4rem;
+  }
+
+  .lg\:pb-24 {
+    padding-bottom: 6rem;
   }
 }
