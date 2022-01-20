@@ -30,7 +30,15 @@ async function buyPack(packid, cartid) {
 		details
 	}
 
-	const response = await fetch(url + `/orders`, {
+	// const response = await fetch(url + `/orders`, {
+	// 	method: "POST",
+	// 	headers: {
+	// 		"Content-Type": "application/json",
+	// 	},
+	// 	body: JSON.stringify(body)
+	// });
+
+	const response = await fetch(url + `/cart/${cartid}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -38,5 +46,7 @@ async function buyPack(packid, cartid) {
 		body: JSON.stringify(body)
 	});
 
-	deletePack(cartid);
+	window.location.href = response.url;
+
+	// deletePack(cartid);
 }

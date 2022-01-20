@@ -99,23 +99,27 @@ const pay = async (req, res) => {
 
   const user = await User.getInformation(req.user.mainId, "P");
   const url = req.protocol + '://' + req.get('host') + req.originalUrl + '/result';
-  
-  const orderToken = jwt.sign(
-    {
-      iat: Date.now(),
-      iss: "vulong61@gmail.com",
-      cus: user.patientphone,
-      amt: total,
-      msg: "Payment of cart id: " + cartId,
-      cbu: url,
-    },
-    process.env.API_PAYMENT_KEY,
-    {
-      expiresIn: process.env.JWT_LIFETIME,
-    }
-  );
+  const iat = Date.now();
+  try {
+    const orderToken = jwt.sign(
+      {
+        iat: iat,
+        iss: "vulong61@gmail.com",
+        cus: user.patientphone,
+        amt: total,
+        msg: "Payment of cart id: " + cartId,
+        cbu: url,
+      },
+      process.env.API_PAYMENT_KEY,
+      {
+        expiresIn: process.env.JWT_LIFETIME,
+      }
+    );
 
-  return res.send(orderToken);
+    return res.redirect(302, "http://localhost:5001/?orderToken="+orderToken);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const payResult = async (req, res) => {

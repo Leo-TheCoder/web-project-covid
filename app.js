@@ -4,6 +4,7 @@ require("express-async-errors");
 const express = require("express");
 const handlebars = require("express-handlebars");
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 
 //declaring public variables
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.static(www));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
 
 const loginRouter = require("./routes/auth_routes/login_route");
 const logoutRouter = require("./routes/auth_routes/logout_route");
