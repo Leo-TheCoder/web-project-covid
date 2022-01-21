@@ -36,18 +36,25 @@
 			<!-- Image gallery -->
 			<div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
 				<div class="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
-					<img src="{{ linkpics.[3] }}" alt="" class="w-full h-full object-center object-cover" />
+					{{#if linkpics.[3] }}<img src="{{ linkpics.[3] }}" alt="" class="w-full h-full object-center object-cover" />
+					{{/if}}
 				</div>
 				<div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
 					<div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+						{{#if linkpics.[0] }}
 						<img src="{{ linkpics.[0] }}" alt="" class="w-full h-full object-center object-cover" />
+						{{/if}}
 					</div>
 					<div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+						{{#if linkpics.[1] }}
 						<img src="{{ linkpics.[1] }}" alt="" class="w-full h-full object-center object-cover" />
+						{{/if}}
 					</div>
 				</div>
 				<div class="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
+					{{#if linkpics.[2] }}
 					<img src="{{ linkpics.[2] }}" alt="" class="w-full h-full object-center object-cover" />
+					{{/if}}
 				</div>
 			</div>
 			<!-- Product info -->
@@ -57,7 +64,7 @@
 					<h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
 						{{productpackname}}
 					</h1>
-					<div class="w-full flex justify-between">
+					<div class="w-full">
 						<div class="mt-2 flex items-center text-indigo-500 text-xl font-medium truncate ...">
 							<p>Còn được mua:</p>
 							<p id="packlimit" class="ml-2">
@@ -65,24 +72,7 @@
 							</p>
 						</div>
 
-						<div class="flex items-center">
-							<p class="w-full text-indigo-500 text-xl font-medium">
-								Số lượng mua:
-							</p>
-							<div class="flex flex-row h-10 w-full ml-4 rounded-lg relative bg-transparent mt-1">
-								<button id="bigdecrement" onclick="bigdecrement()"
-									class=" bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-l cursor-pointer outline-none">
-									<span class="m-auto text-2xl font-thin">-</span>
-								</button>
-								<input type="number"
-									class="text-center w-16 bg-indigo-50  font-semibold text-md outline-none border-0 focus:border-0 flex items-center text-gray-700"
-									name="custom-input-number" value="1"></input>
-								<button id="bigincrement" onclick="bigincrement()"
-									class="bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-r cursor-pointer">
-									<span class="m-auto text-2xl font-thin">+</span>
-								</button>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 				<!-- Options -->
@@ -151,6 +141,7 @@
 														class="bg-indigo-50 text-gray-600 hover:text-gray-700 hover:bg-indigo-300 h-full w-14 rounded-r cursor-pointer">
 														<span class="m-auto text-2xl font-thin">+</span>
 													</button>
+													<span data-name="quant" class="hidden">{{quantity}}</span>
 												</div>
 											</td>
 											<td data-name="total" class="px-6 py-4 whitespace-nowrap text-base text-indigo-600">
@@ -258,44 +249,20 @@
 			'td[data-name="total"]'
 		);
 
+		let maxQuant = Number(target.nextElementSibling.nextElementSibling.innerHTML);
+		console.log(maxQuant);
+
 		let price = Number(productprice.innerText);
 		let value = Number(target.value);
 		value++;
+		if (value>maxQuant) {
+			value = maxQuant;
+		}
 		target.value = value;
 		totalEle.innerHTML = price * value;
 		calculateTotal();
 	}
 
-	function bigdecrement(e) {
-
-		const btn = document.getElementById("bigdecrement");
-		const target = btn.nextElementSibling;
-
-		let value = Number(target.value);
-		value--;
-		if (value == -1) {
-			value = 0;
-		}
-		target.value = value;
-		calculateTotal();
-	}
-
-	function bigincrement(e) {
-		const btn = document.getElementById("bigdecrement");
-		const target = btn.nextElementSibling;
-
-		let value = Number(target.value);
-		value++;
-
-		let limit = Number(document.getElementById("packlimit").innerHTML);
-		if (value > limit) {
-			value = limit;
-		}
-
-		target.value = value;
-
-		calculateTotal();
-	}
 
 	const decrementButtons = document.querySelectorAll(
 		`button[data-action="decrement"]`
@@ -319,11 +286,8 @@
 		);
 		let price = 0;
 		alltotalprice.forEach(element => price += Number(element.innerHTML));
-		const btn = document.getElementById("bigdecrement");
-		const target = btn.nextElementSibling;
-
-		let value = Number(target.value);
-		$("#totalamount").html(price * value);
+		
+		$("#totalamount").html(price);
 	}
 
 	async function addToCart() {
