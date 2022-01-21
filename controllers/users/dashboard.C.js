@@ -46,6 +46,8 @@ const getUserPage = async (req, res) => {
 
 			packsPreview.push({
 				packname: result.productpackname,
+				linkpic: result.linkpics[0],
+				packid: result.productpackid,
 				detail: result.products.map(p => p.productname).join(", ")
 			});
 		}
